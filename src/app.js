@@ -1,14 +1,21 @@
 import './index.html';
 import './assets/scss/main.scss';
+import Config from './assets/js/config';
+import Mixin from './assets/js/mixin';
+import Router from './assets/js/components/Router';
 
 class App {
   constructor() {
-    return {};
+    this.config = Mixin.deepFreeze(Config);
+    this.router = new Router(this);
+
+    console.log(this);
   }
 
   init() {
-
+    this.router.init();
   }
 }
 
-new App();
+const app = new App();
+app.init();
