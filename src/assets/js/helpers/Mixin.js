@@ -36,6 +36,16 @@ const Mixin = {
 
     return out;
   },
+  listen(event, handler) {
+    document.addEventListener(event, handler);
+  },
+  dispatch(event, data = null) {
+    const props = {};
+
+    if (data) props.detail = data;
+
+    document.dispatchEvent(new CustomEvent(event, props));
+  },
 };
 
 export default Mixin;
