@@ -46,6 +46,12 @@ const Mixin = {
 
     document.dispatchEvent(new CustomEvent(event, props));
   },
+  parseHTML(template) {
+    const node = document.createElement('template');
+    node.innerHTML = template;
+
+    return node.content.cloneNode(true);
+  },
 };
 
 export default Mixin;

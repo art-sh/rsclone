@@ -1,5 +1,5 @@
 const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+// const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -19,7 +19,7 @@ const styleLoaders = (extendedLoader) => {
   if (extendedLoader) loaders.push(extendedLoader);
 
   return loaders;
-}
+};
 
 const optimizations = () => {
   const config = {};
@@ -39,7 +39,7 @@ const optimizations = () => {
   }
 
   return config;
-}
+};
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),
@@ -55,6 +55,7 @@ module.exports = {
     alias: {
       '@': path.resolve(__dirname, 'src'),
       '@assets': path.resolve(__dirname, 'src/assets'),
+      '@helpers': path.resolve(__dirname, 'src/helpers'),
     },
   },
   devServer: {
@@ -119,14 +120,14 @@ module.exports = {
           },
         },
       },
-    ]
+    ],
   },
   plugins: [
     new CleanWebpackPlugin(),
     new HTMLWebpackPlugin({
       template: 'index.html',
       minify: isProd,
-      favicon: 'assets/img/shared/icons/favicon.png',
+      favicon: 'assets/img/icons/favicon.png',
     }),
     new MiniCssExtractPlugin({
       filename: `assets/css/style${isProd ? '~[hash]' : ''}.css`,

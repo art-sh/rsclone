@@ -1,10 +1,11 @@
 import './index.html';
 import './assets/scss/main.scss';
-import Config from './assets/js/static/config';
-import Mixin from './assets/js/helpers/Mixin';
-import Router from './assets/js/components/Router';
-import Controller from './assets/js/components/Controller';
-import Storage from './assets/js/components/Storage';
+import Config from './constant/config';
+import Controller from './components/Controller';
+import Mixin from './helpers/Mixin';
+import Render from './components/Render/Render';
+import Router from './components/Router';
+import Storage from './components/Storage';
 
 class App {
   constructor() {
@@ -12,12 +13,14 @@ class App {
     this.storage = new Storage(this);
     this.controller = new Controller(this);
     this.router = new Router(this);
+    this.render = new Render(this);
   }
 
   init() {
     this.router.init(this.config, this.controller);
     this.controller.init(this.config, this.storage, this.router);
     this.storage.init(this.config);
+    this.render.init(this.config);
 
     console.log(this);
   }

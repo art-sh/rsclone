@@ -1,4 +1,4 @@
-import Mixin from '../helpers/Mixin';
+import Mixin from '@helpers/Mixin';
 
 export default class Router {
   constructor(app) {
