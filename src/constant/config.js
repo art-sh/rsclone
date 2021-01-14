@@ -7,4 +7,9 @@ export default {
     hashChange: 'hashchange',
     routeChange: 'route-change',
   },
+  games: {
+    memoryGame: {
+      id: 'MemoryGame'
+    }
+  }
 };
