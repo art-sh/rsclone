@@ -1,4 +1,7 @@
-class ColourMatrix {
+import './css/style.scss';
+import Mixin from '../../../helpers/Mixin';
+
+export default class ColourMatrix {
   constructor() {
     this.fieldSize = 4;
     this.aciveBlocksNumber = 2;
@@ -10,6 +13,7 @@ class ColourMatrix {
     this.lives = 3;
     this.score = 0;
     this.visibilityDelay = 2000;
+    this.delay = 1000;
     this.node = null;
     this.gameBlocks = {
       container: null,
@@ -20,7 +24,6 @@ class ColourMatrix {
   createField = () => {
     this.gameBlocks.container = this.createElementFactory('div', null, 'field-container', null, null, null);
     this.gameBlocks.gameField = this.createElementFactory('div', null, 'field-main', null, null, null);
-    console.log(this.gameBlocks.gameField);
     this.gameBlocks.container.appendChild(this.createGameHeader());
     this.gameBlocks.container.appendChild(this.gameBlocks.gameField);
     this.gameBlocks.container.appendChild(this.createElementFactory('button', null, 'game-start-button', null, null, 'Game Start'));
@@ -101,7 +104,6 @@ class ColourMatrix {
   }
 
   listenersHandlers(fieldContainer) {
-    const field = fieldContainer.querySelector('.field-main');
     const gameStartButton = fieldContainer.querySelector('.game-start-button');
     gameStartButton.addEventListener('click', () => {
       this.startGame();
@@ -157,6 +159,11 @@ class ColourMatrix {
         this.scoreMultiplier = 3;
         this.visibilityDelay = 1200;
         break;
+      default:
+        this.fieldSize = 4;
+        this.aciveBlocksNumber = 2;
+        this.scoreMultiplier = 2.2;
+        break;
     }
   }
 
@@ -180,16 +187,16 @@ class ColourMatrix {
     this.answersCount = 0;
     const gameButtons = this.gameBlocks.container.querySelectorAll('.game-button');
     const activeButtons = this.randomElements();
-    gameButtons.forEach((item) => item.style.pointerEvents = 'none');
+    gameButtons.forEach((item) => item.classList.add('no-clicks'));
     setTimeout(() => {
       activeButtons.forEach((item) => {
         gameButtons[item].classList.add('active');
         gameButtons[item].classList.add('color-block');
       });
-    }, 1000);
+    }, this.delay);
     setTimeout(() => {
       gameButtons.forEach((item) => {
-        item.style.pointerEvents = 'all';
+        item.classList.remove('no-clicks');
         if (item.classList.contains('active')) {
           item.classList.remove('color-block');
         }
@@ -218,7 +225,6 @@ class ColourMatrix {
     if (block.classList.contains('active')) {
       this.answersCount += 1;
       block.classList.add('color-block');
-      block.style.pointerEvents = 'none';
     }
   }
 
@@ -249,6 +255,6 @@ class ColourMatrix {
   getGameInstance() {
     const game = new ColourMatrix();
     this.node = game.init();
-    return this.node;
+    return game;
   }
 }
