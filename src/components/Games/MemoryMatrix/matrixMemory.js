@@ -11,17 +11,22 @@ class ColourMatrix {
     this.score = 0;
     this.visibilityDelay = 2000;
     this.node = null;
+    this.gameBlocks = {
+      container: null,
+      gameField: null,
+    };
   }
 
   createField = () => {
-    const fieldContainer = this.createElementFactory('div', null, 'field-container', null, null, null);
-    const mainField = this.createElementFactory('div', null, 'field-main', null, null, null);
-    fieldContainer.appendChild(this.createGameHeader());
-    fieldContainer.appendChild(mainField);
-    fieldContainer.appendChild(this.createElementFactory('button', null, 'game-start-button', null, null, 'Game Start'));
-    this.createGamesblocks(mainField);
-    this.listenersHandlers(fieldContainer);
-    return fieldContainer;
+    this.gameBlocks.container = this.createElementFactory('div', null, 'field-container', null, null, null);
+    this.gameBlocks.gameField = this.createElementFactory('div', null, 'field-main', null, null, null);
+    console.log(this.gameBlocks.gameField);
+    this.gameBlocks.container.appendChild(this.createGameHeader());
+    this.gameBlocks.container.appendChild(this.gameBlocks.gameField);
+    this.gameBlocks.container.appendChild(this.createElementFactory('button', null, 'game-start-button', null, null, 'Game Start'));
+    this.createGamesblocks(this.gameBlocks.gameField);
+    this.listenersHandlers(this.gameBlocks.container);
+    return this.gameBlocks.container;
   }
 
   createGameHeader = () => {
@@ -74,8 +79,7 @@ class ColourMatrix {
     overlayContainer.appendChild(restartGame);
     overlay.appendChild(overlayContainer);
     restartGame.addEventListener('click', () => {
-      const fieldContainer = document.querySelector('.field-container');
-      fieldContainer.removeChild(overlay);
+      this.gameBlocks.container.removeChild(overlay);
       this.resetFlags();
       this.startGame();
     });
@@ -93,7 +97,7 @@ class ColourMatrix {
     this.lives = 3;
     this.score = 0;
     this.visibilityDelay = 2000;
-    document.querySelector('.field-main').style.width = `${40}%`;
+    this.gameBlocks.gameField.style.width = `${40}%`;
   }
 
   listenersHandlers(fieldContainer) {
@@ -103,7 +107,7 @@ class ColourMatrix {
       this.startGame();
       gameStartButton.textContent = 'Finish';
     });
-    field.addEventListener('click', (e) => {
+    this.gameBlocks.gameField.addEventListener('click', (e) => {
       const guessBlock = e.target.closest('.game-button');
       if (guessBlock) {
         this.checkAnswer(guessBlock);
@@ -116,13 +120,13 @@ class ColourMatrix {
       case 3:
         this.fieldSize = 6;
         this.aciveBlocksNumber = 2;
-        document.querySelector('.field-main').style.width = `${50}%`;
+        this.gameBlocks.gameField.style.width = `${50}%`;
         this.scoreMultiplier = 1.5;
         break;
       case 6:
         this.fieldSize = 9;
         this.aciveBlocksNumber = 3;
-        document.querySelector('.field-main').style.width = `${50}%`;
+        this.gameBlocks.gameField.style.width = `${50}%`;
         this.scoreMultiplier = 1.7;
         break;
       case 9:
@@ -131,7 +135,7 @@ class ColourMatrix {
         this.scoreMultiplier = 1.7;
         break;
       case 12:
-        document.querySelector('.field-main').style.width = `${70}%`;
+        this.gameBlocks.gameField.style.width = `${70}%`;
         this.fieldSize = 12;
         this.aciveBlocksNumber = 4;
         this.scoreMultiplier = 2;
@@ -139,7 +143,7 @@ class ColourMatrix {
       case 16:
         this.fieldSize = 18;
         this.aciveBlocksNumber = 4;
-        document.querySelector('.field-main').style.width = `${100}%`;
+        this.gameBlocks.gameField.style.width = `${100}%`;
         this.scoreMultiplier = 2.2;
         this.visibilityDelay = 1700;
         break;
@@ -157,7 +161,7 @@ class ColourMatrix {
   }
 
   randomElements() {
-    const gameButtons = document.querySelectorAll('.game-button');
+    const gameButtons = this.gameBlocks.container.querySelectorAll('.game-button');
     const numbersCollection = new Set();
     while (numbersCollection.size < this.aciveBlocksNumber) {
       numbersCollection.add(Math.floor(Math.random() * gameButtons.length));
@@ -166,15 +170,15 @@ class ColourMatrix {
   }
 
   startGame() {
-    const lives = document.querySelector('.lives-count');
-    const mainField = document.querySelector('.field-main');
+    const lives = this.gameBlocks.container.querySelector('.lives-count');
+    const mainField = this.gameBlocks.container.querySelector('.field-main');
     lives.textContent = this.lives;
     this.difficultyLevelHandler();
-    const levelCount = document.querySelector('.level-count');
+    const levelCount = this.gameBlocks.container.querySelector('.level-count');
     levelCount.textContent = this.correctAnswers + 1;
     this.createGamesblocks(mainField);
     this.answersCount = 0;
-    const gameButtons = document.querySelectorAll('.game-button');
+    const gameButtons = this.gameBlocks.container.querySelectorAll('.game-button');
     const activeButtons = this.randomElements();
     gameButtons.forEach((item) => item.style.pointerEvents = 'none');
     setTimeout(() => {
@@ -194,7 +198,7 @@ class ColourMatrix {
   }
 
   checkAnswer(block) {
-    const score = document.querySelector('.score-count');
+    const score = this.gameBlocks.container.querySelector('.score-count');
     this.correctAnswerhandler(block);
     this.wrongAnswerhandler(block);
     if (this.answersCount === this.aciveBlocksNumber) {
@@ -202,7 +206,7 @@ class ColourMatrix {
       this.correctAnswers += 1;
       score.textContent = this.score;
       setTimeout(() => {
-        document.querySelectorAll('.game-button').forEach((item) => item.style.backgroundColor = 'white');
+        this.gameBlocks.container.querySelectorAll('.game-button').forEach((item) => item.style.backgroundColor = 'white');
       }, 1000);
       setTimeout(() => {
         this.startGame();
@@ -225,9 +229,8 @@ class ColourMatrix {
       lives.textContent = this.lives;
     }
     if (this.lives === 0) {
-      const fieldContainer = document.querySelector('.field-container');
       const overlay = this.createOverlay();
-      fieldContainer.appendChild(overlay);
+      this.gameBlocks.container.appendChild(overlay);
     }
   }
 
