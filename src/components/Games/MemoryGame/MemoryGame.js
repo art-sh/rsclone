@@ -1,5 +1,5 @@
-import { cardsArray } from './js/cardsArray';
-import './css/style.scss';
+import cardsArray from './js/cardsArray';
+import './scss/style.scss';
 
 export default class MemoryGame {
   constructor(app, size) {

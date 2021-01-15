@@ -1,54 +1,55 @@
-const path = require('path');
+import Mixin from '@helpers/Mixin';
 
-const getFullPath = (currentPath) => path.resolve(__dirname, `../${currentPath}`);
-
-export const cardsArray = [
+const imagesCollection = Mixin.handleWebpackImport(require.context('../img', true, /\.png/));
+const cardsArray = [
   {
     name: 'shell',
-    img: getFullPath('img/blueshell.png'),
+    img: imagesCollection.blueshell,
   },
   {
     name: 'star',
-    img: getFullPath('img/star.png'),
+    img: imagesCollection.star,
   },
   {
     name: 'bobomb',
-    img: getFullPath('img/bobomb.png'),
+    img: imagesCollection.bobomb,
   },
   {
     name: 'mario',
-    img: getFullPath('img/mario.png'),
+    img: imagesCollection.mario,
   },
   {
     name: 'luigi',
-    img: getFullPath('img/luigi.png'),
+    img: imagesCollection.luigi,
   },
   {
     name: 'peach',
-    img: getFullPath('img/peach.png'),
+    img: imagesCollection.peach,
   },
   {
     name: '1up',
-    img: getFullPath('img/1up.png'),
+    img: imagesCollection['1up'],
   },
   {
     name: 'mushroom',
-    img: getFullPath('img/mushroom.png'),
+    img: imagesCollection.mushroom,
   },
   {
     name: 'thwomp',
-    img: getFullPath('img/thwomp.png'),
+    img: imagesCollection.thwomp,
   },
   {
     name: 'bulletbill',
-    img: getFullPath('img/bulletbill.png'),
+    img: imagesCollection.bulletbill,
   },
   {
     name: 'coin',
-    img: getFullPath('img/coin.png'),
+    img: imagesCollection.coin,
   },
   {
     name: 'goomba',
-    img: getFullPath('img/goomba.png'),
+    img: imagesCollection.goomba,
   },
 ];
+
+export default cardsArray;
