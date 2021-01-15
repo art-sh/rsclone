@@ -6,6 +6,7 @@ import Mixin from './helpers/Mixin';
 import Render from './components/Render/Render';
 import Router from './components/Router';
 import Storage from './components/Storage';
+import MemoryGame from './components/Games/MemoryGame/MemoryGame';
 
 class App {
   constructor() {
@@ -22,6 +23,7 @@ class App {
     this.storage.init(this.config);
     this.render.init(this.config);
 
+    new MemoryGame(this);
     console.log(this);
   }
 }

@@ -9,7 +9,7 @@ export default {
   },
   games: {
     memoryGame: {
-      id: 'MemoryGame'
-    }
-  }
+      id: 'MemoryGame',
+    },
+  },
 };
