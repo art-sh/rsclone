@@ -1,4 +1,3 @@
-import Mixin from '@helpers/Mixin';
 import Header from './components/Header/Header';
 import Content from './components/Content/Content';
 
@@ -20,21 +19,19 @@ export default class Render {
   init(config) {
     this.$config = config;
 
-    this.elements.app.append(this.elements.header.getNode());
-
-    this.setContentListeners();
+    this.elements.header.init();
+    this.elements.content.init();
   }
 
-  setContentListeners() {
-    Mixin.listen(this.$config.events.routeChange, (e) => {
-      const eventData = e.detail;
-      if (!eventData) return;
+  renderPage(controller, action = null) {
+    if (!controller) return;
 
-      if (eventData.route.controller === 'game') {
-        this.elements.content.setContent('game');
-      } else if (eventData.route.controller === 'welcome') {
-        this.elements.content.setContent('welcome');
-      }
-    });
+    if (controller === 'game') {
+      this.elements.content.setContent('game');
+    } else if (controller === 'welcome') {
+      this.elements.content.setContent('welcome');
+    }
+
+    console.log(action);
   }
 }

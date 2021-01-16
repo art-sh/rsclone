@@ -9,10 +9,17 @@ export default class Content {
     this.$appContainer = appContainer;
 
     this.node = null;
+    this.elements = {};
     this.templates = {
       game: templateGame,
       welcome: templateWelcome,
     };
+  }
+
+  init() {
+    this.node = document.createElement('div');
+
+    this.$appContainer.append(this.node);
   }
 
   getNode(template) {
@@ -25,18 +32,42 @@ export default class Content {
   setContent(contentType) {
     const newNode = this.getNode(this.templates[contentType]) || '';
 
-    if (this.node) {
-      this.node.replaceWith(newNode);
-    } else {
-      this.$appContainer.append(newNode);
-    }
+    this.node.replaceWith(newNode);
 
     this.node = newNode;
-    console.log(this.node);
-    this.setContentListeners(contentType);
+    this.elements = this.getNodeElements(newNode, contentType);
+
+    this.setContentListeners(newNode, contentType);
   }
 
   setContentListeners() {
     //
+  }
+
+  getNodeElements(node, type) {
+    if (type === 'game') {
+      return {
+        node,
+        title: node.querySelector('.game-title'),
+        stats: {
+          score: node.querySelector('.game-status__state-score'),
+          time: node.querySelector('.game-status__state-time'),
+          icons: node.querySelector('.game-status__item-stats'),
+        },
+        game: {
+          box: node.querySelector('.game-box'),
+          finishBtn: node.querySelector('.game-finish'),
+        },
+        templates: {
+          star: node.querySelector('#game-stats-star'),
+        },
+      };
+    }
+
+    return {};
+  }
+
+  getContentElements() {
+    return this.elements;
   }
 }
