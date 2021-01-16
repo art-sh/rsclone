@@ -24,21 +24,17 @@ export default class MemoryGame {
     this.selected = document.querySelectorAll('.selected');
   }
 
-  // 1 - game board append
   getGameNode() {
     const game = document.createElement('div');
     game.setAttribute('id', 'memory-game');
     const section = document.createElement('section');
     section.setAttribute('class', 'memory__grid');
     section.addEventListener('click', (event) => this.flipCard(event));
-
     const panel = document.createElement('div');
     panel.setAttribute('class', 'memory__panel');
-
     const timer = document.createElement('div');
     timer.insertAdjacentHTML('afterBegin', '<span>Time:</span>');
     timer.insertAdjacentHTML('beforeEnd', '<span id="timer">00:00</span>');
-
     const score = document.createElement('div');
     score.insertAdjacentHTML('afterBegin', '<span>Score:</span>');
     score.insertAdjacentHTML('beforeEnd', '<span id="score">0</span>');
@@ -48,7 +44,6 @@ export default class MemoryGame {
     return game;
   }
 
-  // 2 - cards append to game
   createCards(size) {
     const resizedArray = cardsArray
       .sort(() => 0.5 - Math.random())
@@ -78,23 +73,17 @@ export default class MemoryGame {
   flipCard(event) {
     const clicked = event.target;
 
-    // didn't count falsy clicks
     if (clicked.nodeName === 'SECTION'
       || clicked === this.previousClick
       || clicked.parentNode.classList.contains('selected')) {
       return;
     }
-    // to start Timer
     if (!this.isGameActive) {
       this.isGameActive = true;
       this.updateTimer();
     }
-
-    // check 2 cards for match
     if (this.guess < 2) {
       this.guess += 1;
-
-      // flip chosen cards
       if (this.guess === 1) {
         this.firstGuess = clicked.parentNode.dataset.name;
         clicked.parentNode.classList.add('selected');
@@ -102,12 +91,7 @@ export default class MemoryGame {
         this.secondGuess = clicked.parentNode.dataset.name;
         clicked.parentNode.classList.add('selected');
       }
-
-      // if matches - add .match and reset, if not matches - just reset
-      if (this.firstGuess !== '' && this.secondGuess !== '') {
-        this.validateAndCount();
-      }
-
+      if (this.firstGuess !== '' && this.secondGuess !== '') this.validateAndCount();
       this.previousClick = clicked;
     }
   }
@@ -129,7 +113,6 @@ export default class MemoryGame {
     }
   }
 
-  //  check for matches
   match() {
     this.selected.forEach((card) => card.classList.add('match'));
   }
@@ -143,12 +126,12 @@ export default class MemoryGame {
 
   checkIfWin() {
     if (this.win === this.size) {
-      console.log('you are won for', this.timer, this.score); // ----------------------- POP UP should be here
+      console.log('you are won for', this.timer, this.score);
       this.destroyGameInstance();
       this.size += this.step;
       setTimeout(() => {
         if (this.win === cardsArray.length) {
-          console.log('FINISH GAME'); // ------------------------------------------------- POP UP should be here
+          console.log('FINISH GAME');
         } else {
           this.getGameInstance(this.size);
         }
