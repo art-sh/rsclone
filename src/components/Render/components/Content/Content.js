@@ -8,7 +8,7 @@ export default class Content {
     this.$app = app;
     this.$appContainer = appContainer;
 
-    this.node = null;
+    this.elementContent = null;
     this.elements = {};
     this.templates = {
       game: templateGame,
@@ -17,27 +17,27 @@ export default class Content {
   }
 
   init() {
-    this.node = document.createElement('div');
+    this.elementContent = document.createElement('div');
 
-    this.$appContainer.append(this.node);
+    this.$appContainer.append(this.elementContent);
   }
 
   getNode(template) {
-    const node = document.createElement('div');
-    node.append(Mixin.parseHTML(template));
+    const newContentElement = document.createElement('div');
+    newContentElement.append(Mixin.parseHTML(template));
 
-    return node.firstChild;
+    return newContentElement.firstChild;
   }
 
   setContent(contentType) {
-    const newNode = this.getNode(this.templates[contentType]) || '';
+    const newContentElement = this.getNode(this.templates[contentType]) || '';
 
-    this.node.replaceWith(newNode);
+    this.elementContent.replaceWith(newContentElement);
 
-    this.node = newNode;
-    this.elements = this.getNodeElements(newNode, contentType);
+    this.elementContent = newContentElement;
+    this.elements = this.getNodeElements(newContentElement, contentType);
 
-    this.setContentListeners(newNode, contentType);
+    this.setContentListeners(newContentElement, contentType);
   }
 
   setContentListeners() {
