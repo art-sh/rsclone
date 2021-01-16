@@ -48,7 +48,7 @@ const Mixin = {
   },
   parseHTML(template) {
     const node = document.createElement('template');
-    node.innerHTML = template;
+    node.innerHTML = template.trim();
 
     return node.content.cloneNode(true);
   },
