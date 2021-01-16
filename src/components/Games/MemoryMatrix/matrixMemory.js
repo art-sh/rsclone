@@ -1,8 +1,9 @@
 import './css/style.scss';
 import Mixin from '../../../helpers/Mixin';
-
 export default class ColourMatrix {
-  constructor() {
+  constructor(config, elements) {
+    this.gameConfig = config;
+    this.elements = elements;
     this.fieldSize = 4;
     this.aciveBlocksNumber = 2;
     this.answersCount = 0;
@@ -13,6 +14,7 @@ export default class ColourMatrix {
     this.lives = 3;
     this.score = 0;
     this.visibilityDelay = 2000;
+    this.startGameDelay = 2000;
     this.delay = 1000;
     this.node = null;
     this.gameBlocks = {
@@ -21,7 +23,12 @@ export default class ColourMatrix {
     };
   }
 
-  createField = () => {
+  init() {
+    const field = this.createField();
+    return field;
+  }
+
+  createField() {
     this.gameBlocks.container = this.createElementFactory('div', null, 'field-container', null, null, null);
     this.gameBlocks.gameField = this.createElementFactory('div', null, 'field-main', null, null, null);
     this.gameBlocks.container.appendChild(this.createGameHeader());
@@ -32,7 +39,7 @@ export default class ColourMatrix {
     return this.gameBlocks.container;
   }
 
-  createGameHeader = () => {
+  createGameHeader() {
     const headerWrapper = this.createElementFactory('div', null, 'header-wrapper', null, null, null);
     const header = this.createElementFactory('div', null, 'header', null, null, null);
     const livesContainer = this.createElementFactory('div', null, 'lives-container', null, null, null);
@@ -214,10 +221,10 @@ export default class ColourMatrix {
       score.textContent = this.score;
       setTimeout(() => {
         this.gameBlocks.container.querySelectorAll('.game-button').forEach((item) => item.style.backgroundColor = 'white');
-      }, 1000);
+      }, this.delay);
       setTimeout(() => {
         this.startGame();
-      }, 2000);
+      }, this.startGameDelay);
     }
   }
 
@@ -242,19 +249,12 @@ export default class ColourMatrix {
 
   endGameHandler() {
     Mixin.dispatch(this.$app.config.events.gameEnd, {
-      game: 'Colour Matrix',
-      summary: this.score,
+      gameId: this.gameConfig.games.matrixMemoryGame.id,
+      score: this.score,
     });
   }
 
-  init() {
-    const field = this.createField();
-    return field;
-  }
-
-  getGameInstance() {
-    const game = new ColourMatrix();
-    this.node = game.init();
-    return game;
+  getGameInstance(config, elements) {
+    return  new ColourMatrix(config, elements);
   }
 }

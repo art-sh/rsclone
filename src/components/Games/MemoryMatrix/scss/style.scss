@@ -40,7 +40,11 @@
           transition-duration: 0.6s;
           border-radius: 0.8rem;
           outline: none;
-
+          &.color-block {
+            background-color: rebeccapurple !important;
+            transition: 0.4s;
+            pointer-events: none;
+          }
           &:hover {
               cursor: pointer;
               box-shadow: 0px 0px 5px black;
@@ -59,8 +63,4 @@
 .no-clicks {
   pointer-events: none;
 }
-.color-block {
-  background-color: rebeccapurple !important;
-  transition: 0.4s;
-  pointer-events: none;
-}
+
