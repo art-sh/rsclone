@@ -19,8 +19,6 @@ export default class Router {
   setHashChangeListener() {
     window.addEventListener(this.$app.config.events.hashChange, () => {
       this.handleCurrentRoute(window.location.hash.slice(2));
-
-      document.dispatchEvent(new Event(this.$app.config.events.routeChange));
     });
   }
 
@@ -30,6 +28,13 @@ export default class Router {
     document.title = Mixin.uppercaseFirstLetter(action || controller || 'Brain wars');
 
     this.$controller.handleRoute(controller, action);
+
+    Mixin.dispatch(this.$app.config.events.routeChange, {
+      route: {
+        controller,
+        action,
+      },
+    });
   }
 
   navigate(newRoute) {
