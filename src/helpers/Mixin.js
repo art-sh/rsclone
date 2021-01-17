@@ -49,10 +49,10 @@ const Mixin = {
     document.dispatchEvent(new CustomEvent(event, props));
   },
   parseHTML(template) {
-    const node = document.createElement('template');
-    node.innerHTML = template;
+    const templateElement = document.createElement('template');
+    templateElement.innerHTML = template.trim();
 
-    return node.content.cloneNode(true);
+    return templateElement.content.cloneNode(true);
   },
   handleWebpackImport(requireFunction) {
     const out = {};
