@@ -1,5 +1,6 @@
-import './css/style.scss';
+import './scss/style.scss';
 import Mixin from '../../../helpers/Mixin';
+
 export default class ColourMatrix {
   constructor(config, elements) {
     this.gameConfig = config;
@@ -56,14 +57,14 @@ export default class ColourMatrix {
     return headerWrapper;
   }
 
-  createGamesblocks = (mainField) => {
+  createGamesblocks(mainField) {
     mainField.innerHTML = '';
     for (let i = 1; i <= this.fieldSize; i += 1) {
       mainField.appendChild(this.createElementFactory('div', i, 'game-button', null, null, null));
     }
   }
 
-  createElementFactory = (elem, id, classSelec, attr, attrValue, textContent) => {
+  createElementFactory(elem, id, classSelec, attr, attrValue, textContent) {
     const element = document.createElement(elem);
     if (id) {
       element.setAttribute('id', id);
@@ -126,6 +127,10 @@ export default class ColourMatrix {
 
   difficultyLevelHandler() {
     switch (this.correctAnswers) {
+      case 1:
+      case 2:
+        this.fieldSize = 4;
+        break;
       case 3:
         this.fieldSize = 6;
         this.aciveBlocksNumber = 2;
@@ -167,9 +172,8 @@ export default class ColourMatrix {
         this.visibilityDelay = 1200;
         break;
       default:
-        this.fieldSize = 4;
-        this.aciveBlocksNumber = 2;
-        this.scoreMultiplier = 2.2;
+        this.visibilityDelay = 1100;
+        this.scoreMultiplier = 4;
         break;
     }
   }
@@ -220,7 +224,7 @@ export default class ColourMatrix {
       this.correctAnswers += 1;
       score.textContent = this.score;
       setTimeout(() => {
-        this.gameBlocks.container.querySelectorAll('.game-button').forEach((item) => item.style.backgroundColor = 'white');
+        this.gameBlocks.container.querySelectorAll('.game-button').forEach((item) => { item.style.backgroundColor = 'white'; });
       }, this.delay);
       setTimeout(() => {
         this.startGame();
@@ -255,6 +259,6 @@ export default class ColourMatrix {
   }
 
   getGameInstance(config, elements) {
-    return  new ColourMatrix(config, elements);
+    return new ColourMatrix(config, elements);
   }
 }
