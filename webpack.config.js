@@ -50,6 +50,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: `assets/js/app${isProd ? '~[hash]' : ''}.js`,
+    publicPath: '/',
   },
   resolve: {
     alias: {

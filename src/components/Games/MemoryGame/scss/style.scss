@@ -9,7 +9,7 @@ body {
   padding: 5px;
 }
 
-.memory__grid {
+#memory-game {
   max-width: 320px;
   margin: 0 auto 10px;
   display: flex;
@@ -18,7 +18,7 @@ body {
 
   .card {
     position: relative;
-    transition: all .4s linear;
+    transition: all .25s linear;
     transform-style: preserve-3d;
     margin: 3px;
     height: 65px;
@@ -45,19 +45,16 @@ body {
       background-position: center center;
     }
 
-    .selected {
+    &.selected {
       transform: rotateY(180deg);
     }
 
-    .match .back {
-      background: transparent;
+    &.match {
+      pointer-events: none;
+
+      .back {
+        background: transparent;
+      }
     }
   }
-}
-
-.memory__panel {
-  max-width: 300px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
 }
