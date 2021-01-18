@@ -11,19 +11,19 @@ html {
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Amatic SC', cursive;
 }
 
 h1 {
   text-align: center;
-  font-size: 10rem;
+  font-size: 5rem;
   line-height: 1;
   margin-bottom: 0;
 }
 
 .score {
   background: rgba(255,255,255,0.2);
-  padding: 0 3rem;
+  padding: 0 1rem;
+  margin-left: 1rem;
   line-height: 1;
   border-radius: 1rem;
 }
@@ -36,12 +36,11 @@ button {
   background-color: black;
   color: #fff;
   font-size: 2em;
-  font-family: 'Amatic SC', cursive;
+  cursor: pointer;
 }
 
-.game {
+.gameBoard {
   width: 600px;
-  height: 400px;
   display: flex;
   flex-wrap: wrap;
   margin: 0 auto;
@@ -51,6 +50,7 @@ button {
   flex: 1 0 33.33%;
   overflow: hidden;
   position: relative;
+  height: 20rem;
 }
 
 .hole:after {
