@@ -37,7 +37,7 @@ export default class Content {
     this.elementContent = newContentElement;
     this.elements = this.getNodeElements(newContentElement, contentType);
 
-    this.setContentListeners(newContentElement, contentType);
+    this.setContentListeners(this.elements, contentType);
   }
 
   setContentListeners() {

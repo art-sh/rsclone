@@ -50,12 +50,14 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: `assets/js/app${isProd ? '~[hash]' : ''}.js`,
+    publicPath: '/',
   },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
       '@assets': path.resolve(__dirname, 'src/assets'),
       '@helpers': path.resolve(__dirname, 'src/helpers'),
+      '@games': path.resolve(__dirname, 'src/components/Games'),
     },
   },
   devServer: {

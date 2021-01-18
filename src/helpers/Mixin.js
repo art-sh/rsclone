@@ -1,3 +1,5 @@
+const path = require('path');
+
 const Mixin = {
   uppercaseFirstLetter(str) {
     return str[0].toUpperCase() + str.slice(1);
@@ -51,6 +53,17 @@ const Mixin = {
     templateElement.innerHTML = template.trim();
 
     return templateElement.content.cloneNode(true);
+  },
+  handleWebpackImport(requireFunction) {
+    const out = {};
+
+    requireFunction.keys().forEach((imagePath) => {
+      const module = requireFunction(imagePath);
+
+      out[path.basename(imagePath).split('.').shift()] = module.default;
+    });
+
+    return out;
   },
 };
 
