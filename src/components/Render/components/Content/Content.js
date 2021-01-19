@@ -1,4 +1,5 @@
 import Mixin from '@helpers/Mixin';
+import CharsAndNumbers from '../../../Games/charsAndNumbers/charsAndNumbers';
 
 const templateGame = require('./assets/templates/game.html');
 const templateWelcome = require('./assets/templates/welcome.html');
@@ -30,13 +31,15 @@ export default class Content {
   }
 
   setContent(contentType) {
+    contentType = 'game';
     const newContentElement = this.getNode(this.templates[contentType]) || '';
 
     this.elementContent.replaceWith(newContentElement);
 
     this.elementContent = newContentElement;
     this.elements = this.getNodeElements(newContentElement, contentType);
-
+    const game = new CharsAndNumbers().getGameInstance(this.$app.config, this.elements);
+    game.init();
     this.setContentListeners(newContentElement, contentType);
   }
 

@@ -2,7 +2,9 @@ import './scss/style.scss';
 import Mixin from '../../../helpers/Mixin';
 
 export default class CharsAndNumbers {
-  constructor() {
+  constructor(config, elements) {
+    this.config = config;
+    this.elements = elements;
     this.gameBlocks = {
       container: null,
       gameField: null,
@@ -32,14 +34,19 @@ export default class CharsAndNumbers {
     this.answer = null;
     this.guess = null;
     this.guessCount = 0;
+    this.answersCount = 0;
+    this.score = 0;
+    this.images = Mixin.handleWebpackImport(require.context('./assets/images', true, /\.svg/));
+    this.scoreMultipliyer = 1;
   }
 
   createField() {
+    this.elements.stats.score.textContent = 0;
     this.gameBlocks.container = this.createElementFactory('div', null, 'game-container', null, null, null);
     this.gameBlocks.gameField = this.createElementFactory('div', null, 'game-field', null, null, null);
     this.gameBlocks.noButton = this.createElementFactory('button', null, 'no-answer', null, null, 'NO');
-    const leftArrow = this.createElementFactory('img', null, 'left-arrow', 'src', './images/left-arrow.svg', null);
-    const rightArrow = this.createElementFactory('img', null, 'right-arrow', 'src', './images/right-arrow.svg', null);
+    const leftArrow = this.createElementFactory('img', null, 'left-arrow', 'src', `./${this.images.leftArrow}`, null);
+    const rightArrow = this.createElementFactory('img', null, 'right-arrow', 'src', `./${this.images.rightArrow}`, null);
     leftArrow.setAttribute('width', '30');
     leftArrow.setAttribute('height', '30');
     rightArrow.setAttribute('width', '30');
@@ -84,7 +91,7 @@ export default class CharsAndNumbers {
     return questionBlock;
   }
 
-  createElementFactory = (elem, id, classSelec, attr, attrValue, textContent) => {
+  createElementFactory(elem, id, classSelec, attr, attrValue, textContent) {
     const element = document.createElement(elem);
     if (id) {
       element.setAttribute('id', id);
@@ -141,6 +148,7 @@ export default class CharsAndNumbers {
       }
       this.checkGuess();
     });
+    document.addEventListener('keydown', this.keyboarArrowClickHandler.bind(this));
   }
 
   clearTextContent(first, second) {
@@ -149,10 +157,33 @@ export default class CharsAndNumbers {
   }
 
   difficultyHandler() {
+    if (this.answersCount >= 0 && this.answersCount < 5) {
+      this.difficulty = 5;
+    } else if (this.answersCount >= 5 && this.answersCount <= 10) {
+      this.difficulty = 4;
+      this.scoreMultipliyer = 1.6;
+    } else if (this.answersCount >= 10 && this.answersCount <= 15) {
+      this.difficulty = 3;
+      this.scoreMultipliyer = 2.5;
+    } else if (this.answersCount >= 16 && this.answersCount <= 20) {
+      this.difficulty = 2;
+      this.scoreMultipliyer = 2.5;
+    } else {
+      this.difficulty = 1;
+      this.scoreMultipliyer = 3;
+    }
+  }
 
+  keyboarArrowClickHandler(e) {
+    if (e.code === 'ArrowLeft') {
+      this.gameBlocks.noButton.click();
+    } else if (e.code === 'ArrowRight') {
+      this.gameBlocks.yesButton.click();
+    }
   }
 
   checkGuess() {
+    this.answersCount += 1;
     this.wrongAnswerHandler();
     this.correctAnswerHandler();
 
@@ -161,6 +192,7 @@ export default class CharsAndNumbers {
       this.containerIndex = +(!this.containerIndex);
       this.choseContentContainer();
       this.guessCount = 0;
+      this.difficultyHandler();
       this.addLevelContent();
     }
 
@@ -172,6 +204,8 @@ export default class CharsAndNumbers {
   correctAnswerHandler() {
     if (this.guess === this.answer) {
       this.guessCount += 1;
+      this.score += this.scoreMultipliyer * 20;
+      this.elements.stats.score.textContent = this.score;
       this.addLevelContent();
     }
   }
@@ -185,6 +219,10 @@ export default class CharsAndNumbers {
   }
 
   endGameHandler() {
+    Mixin.dispatch(this.$app.config.events.gameEnd, {
+      gameId: this.gameConfig.games.charsAndNumbersGame.id,
+      score: this.score,
+    });
     alert('GAME OVER');
   }
 
@@ -194,9 +232,18 @@ export default class CharsAndNumbers {
     this.addLevelContent();
   }
 
+  destroyGameInstance() {
+    document.removeEventListener('keydown', this.keyboarArrowClickHandler.bind(this));
+    this.elements.game.box.removeChild(this.gameBlocks.container);
+  }
+
+  getGameInstance(config, elements) {
+    return new CharsAndNumbers(config, elements);
+  }
+
   init() {
     this.createField();
-    document.body.appendChild(this.gameBlocks.container);
+    this.elements.game.box.appendChild(this.gameBlocks.container);
     this.startGame();
   }
 }

@@ -7,7 +7,7 @@
     width: 33rem;
     height: 33rem;
     border: 1px solid black;
-    .game-field { 
+    .game-field {
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
@@ -16,6 +16,14 @@
         width: 90%;
         height: 88%;
         border: 1px solid black;
+        .active {
+          .number-question {
+            color: black !important;
+          }
+          .char-question {
+            color: black !important;
+          }
+        }
         .number-question-block {
             display: flex;
             flex-direction: column;
@@ -25,9 +33,11 @@
             .number-question {
                 text-transform: uppercase;
                 font: bold normal 1.5rem/110% Arial, sans-serif;
+                color: gray;
             }
             .number-block-content {
                 width: 20%;
+                height: 40px;
                 text-align: center;
                 border-bottom: 1px solid red;
                 .number-first-content-item {
@@ -51,7 +61,9 @@
             .char-question {
                 text-transform: uppercase;
                 font: bold normal 1.5rem/110% Arial, sans-serif;
+                color: gray;
             }
+
             .char-block-content {
                 width: 20%;
                 height: 40px;
@@ -65,7 +77,7 @@
                 }
             }
         }
-        
+
     }
     .button-container {
         display: flex;
@@ -94,3 +106,5 @@
         }
     }
 }
+
+
