@@ -1,26 +1,22 @@
-//In order to advance through the levels of this game, the user will have to hit the target mole.
+// import './scss/style.scss';
 
 class WhackAMoleGame {
     constructor(config, elements) {
         // this.gameConfig = config;
-
         this.elements = elements;
         this.gameElement = null;
-
-        this.startBtn = null;
-        this.isStartBtnDisabled = false;
         this.holes = null;
         this.moles = null;
         this.lastHole = null;
         this.fieldSize = 9;
-        this.score = 0;
-        this.scoreToHTML = null;
+        this.totalScore = 0;
+        this.sessionScore = 0;
+        this.scoreToHTML = null; // выпилить при добавлении в проект
         this.isScoreCheat = false; // against repeated clicks on the mole
         this.timeUp = false; // to the end of the game
         this.sessionTime = 5000;
-        this.step = 5000;
-        this.timeId = null;
-        this.clear = null;
+        this.minTime = 900;
+        this.maxTime = 1000;
     }
 
     getGameNode() {
@@ -32,17 +28,14 @@ class WhackAMoleGame {
         title.textContent = 'Whack-a-mole!';
         title.insertAdjacentHTML('beforeEnd', `<span class="score">0</span>`);
 
-        const button = document.createElement('button');
-        button.textContent = 'Start';
-
-        game.append(title, button, this.createHoles());
+        game.append(title, this.createHoles(this.fieldSize));
         return game;
     }
 
-    createHoles() {
+    createHoles(size) {
         const gameBoard = document.createElement('div');
         gameBoard.setAttribute('class', 'gameBoard');
-        for (let i = 0; i < this.fieldSize; i += 1) {
+        for (let i = 0; i < size; i += 1) {
             const holeMole = this.buildHoleMole();
             gameBoard.append(holeMole);
         }
@@ -57,39 +50,43 @@ class WhackAMoleGame {
     }
 
     startGame() {
-        console.log('startGame');
-
+        this.sessionScore = 0;
         this.isScoreCheat = false;
-        this.isStartBtnDisabled = true;
-        this.checkStartBtn();
         this.timeUp = false;
-        this.showHideMoles(700, 1000);
-
-        this.clear = setTimeout(() => {
-            console.log('startGame, Timeout', this.score, this.sessionTime);
-
-            this.isStartBtnDisabled = false;
-            this.checkStartBtn();
-            this.timeUp = true;
-
-        }, this.sessionTime);
+        this.showHideMoles(this.minTime, this.maxTime);
+        setTimeout(() => this.timeUp = true, this.sessionTime);
     }
 
     levelUp() {
-        this.destroyGameInstance();
-        this.sessionTime += this.step;
-        this.startGame();
+        this.maxTime >= 100 ? this.maxTime -= 100 : this.maxTime = 100;
+        this.minTime >= 100 ? this.minTime -= 100 : this.minTime = 100;
+        this.sessionScore >= 3 ? this.startGame() : this.gameEnd();
     }
 
-    checkStartBtn() {
-        console.log('checkStartBtn');
+    showHideMoles(from, to) {
+        const randomTime = this.randomTime(from, to);
+        const randomHole = this.randomHole(this.holes);
+        randomHole.classList.add('up');
+        setTimeout(() => {
+            randomHole.classList.remove('up');
+            if (!this.timeUp) {
+                this.showHideMoles(from, to);
+                setTimeout(() => this.isScoreCheat = false, randomTime / 5);
+            } else {
+                this.levelUp();
+            }
+        }, randomTime);
+    }
 
-        if (this.isStartBtnDisabled) {
-            this.startBtn.disabled = true;
-            this.startBtn.style.cursor = 'default'
-        } else {
-            this.startBtn.disabled = false;
-            this.startBtn.style.cursor = 'pointer'
+    countScore(e) {
+        if (!e.isTrusted) return; // protected from cheat
+
+        if (!this.isScoreCheat) {
+            this.totalScore += 1;
+            this.sessionScore += 1;
+            this.moles.forEach(mole => mole.classList.remove('up'));
+            this.setScoreText(this.totalScore);
+            this.isScoreCheat = true;
         }
     }
 
@@ -100,38 +97,14 @@ class WhackAMoleGame {
     randomHole(holes) {
         const index = Math.floor(Math.random() * holes.length);
         const hole = holes[index];
-        if (hole === this.lastHole) {
-            return this.randomHole(this.holes);
-        }
+        if (hole === this.lastHole) return this.randomHole(this.holes);
         this.lastHole = hole;
         return hole;
     }
 
-    showHideMoles(from, to) {
-        const time = this.randomTime(from, to);
-        const hole = this.randomHole(this.holes);
-        hole.classList.add('up');
-        this.timeId = setTimeout(() => {
-            hole.classList.remove('up');
-            if (!this.timeUp) {
-                this.showHideMoles(from, to);
-                // against repeated clicks on the mole
-                setTimeout(() => {
-                    this.isScoreCheat = false;
-                }, time / 5);
-            }
-        }, time);
-    }
-
-    countScore(e) {
-        if (!e.isTrusted) return; // protected from cheat
-
-        if (!this.isScoreCheat) {
-            this.score += 1;
-            this.moles.forEach(mole => mole.classList.remove('up'));
-            this.scoreToHTML.textContent = this.score; // записывать в скор приложения
-            this.isScoreCheat = true;
-        }
+    setScoreText(string) {
+        this.scoreToHTML.textContent = string; // выпилить
+        // this.elements.stats.score.textContent = string.toString();
     }
 
     destroyGameInstance() {
@@ -140,32 +113,30 @@ class WhackAMoleGame {
     }
 
     gameEnd() {
-        clearTimeout(this.timeId);
-        this.isStartBtnDisabled = false;
         this.isScoreCheat = false;
         this.timeUp = false;
+        console.log('--------------------Game End'); // здесь будет модальное окно
 
-        return {
-            // game: this.gameConfig.id,
-            score: this.score,
-        };
+        // return Mixin.dispatch(this.gameConfig.events.gameEnd, {
+        //   game: this.gameConfig.id,
+        //   score: this.totalScore,
+        // });
     }
 
     queryNodes() {
         this.gameElement = document.querySelector('#whackAMole-game');
-        this.startBtn = document.querySelector('button');
         this.holes = document.querySelectorAll('.hole');
         this.moles = document.querySelectorAll('.mole');
-        this.scoreToHTML = document.querySelector('.score');
+        this.scoreToHTML = document.querySelector('.score'); // ВЫПИЛИТЬ
     }
 
     init() {
         document.body.append(this.getGameNode());
+        // this.elements.game.box.append(this.getGameNode());
         this.queryNodes();
-        this.startBtn.addEventListener('click', this.startGame.bind(this));
         this.moles.forEach(mole => mole.addEventListener('click', this.countScore.bind(this)));
-
-        console.log('init')
+        this.setScoreText(0);
+        this.startGame();
     }
 
     getGameInstance(root) {

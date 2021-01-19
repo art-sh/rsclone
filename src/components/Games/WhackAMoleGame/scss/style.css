@@ -1,7 +1,5 @@
 html {
   box-sizing: border-box;
-  font-size: 10px;
-  background: #ffc600;
 }
 
 *, *:before, *:after {
@@ -13,34 +11,8 @@ body {
   margin: 0;
 }
 
-h1 {
-  text-align: center;
-  font-size: 5rem;
-  line-height: 1;
-  margin-bottom: 0;
-}
-
-.score {
-  background: rgba(255,255,255,0.2);
-  padding: 0 1rem;
-  margin-left: 1rem;
-  line-height: 1;
-  border-radius: 1rem;
-}
-
-button {
-  display: block;
-  margin: 1em auto;
-  padding: 1em;
-  border-radius: 25%;
-  background-color: black;
-  color: #fff;
-  font-size: 2em;
-  cursor: pointer;
-}
-
 .gameBoard {
-  width: 600px;
+  max-width: 600px;
   display: flex;
   flex-wrap: wrap;
   margin: 0 auto;
@@ -50,7 +22,7 @@ button {
   flex: 1 0 33.33%;
   overflow: hidden;
   position: relative;
-  height: 20rem;
+  height: 200px;
 }
 
 .hole:after {
