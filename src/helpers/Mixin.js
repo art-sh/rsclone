@@ -49,10 +49,21 @@ const Mixin = {
     document.dispatchEvent(new CustomEvent(event, props));
   },
   parseHTML(template) {
-    const templateElement = document.createElement('template');
-    templateElement.innerHTML = template.trim();
+    const node = document.createElement('template');
+    node.innerHTML = template;
 
-    return templateElement.content.cloneNode(true);
+    return node.content.cloneNode(true);
+  },
+  handleWebpackImport(requireFunction) {
+    const out = {};
+
+    requireFunction.keys().forEach((imagePath) => {
+      const module = requireFunction(imagePath);
+
+      out[path.basename(imagePath).split('.').shift()] = module.default;
+    });
+
+    return out;
   },
   handleWebpackImport(requireFunction) {
     const out = {};
