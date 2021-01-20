@@ -41,13 +41,27 @@ export default class Content {
   }
 
   setContent(contentType) {
-    const newContentElement = this.getNode(this.templates[contentType]) || '';
-    this.elementContent.replaceWith(newContentElement);
+    if (window.getComputedStyle(this.elementContent).transition === 'all 0s ease 0s') this.elementContent.style.transition = 'opacity .5s ease-in-out';
 
-    this.elementContent = newContentElement;
-    this.elements = this.getNodeElements(newContentElement, contentType);
+    window.requestAnimationFrame(() => {
+      const newContentElement = this.getNode(this.templates[contentType]) || '';
 
-    this.setContentListeners(this.elements, contentType);
+      newContentElement.style.opacity = '0';
+      this.elementContent.style.opacity = '0';
+      this.elementContent.ontransitionend = () => {
+        this.elementContent.ontransitionend = null;
+        this.elementContent.replaceWith(newContentElement);
+        this.elementContent = newContentElement;
+
+        window.requestAnimationFrame(() => {
+          window.requestAnimationFrame(() => this.elementContent.removeAttribute('style'));
+
+          this.elements = this.getNodeElements(newContentElement, contentType);
+
+          this.setContentListeners(this.elements, contentType);
+        });
+      };
+    });
   }
 
   setContentListeners() {
