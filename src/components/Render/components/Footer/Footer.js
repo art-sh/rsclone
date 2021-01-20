@@ -3,17 +3,14 @@ import Mixin from '@helpers/Mixin';
 
 const template = require('./assets/template.html');
 
-export default class Header {
+export default class Footer {
   constructor(app, appContainer) {
     this.$app = app;
     this.$appContainer = appContainer;
 
     this.node = this.getNode();
-    this.elements = {
-      logo: this.node.querySelector('.logo'),
-    };
 
-    this.setHeaderListeners();
+    this.setFooterListeners();
   }
 
   init() {
@@ -21,13 +18,13 @@ export default class Header {
   }
 
   getNode() {
-    const node = document.createElement('header');
+    const node = document.createElement('footer');
     node.append(Mixin.parseHTML(template));
 
     return node.firstChild;
   }
 
-  setHeaderListeners() {
-    this.elements.logo.addEventListener('click', () => console.log('logo clicked'));
+  setFooterListeners() {
+
   }
 }

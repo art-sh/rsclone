@@ -2,6 +2,11 @@ import Mixin from '@helpers/Mixin';
 
 const templateGame = require('./assets/templates/game.html');
 const templateWelcome = require('./assets/templates/welcome.html');
+const templateGameList = require('./assets/templates/game-list.html');
+const templateSignIn = require('./assets/templates/sign-in.html');
+const templateSignUp = require('./assets/templates/sign-up.html');
+const templateProfile = require('./assets/templates/profile.html');
+const templateStatistic = require('./assets/templates/statistic.html');
 
 export default class Content {
   constructor(app, appContainer) {
@@ -13,6 +18,11 @@ export default class Content {
     this.templates = {
       game: templateGame,
       welcome: templateWelcome,
+      gameList: templateGameList,
+      signIn: templateSignIn,
+      signUp: templateSignUp,
+      profile: templateProfile,
+      statistic: templateStatistic,
     };
   }
 
@@ -24,6 +34,7 @@ export default class Content {
 
   getNode(template) {
     const newContentElement = document.createElement('div');
+
     newContentElement.append(Mixin.parseHTML(template));
 
     return newContentElement.firstChild;
@@ -31,7 +42,6 @@ export default class Content {
 
   setContent(contentType) {
     const newContentElement = this.getNode(this.templates[contentType]) || '';
-
     this.elementContent.replaceWith(newContentElement);
 
     this.elementContent = newContentElement;

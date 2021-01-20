@@ -1,0 +1,60 @@
+.header {
+  position: relative;
+  z-index: 2;
+}
+
+.main {
+  z-index: 2;
+  position: relative;
+  @media (max-width: 500px) {
+    position: static;
+  }
+}
+
+.footer {
+  z-index: 2;
+}
+
+.main-container:before {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 620px;
+  height: 493px;
+  background-image: url('@assets/img/vector-left-top.svg');
+  top: 0;
+  z-index: 1;
+  @media (max-width: 500px) {
+    display: none;
+  }
+}
+
+
+.main-container:after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 556px;
+  height: 329px;
+  background-image: url('@assets/img/vector-left-bottom.svg');
+  bottom: 0;
+  z-index: 1;
+  @media (max-width: 500px) {
+    display: none;
+  }
+}
+
+.header:after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 372px;
+  height: 774px;
+  background-image: url('@assets/img/vector-right-top.svg');
+  top: 0;
+  right: -40px;
+  z-index: 1;
+  @media (max-width: 500px) {
+    display: none;
+  }
+}

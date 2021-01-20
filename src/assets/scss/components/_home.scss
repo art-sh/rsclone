@@ -1,0 +1,112 @@
+.games {
+  margin-top: 40px;
+  margin-bottom: 100px;
+}
+
+.games__item {
+  background: #FDFDFD;
+  border-radius: 10px;
+  box-shadow: 0px 4px 4px rgba(133, 131, 131, 0.2);
+  display: flex;
+  padding: 20px 50px 25px 20px;
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 20px 25px 20px;
+  }
+
+  &_recommended {
+    margin-bottom: 25px;
+    @media (max-width: 960px) {
+      display: none;
+    }
+  }
+}
+
+.games__list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 25px;
+  @media (max-width: 960px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.games__img-frame {
+  width: 162px;
+  height: 167px;
+  margin-right: 20px;
+  @media (max-width: 500px) {
+    margin-bottom: 20px;
+  }
+}
+
+.games__item_recommended .games__img-frame {
+  width: 245px;
+  height: 225px;
+  margin-right: 30px;
+}
+
+.games__img {
+  width: 162px;
+  height: 167px;
+  object-fit: contain;
+  object-position: bottom;
+}
+
+.games__item_recommended .games__img{
+  width: 245px;
+  height: 225px;
+}
+
+.games__info {
+  @media (max-width: 500px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.games__title {
+  font-family: Acrom, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 135%;
+  text-transform: capitalize;
+  color: #472B83;
+  margin-bottom: 15px;
+}
+
+.games__item_recommended .games__title{
+  font-size: 36px;
+}
+
+.games__p {
+  font-family: Acrom, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 135%;
+  text-transform: capitalize;
+  color: #333;
+}
+
+.games__item_recommended .games__p{
+  font-size: 18px;
+}
+
+.games__desc {
+  margin-bottom: 25px;
+  max-height: 55px;
+  overflow: hidden;
+
+  @media (max-width: 500px) {
+    text-align: center;
+  }
+}
+
+.games__item_recommended .games__desc{
+  max-height: 100px;
+}
