@@ -36,8 +36,11 @@ export default class CharsAndNumbers {
     this.guessCount = 0;
     this.answersCount = 0;
     this.score = 0;
-    this.images = Mixin.handleWebpackImport(require.context('./assets/images', true, /\.svg/));
+    this.images = Mixin.handleWebpackImport(require.context('./assets/img', true, /\.svg|.jpg/));
     this.scoreMultipliyer = 1;
+    this.timerInterval = 1000;
+    this.currentTimeSeconds = 0;
+    this.currentTimeInterval = 0;
   }
 
   createField() {
@@ -140,15 +143,17 @@ export default class CharsAndNumbers {
 
   listenersHandler() {
     this.gameBlocks.buttonWrapper.addEventListener('click', (e) => {
-      const target = e.target.textContent;
-      if (target === 'YES') {
+      const target = e.target.closest('button');
+      if (!target) return;
+      if (target.textContent === 'YES') {
         this.guess = true;
-      } else if (target === 'NO') {
+      } else if (target.textContent === 'NO') {
         this.guess = false;
       }
       this.checkGuess();
     });
     document.addEventListener('keydown', this.keyboarArrowClickHandler.bind(this));
+    this.elements.game.finishBtn.addEventListener('click', this.endGameHandler.bind(this));
   }
 
   clearTextContent(first, second) {
@@ -186,7 +191,7 @@ export default class CharsAndNumbers {
     this.answersCount += 1;
     this.wrongAnswerHandler();
     this.correctAnswerHandler();
-
+    this.addLevelContent();
     if (this.guessCount % this.difficulty === 0 && this.guessCount !== 0) {
       this.clearTextContent(this.choosenContainer.firstContent, this.choosenContainer.secondContent);
       this.containerIndex = +(!this.containerIndex);
@@ -206,7 +211,6 @@ export default class CharsAndNumbers {
       this.guessCount += 1;
       this.score += this.scoreMultipliyer * 20;
       this.elements.stats.score.textContent = this.score;
-      this.addLevelContent();
     }
   }
 
@@ -214,16 +218,40 @@ export default class CharsAndNumbers {
     if (this.guess !== this.answer) {
       this.guessCount += 1;
       this.lives -= 1;
-      this.addLevelContent();
     }
   }
 
+  updateTimer() {
+    this.currentTimeSeconds = 80;
+    this.currentTimeInterval = setInterval(() => {
+      // if (!this.isGameActive) return;
+
+      const min = Math.floor(this.currentTimeSeconds / 60);
+      const sec = this.currentTimeSeconds % 60;
+
+      this.currentTimeSeconds -= 1;
+      this.setTimeText(`${this.addZero(min)}:${this.addZero(sec)}`);
+      if (min === 0 && sec === 0) {
+        this.endGameHandler();
+      }
+    }, this.timerInterval);
+  }
+
+  setTimeText(string) {
+    this.elements.stats.time.textContent = string.toString();
+  }
+
+  addZero(num) {
+    return num.toString().padStart(2, '0');
+  }
+
   endGameHandler() {
+    clearInterval(this.currentTimeInterval);
+    alert('GAME OVER');
     Mixin.dispatch(this.$app.config.events.gameEnd, {
-      gameId: this.gameConfig.games.charsAndNumbersGame.id,
+      gameId: this.config.games.charsAndNumbersGame.id,
       score: this.score,
     });
-    alert('GAME OVER');
   }
 
   startGame() {
@@ -233,6 +261,7 @@ export default class CharsAndNumbers {
   }
 
   destroyGameInstance() {
+    clearInterval(this.currentTimeInterval);
     document.removeEventListener('keydown', this.keyboarArrowClickHandler.bind(this));
     this.elements.game.box.removeChild(this.gameBlocks.container);
   }
@@ -242,6 +271,8 @@ export default class CharsAndNumbers {
   }
 
   init() {
+    this.setTimeText(`${this.addZero(1)}:${this.addZero(20)}`);
+    this.updateTimer();
     this.createField();
     this.elements.game.box.appendChild(this.gameBlocks.container);
     this.startGame();

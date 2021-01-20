@@ -4,18 +4,20 @@
     justify-content: space-evenly;
     align-items: center;
     flex: 1;
-    width: 33rem;
-    height: 33rem;
+    width: 42rem;
+    height: 22rem;
     border: 1px solid black;
+    background-image: url('../assets/img/background.jpg');
+    background-position: center;
+    background-size: cover;
     .game-field {
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
-        align-items: center;
-        width: 100%;
-        width: 90%;
+        align-items: center;;
+        width: 56%;
         height: 88%;
-        border: 1px solid black;
+
         .active {
           .number-question {
             color: black !important;
@@ -39,7 +41,6 @@
                 width: 20%;
                 height: 40px;
                 text-align: center;
-                border-bottom: 1px solid red;
                 .number-first-content-item {
                     font: normal normal 2rem/110% Arial, sans-serif;
                 }
@@ -68,7 +69,6 @@
                 width: 20%;
                 height: 40px;
                 text-align: center;
-                border-bottom: 1px solid red;
                 .char-first-content-item {
                     font: normal normal 2rem/110% Arial, sans-serif;
                 }
@@ -84,21 +84,23 @@
         justify-content: space-evenly;
         align-items: center;
         width: 70%;
-        height: 7%;
+        height: 15%;
         & > button {
             display: flex;
             flex-direction: row-reverse;
             align-items: center;
             justify-content: space-around;
             width: 30%;
-            height: 100%;
+            height: 90%;
             outline: none;
             border-radius: 10px;
             border: none;
+            font: bold normal 1rem/110% Arial, sans-serif;
+            background-color: brown;
             &:hover {
                 cursor: pointer;
                 transition: 0.4s;
-                transform: scale(1.05);
+                transform: scale(1.03);
             }
         }
         .yes-answer {
