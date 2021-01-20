@@ -20,6 +20,7 @@ export default class Controller {
 
   handleRoute(controller, action) {
     if (!this.isCurrentUserHaveAccess(controller, action)) return this.$router.navigate('welcome');
+
     this.$render.renderPage(controller, action);
   }
 

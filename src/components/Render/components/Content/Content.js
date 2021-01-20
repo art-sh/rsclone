@@ -34,6 +34,7 @@ export default class Content {
 
   getNode(template) {
     const newContentElement = document.createElement('div');
+
     newContentElement.append(Mixin.parseHTML(template));
 
     return newContentElement.firstChild;
