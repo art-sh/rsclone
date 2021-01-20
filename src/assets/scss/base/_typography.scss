@@ -1,31 +1,31 @@
 @font-face {
   font-family: 'Acrom';
-  src: url("../../../../../brainwars-css/frontend/assets/fonts/Acrom-Regular.woff2") format("woff2"),
-  url("../../../../../brainwars-css/frontend/assets/fonts/Acrom-Regular.woff") format("woff");
+  src: url('@assets/fonts/Acrom-Regular.woff2') format("woff2"),
+  url('@assets/fonts/Acrom-Regular.woff') format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Acrom';
-  src: url("../../../../../brainwars-css/frontend/assets/fonts/Acrom-Medium.woff2") format("woff2"),
-  url("../../../../../brainwars-css/frontend/assets/fonts/Acrom-Medium.woff") format("woff");
+  src: url('@assets/fonts/Acrom-Medium.woff2') format("woff2"),
+  url('@assets/fonts/Acrom-Medium.woff') format("woff");
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Acrom';
-  src: url('../../../../../brainwars-css/frontend/assets/fonts/Acrom-Bold.woff2') format('woff2'),
-  url('../../../../../brainwars-css/frontend/assets/fonts/Acrom-Bold.woff') format('woff');
+  src: url('@assets/fonts/Acrom-Bold.woff2') format('woff2'),
+  url('@assets/fonts/Acrom-Bold.woff') format('woff');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Acrom';
-  src: url('../../../../../brainwars-css/frontend/assets/fonts/Acrom-Thin.woff2') format('woff2'),
-  url('../../../../../brainwars-css/frontend/assets/fonts/Acrom-Thin.woff') format('woff');
+  src: url('@assets/fonts/Acrom-Thin.woff2') format('woff2'),
+  url('@assets/fonts/Acrom-Thin.woff') format('woff');
   font-weight: 250;
   font-style: normal;
 }

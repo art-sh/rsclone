@@ -21,7 +21,7 @@
   position: absolute;
   width: 620px;
   height: 493px;
-  background-image: url("../../../../../brainwars-css/frontend/assets/images/vector-left-top.svg");
+  background-image: url('@assets/img/vector-left-top.svg');
   top: 0;
   z-index: 1;
   @media (max-width: 500px) {
@@ -36,7 +36,7 @@
   position: absolute;
   width: 556px;
   height: 329px;
-  background-image: url("../../../../../brainwars-css/frontend/assets/images/vector-left-bottom.svg");
+  background-image: url('@assets/img/vector-left-bottom.svg');
   bottom: 0;
   z-index: 1;
   @media (max-width: 500px) {
@@ -50,7 +50,7 @@
   position: absolute;
   width: 372px;
   height: 774px;
-  background-image: url("../../../../../brainwars-css/frontend/assets/images/vector-right-top.svg");
+  background-image: url('@assets/img/vector-right-top.svg');
   top: 0;
   right: -40px;
   z-index: 1;
