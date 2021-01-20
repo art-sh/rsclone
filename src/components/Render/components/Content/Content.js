@@ -1,5 +1,4 @@
 import Mixin from '@helpers/Mixin';
-import MemoryMatrix from '../../../Games/MemoryMatrix/matrixMemory';
 
 const templateGame = require('./assets/templates/game.html');
 const templateWelcome = require('./assets/templates/welcome.html');
@@ -31,17 +30,12 @@ export default class Content {
   }
 
   setContent(contentType) {
-    contentType = 'game';
     const newContentElement = this.getNode(this.templates[contentType]) || '';
 
     this.elementContent.replaceWith(newContentElement);
 
     this.elementContent = newContentElement;
     this.elements = this.getNodeElements(newContentElement, contentType);
-
-    const game = new MemoryMatrix().getGameInstance(this.$app.config, this.elements);
-    game.memoryMatrix.init();
-    game.memoryMatrix.startGame();
 
     this.setContentListeners(newContentElement, contentType);
   }
