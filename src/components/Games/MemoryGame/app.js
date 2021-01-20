@@ -188,8 +188,8 @@ export default class MemoryGame {
     //
   }
 
-  getGameInstance(root) {
-    const app = new MemoryGame(root, 6);
+  getGameInstance(root, elements) {
+    const app = new MemoryGame(root, 6, elements);
     app.init();
     return app;
   }

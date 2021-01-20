@@ -40,15 +40,13 @@ export default class Content {
     return newContentElement.firstChild;
   }
 
-  setContent(contentType) {
-    if (window.getComputedStyle(this.elementContent).transition === 'all 0s ease 0s') this.elementContent.style.transition = 'opacity .5s ease-in-out';
+  setContent(contentType, cb = null) {
+    const contentStyles = window.getComputedStyle(this.elementContent);
+    if (contentStyles.transition === 'all 0s ease 0s') this.elementContent.style.transition = 'opacity .5s ease-in-out';
 
     window.requestAnimationFrame(() => {
       const newContentElement = this.getNode(this.templates[contentType]) || '';
-
-      newContentElement.style.opacity = '0';
-      this.elementContent.style.opacity = '0';
-      this.elementContent.ontransitionend = () => {
+      const handler = () => {
         this.elementContent.ontransitionend = null;
         this.elementContent.replaceWith(newContentElement);
         this.elementContent = newContentElement;
@@ -59,8 +57,19 @@ export default class Content {
           this.elements = this.getNodeElements(newContentElement, contentType);
 
           this.setContentListeners(this.elements, contentType);
+
+          cb && cb(this);
         });
       };
+
+      newContentElement.style.opacity = '0';
+      this.elementContent.style.opacity = '0';
+
+      if (+contentStyles.opacity) {
+        this.elementContent.ontransitionend = handler;
+      } else {
+        handler();
+      }
     });
   }
 

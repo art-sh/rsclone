@@ -1,7 +1,7 @@
 import './scss/style.scss';
 import Mixin from '../../../helpers/Mixin';
 
-export default class ColourMatrix {
+export default class MemoryMatrix {
   constructor(config, elements) {
     this.audioCollection = Mixin.handleWebpackImport(require.context('./assets/audio', true, /\.mp3/));
     this.gameConfig = config;
@@ -262,7 +262,7 @@ export default class ColourMatrix {
 
   endGameHandler() {
     Mixin.dispatch(this.$app.config.events.gameEnd, {
-      gameId: this.gameConfig.games.matrixMemoryGame.id,
+      gameId: this.gameConfig.games.memoryMatrix.id,
       score: this.score,
     });
   }
@@ -273,6 +273,6 @@ export default class ColourMatrix {
   }
 
   getGameInstance(config, elements) {
-    return new ColourMatrix(config, elements);
+    return new MemoryMatrix(config, elements);
   }
 }

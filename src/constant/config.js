@@ -6,9 +6,10 @@ export default {
   events: {
     hashChange: 'hashchange',
     routeChange: 'route-change',
+    gameEnd: 'game-end',
   },
   games: {
-    matrixMemoryGame: {
+    memoryMatrix: {
       name: 'Matrix Memory',
       id: 'matrix-memory',
       description: 'The “Memory Matrix” simulator will make it easier to absorb new material, work with pronunciation and memorize grammar rules. What is more you will develop logical and analytical skills.',
