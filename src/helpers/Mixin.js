@@ -65,6 +65,17 @@ const Mixin = {
 
     return out;
   },
+  handleWebpackImport(requireFunction) {
+    const out = {};
+
+    requireFunction.keys().forEach((imagePath) => {
+      const module = requireFunction(imagePath);
+
+      out[path.basename(imagePath).split('.').shift()] = module.default;
+    });
+
+    return out;
+  },
 };
 
 export default Mixin;

@@ -1,0 +1,68 @@
+.footer {
+  background-color: #2A1851;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
+}
+
+.rs-logo {
+  @media (max-width: 600px) {
+    margin-bottom: 15px;
+  }
+}
+
+.authors {
+  @media (max-width: 600px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.authors__link {
+  font-family: Acrom, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 13px;
+  text-decoration-line: underline;
+  color: #f9f9f9;
+  transition-duration: 300ms;
+
+  svg path {
+    fill: #f9f9f9;
+    transition-duration: 300ms;
+  }
+
+  &:hover {
+    color: #FFBD59;
+    svg path {
+      fill: #FFBD59;
+      transition-duration: 300ms;
+    }
+  }
+}
+
+.authors__item {
+
+  margin-bottom: 7px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.authors__link {
+  display: flex;
+  align-items: center;
+}
+
+.authots__name {
+  margin-right: 5px;
+}
