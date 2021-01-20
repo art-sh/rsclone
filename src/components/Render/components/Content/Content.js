@@ -41,7 +41,6 @@ export default class Content {
 
   setContent(contentType) {
     const newContentElement = this.getNode(this.templates[contentType]) || '';
-    console.log(contentType);
     this.elementContent.replaceWith(newContentElement);
 
     this.elementContent = newContentElement;
