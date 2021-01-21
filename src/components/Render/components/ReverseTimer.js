@@ -10,15 +10,14 @@ export default class ReverseTimer {
 
   initTimer(time, container, endGameMethod, interval = 1000) {
     this.timerInterval = interval;
-    console.log(Mixin);
     this.currentTimeSeconds = time;
     this.currentTimeInterval = setInterval(() => {
       const min = Math.floor(this.currentTimeSeconds / 60);
       const sec = this.currentTimeSeconds % 60;
-
       this.currentTimeSeconds -= 1;
       this.setTimeText(`${this.addZero(min)}:${this.addZero(sec)}`, container);
       if (min === 0 && sec === 0) {
+        clearInterval(this.currentTimeInterval);
         endGameMethod();
       }
     }, this.timerInterval);
