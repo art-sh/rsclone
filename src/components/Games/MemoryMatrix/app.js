@@ -17,7 +17,7 @@ export default class MemoryMatrix {
     this.lives = ['*', '*', '*'];
     this.score = 0;
     this.visibilityDelay = 2000;
-    this.startGameDelay = 2000;
+    this.startGameDelay = 1500;
     this.delay = 1000;
     this.audioDelay = 200;
     this.gameBlocks = {
@@ -25,6 +25,8 @@ export default class MemoryMatrix {
       gameField: null,
     };
     this.timer = new ReverseTimer(this.gameConfig);
+    this.isGameEnd = false;
+    this.isGameStart = false;
   }
 
   init() {
@@ -103,6 +105,7 @@ export default class MemoryMatrix {
     this.visibilityDelay = 2000;
     this.gameBlocks.gameField.style.width = `${40}%`;
     this.elements.stats.score.textContent = 0;
+    this.isGameStart = false;
   }
 
   listenersHandlers() {
@@ -173,8 +176,12 @@ export default class MemoryMatrix {
 
   startGame() {
     const mainField = this.gameBlocks.container.querySelector('.matrix-memory-container__main');
-    this.timer.initTimer(80, this.elements.stats.time, this.endGameHandler);
 
+    if (!this.isGameStart) {
+      console.log('tiemr');
+      this.timer.initTimer(10, this.elements.stats.time, this.endGameHandler.bind(this));
+    }
+    this.isGameStart = true;
     this.difficultyLevelHandler();
     this.createGamesblocks(mainField);
 
@@ -201,19 +208,22 @@ export default class MemoryMatrix {
   checkAnswer(block) {
     this.correctAnswerhandler(block);
     this.wrongAnswerhandler(block);
-    if (this.answersCount === this.aciveBlocksNumber) {
+    if (this.answersCount === this.aciveBlocksNumber && !this.isGameEnd) {
       this.score += this.scoreMultiplier * 20;
       this.correctAnswers += 1;
       this.elements.stats.score.textContent = this.score;
       this.blockOrApproveClicksHandler('block');
+
       setTimeout(() => {
         this.audioHandler('right');
       }, this.audioDelay);
       setTimeout(() => {
+        this.gameBlocks.container.style.opacity = '0';
         this.gameBlocks.container.querySelectorAll('.matrix-memory-game-button').forEach((item) => { item.style.backgroundColor = 'white'; });
       }, this.delay);
       setTimeout(() => {
         this.startGame();
+        this.gameBlocks.container.style.opacity = '1';
       }, this.startGameDelay);
     }
   }
@@ -244,14 +254,18 @@ export default class MemoryMatrix {
       this.audioHandler('wrong');
     }
     if (this.elements.stats.icons.children.length === 0) {
+      clearInterval(this.timer.currentTimeInterval);
       const overlay = this.createOverlay();
       this.gameBlocks.container.appendChild(overlay);
     }
   }
 
   endGameHandler() {
-    Mixin.dispatch(this.gameConfig.events.gameEnd, {
-      gameId: this.gameConfig.games.memoryMatrix.id,
+    this.isGameEnd = true;
+    this.isGameStart = false;
+    alert(this.score);
+    Mixin.dispatch(this.gameConfig.config.events.gameEnd, {
+      gameId: this.gameConfig.config.games.memoryMatrix.id,
       score: this.score,
     });
   }
