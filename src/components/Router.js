@@ -40,4 +40,8 @@ export default class Router {
   navigate(newRoute) {
     window.location.hash = `#/${newRoute}`;
   }
+
+  setPath(path) {
+    window.location.pathname = path;
+  }
 }

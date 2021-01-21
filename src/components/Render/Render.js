@@ -1,5 +1,11 @@
+import MemoryGame from '@games/MemoryGame/app';
+import MemoryMatrix from '@games/MemoryMatrix/app';
+
+import Mixin from '@helpers/Mixin';
+
 import Header from './components/Header/Header';
 import Content from './components/Content/Content';
+import Footer from './components/Footer/Footer';
 
 export default class Render {
   constructor(app) {
@@ -12,26 +18,61 @@ export default class Render {
       app: appContainer,
       header: new Header(this.$app, appContainer),
       content: new Content(this.$app, appContainer),
-      footer: null,
+      footer: new Footer(this.$app, appContainer),
     };
+    this.gameInstance = null;
+    this.games = {};
   }
 
   init(config) {
     this.$config = config;
 
+    this.games[this.$config.games.memoryGame.id] = MemoryGame;
+    this.games[this.$config.games.memoryMatrix.id] = MemoryMatrix;
+
     this.elements.header.init();
     this.elements.content.init();
+    this.elements.footer.init();
+
+    this.setListeners();
   }
 
   renderPage(controller, action = null) {
     if (!controller) return;
 
     if (controller === 'game') {
-      this.elements.content.setContent('game');
+      const cb = (content) => {
+        this.loadGame(action, content.getContentElements());
+      };
+
+      this.elements.content.setContent('game', cb);
     } else if (controller === 'welcome') {
       this.elements.content.setContent('welcome');
+    } else if (controller === 'game-list') {
+      this.elements.content.setContent('gameList');
+    } else if (controller === 'sign-in') {
+      this.elements.content.setContent('signIn');
+    } else if (controller === 'sign-up') {
+      this.elements.content.setContent('signUp');
+    } else if (controller === 'profile') {
+      this.elements.content.setContent('profile');
+    } else if (controller === 'statistic') {
+      this.elements.content.setContent('statistic');
     }
+  }
 
-    console.log(action);
+  loadGame(id, contentElements) {
+    if (!this.games[id]) return this.$app.router.navigate('game-list');
+
+    const gameInstance = new this.games[id]();
+    this.gameInstance = gameInstance.getGameInstance(this.$app, contentElements);
+    this.gameInstance.init();
+    this.gameInstance.startGame();
+  }
+
+  setListeners() {
+    Mixin.listen(this.$config.events.routeChange, () => {
+      if (this.gameInstance) this.gameInstance.destroyGameInstance();
+    });
   }
 }

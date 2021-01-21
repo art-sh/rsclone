@@ -1,0 +1,56 @@
+.game-title {
+  font-family: Acrom, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 43px;
+  letter-spacing: 0.015em;
+  text-transform: capitalize;
+  margin-top: 40px;
+  text-align: center;
+  margin-bottom: 11px;
+  @media (max-width: 500px) {
+    font-size: 24px;
+  }
+}
+
+.game-status {
+  margin-bottom: 20px;
+}
+
+.game-status__item {
+  margin-bottom: 12px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.game-status__title {
+  font-family: Acrom, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 19px;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.game-status__state {
+  font-family: monospace;
+  font-size: 16px;
+  line-height: 21px;
+}
+
+.game-box {
+  max-width: 800px;
+  min-height: 350px;
+  margin: auto;
+  background-color: #f9f9f9;
+  margin-bottom: 40px;
+}
+
+.game-finish {
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 74px;
+}

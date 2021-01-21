@@ -1,0 +1,66 @@
+.form_sign-up {
+  margin-top: 30px;
+  position: relative;
+  z-index: 10;
+}
+
+.form__title {
+  font-family: Acrom, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 28px;
+  line-height: 1.2;
+  letter-spacing: 0.015em;
+  color: #F9F9F9;
+  margin-bottom: 4px;
+}
+
+.form__link {
+  display: block;
+  font-family: Acrom, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 13px;
+  text-decoration-line: underline;
+  color: #F9F9F9;
+  margin-bottom: 20px;
+}
+
+.form__field {
+  position: relative;
+  margin-bottom: 27px;
+  &:last-of-type {
+    margin-bottom: 35px;
+  }
+}
+
+.form__input {
+  background: #F9F9F9;
+  border: 1px solid #6175C0;
+  box-sizing: border-box;
+  font-family: Acrom, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 1.2;
+  color: #888888;
+  padding: 6px 10px;
+  width: 300px;
+  display: block;
+
+  @media (max-width: 600px) {
+    width: 250px;
+  }
+}
+
+.form__error {
+  position: absolute;
+  top: 33px;
+  font-family: Acrom, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 1.2;
+  color: #EB6AA4;
+}

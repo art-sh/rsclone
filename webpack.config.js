@@ -57,6 +57,7 @@ module.exports = {
       '@': path.resolve(__dirname, 'src'),
       '@assets': path.resolve(__dirname, 'src/assets'),
       '@helpers': path.resolve(__dirname, 'src/helpers'),
+      '@games': path.resolve(__dirname, 'src/components/Games'),
     },
   },
   devServer: {
@@ -135,6 +136,7 @@ module.exports = {
     }),
     new ESLintPlugin({
       threads: true,
+      // fix: true,
     }),
   ],
 };

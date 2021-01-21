@@ -21,7 +21,7 @@ export default class Header {
   }
 
   getNode() {
-    const node = document.createElement('div');
+    const node = document.createElement('header');
     node.append(Mixin.parseHTML(template));
 
     return node.firstChild;

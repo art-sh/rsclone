@@ -1,3 +1,128 @@
-.logo {
-  color: green;
+.header {
+  background-color: #472B83;
+  padding-top: 22px;
+  padding-bottom: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+
+.menu__list{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.menu__item {
+  margin-right: 46px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  @media (max-width: 500px) {
+    margin-right: 0;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+}
+
+.menu__link {
+  color: #f9f9f9;
+  font-family: Acrom, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0.015em;
+  text-decoration: none;
+  @media (max-width: 500px) {
+    font-size: 20px;
+
+    svg {
+      display: none;
+    }
+  }
+}
+
+.menu__mobile-text {
+  display: none;
+
+  @media (max-width: 500px) {
+    display: block;
+  }
+}
+
+@media (max-width: 500px) {
+  .menu__list {
+    display: none; // hidden!!!!!!!!!
+    align-items: center;
+    position: absolute;
+    top: 83px;
+    background-color: #472B83;
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    left: 0;
+    z-index: 3000;
+    justify-content: flex-start;
+    padding-top: 20px;
+  }
+
+  .burger {
+    display: inline-block;
+    position: relative;
+    width: 28px;
+    height: 20px;
+    margin-left: auto;
+    cursor: pointer;
+
+    & span {
+      display: block;
+      position: absolute;
+      width: 100%;
+      opacity: 1;
+      left: 0;
+      transform: rotate(0deg);
+      transition: .25s ease-in-out;
+      height: 3px;
+      background-color: #f9f9f9;
+
+
+      &:nth-child(1) {
+        top: 0;
+      }
+
+      &:nth-child(2), &:nth-child(3) {
+        top: 8px;
+      }
+
+      &:nth-child(4) {
+        top: 16px;
+      }
+    }
+  }
+
+  .burger.active {
+    & span:nth-child(1) {
+      top: 8px;
+      width: 0%;
+      left: 50%;
+    }
+
+    & span:nth-child(2) {
+      transform: rotate(45deg);
+    }
+
+    & span:nth-child(3) {
+      transform: rotate(-45deg);
+    }
+
+    & span:nth-child(4) {
+      top: 8px;
+      width: 0%;
+      left: 50%;
+    }
+  }
+}
+
