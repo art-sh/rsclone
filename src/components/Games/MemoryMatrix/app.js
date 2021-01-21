@@ -1,5 +1,6 @@
 import './scss/style.scss';
 import Mixin from '../../../helpers/Mixin';
+// import ReverseTimer from '../../Render/reverseTimer';
 
 export default class MemoryMatrix {
   constructor(config, elements) {
@@ -13,7 +14,7 @@ export default class MemoryMatrix {
     this.currentLevel = 1;
     this.currentScore = 0;
     this.scoreMultiplier = 1;
-    this.lives = 3;
+    this.lives = ['*', '*', '*'];
     this.score = 0;
     this.visibilityDelay = 2000;
     this.startGameDelay = 2000;
@@ -23,6 +24,7 @@ export default class MemoryMatrix {
       container: null,
       gameField: null,
     };
+    // this.timer = new ReverseTimer(this.gameConfig);
   }
 
   init() {
@@ -32,38 +34,26 @@ export default class MemoryMatrix {
     return field;
   }
 
+  createLivesIcons() {
+    this.lives.forEach(() => {
+      this.elements.stats.icons.appendChild(this.elements.templates.star.content.cloneNode(true));
+    });
+  }
+
   createField() {
-    this.gameBlocks.container = this.createElementFactory('div', null, 'field-container', null, null, null);
-    this.gameBlocks.gameField = this.createElementFactory('div', null, 'field-main', null, null, null);
-    this.gameBlocks.container.appendChild(this.createGameHeader());
+    this.gameBlocks.container = this.createElementFactory('div', null, 'matrix-memory-container', null, null, null);
+    this.gameBlocks.gameField = this.createElementFactory('div', null, 'matrix-memory-container__main', null, null, null);
     this.gameBlocks.container.appendChild(this.gameBlocks.gameField);
-    // this.gameBlocks.container.appendChild(this.createElementFactory('button', null, 'game-start-button', null, null, 'Game Start'));
+    this.createLivesIcons();
     this.createGamesblocks(this.gameBlocks.gameField);
     this.listenersHandlers(this.gameBlocks.container);
     return this.gameBlocks.container;
   }
 
-  createGameHeader() {
-    const headerWrapper = this.createElementFactory('div', null, 'header-wrapper', null, null, null);
-    const header = this.createElementFactory('div', null, 'header', null, null, null);
-    const livesContainer = this.createElementFactory('div', null, 'lives-container', null, null, null);
-    // const scoreContainer = this.createElementFactory('div', null, 'score-container', null, null, null);
-    const levelContainer = this.createElementFactory('div', null, 'level-container', null, null, null);
-    livesContainer.appendChild(this.createElementFactory('span', null, 'lives', null, null, 'Lives:'));
-    livesContainer.appendChild(this.createElementFactory('span', null, 'lives-count', null, null, `${this.lives}`));
-    // scoreContainer.appendChild(this.createElementFactory('span', null, 'score-count', null, null, `${this.currentScore}`));
-    levelContainer.appendChild(this.createElementFactory('span', null, 'level', null, null, 'Level:'));
-    levelContainer.appendChild(this.createElementFactory('span', null, 'level-count', null, null, `${this.currentLevel}`));
-    // this.elements.stats.score.appendChild(this.createElementFactory('span', null, 'score-count', null, null, `${this.currentScore}`));
-    header.append(livesContainer, levelContainer);
-    headerWrapper.appendChild(header);
-    return headerWrapper;
-  }
-
   createGamesblocks(mainField) {
     mainField.innerHTML = '';
     for (let i = 1; i <= this.fieldSize; i += 1) {
-      mainField.appendChild(this.createElementFactory('div', i, 'game-button', null, null, null));
+      mainField.appendChild(this.createElementFactory('div', i, 'matrix-memory-game-button', null, null, null));
     }
   }
 
@@ -97,6 +87,7 @@ export default class MemoryMatrix {
       this.resetFlags();
       this.startGame();
     });
+    restartGame.addEventListener('click', this.createLivesIcons.bind(this));
     return overlay;
   }
 
@@ -108,7 +99,6 @@ export default class MemoryMatrix {
     this.currentLevel = 1;
     this.currentScore = 0;
     this.scoreMultiplier = 1;
-    this.lives = 3;
     this.score = 0;
     this.visibilityDelay = 2000;
     this.gameBlocks.gameField.style.width = `${40}%`;
@@ -116,13 +106,13 @@ export default class MemoryMatrix {
   }
 
   listenersHandlers() {
-    this.gameBlocks.gameField.addEventListener('click', (e) => {
-      const guessBlock = e.target.closest('.game-button');
+    this.elements.game.box.addEventListener('click', (e) => {
+      const guessBlock = e.target.closest('.matrix-memory-game-button');
       if (guessBlock) {
         this.checkAnswer(guessBlock);
       }
     });
-    this.elements.game.finishBtn.addEventListener('click', this.destroyGameInstance.bind(this));
+    this.elements.game.finishBtn.addEventListener('click', this.createOverlay.bind(this));
   }
 
   difficultyLevelHandler() {
@@ -164,7 +154,7 @@ export default class MemoryMatrix {
   }
 
   randomElements() {
-    const gameButtons = this.gameBlocks.container.querySelectorAll('.game-button');
+    const gameButtons = this.gameBlocks.container.querySelectorAll('.matrix-memory-game-button');
     const numbersCollection = new Set();
     while (numbersCollection.size < this.aciveBlocksNumber) {
       numbersCollection.add(Math.floor(Math.random() * gameButtons.length));
@@ -173,7 +163,7 @@ export default class MemoryMatrix {
   }
 
   blockOrApproveClicksHandler(type = 'block') {
-    const gameButtons = this.gameBlocks.container.querySelectorAll('.game-button');
+    const gameButtons = this.gameBlocks.container.querySelectorAll('.matrix-memory-game-button');
     if (type === 'block') {
       gameButtons.forEach((item) => item.classList.add('no-clicks'));
     } else {
@@ -182,15 +172,14 @@ export default class MemoryMatrix {
   }
 
   startGame() {
-    const lives = this.gameBlocks.container.querySelector('.lives-count');
-    const mainField = this.gameBlocks.container.querySelector('.field-main');
-    lives.textContent = this.lives;
+    const mainField = this.gameBlocks.container.querySelector('.matrix-memory-container__main');
+    // this.timer.initTimer(5, this.elements.stats.time, this.endGameHandler);
+
     this.difficultyLevelHandler();
-    const levelCount = this.gameBlocks.container.querySelector('.level-count');
-    levelCount.textContent = this.correctAnswers + 1;
     this.createGamesblocks(mainField);
+
     this.answersCount = 0;
-    const gameButtons = this.gameBlocks.container.querySelectorAll('.game-button');
+    const gameButtons = this.gameBlocks.container.querySelectorAll('.matrix-memory-game-button');
     const activeButtons = this.randomElements();
     this.blockOrApproveClicksHandler();
     setTimeout(() => {
@@ -221,7 +210,7 @@ export default class MemoryMatrix {
         this.audioHandler('right');
       }, this.audioDelay);
       setTimeout(() => {
-        this.gameBlocks.container.querySelectorAll('.game-button').forEach((item) => { item.style.backgroundColor = 'white'; });
+        this.gameBlocks.container.querySelectorAll('.matrix-memory-game-button').forEach((item) => { item.style.backgroundColor = 'white'; });
       }, this.delay);
       setTimeout(() => {
         this.startGame();
@@ -248,20 +237,20 @@ export default class MemoryMatrix {
   }
 
   wrongAnswerhandler(block) {
-    const lives = document.querySelector('.lives-count');
+    const live = this.elements.stats.icons.querySelector('.game-status_custom');
+
     if (!block.classList.contains('active')) {
-      this.lives -= 1;
-      lives.textContent = this.lives;
+      this.elements.stats.icons.removeChild(live);
       this.audioHandler('wrong');
     }
-    if (this.lives === 0) {
+    if (this.elements.stats.icons.children.length === 0) {
       const overlay = this.createOverlay();
       this.gameBlocks.container.appendChild(overlay);
     }
   }
 
   endGameHandler() {
-    Mixin.dispatch(this.$app.config.events.gameEnd, {
+    Mixin.dispatch(this.gameConfig.events.gameEnd, {
       gameId: this.gameConfig.games.memoryMatrix.id,
       score: this.score,
     });
