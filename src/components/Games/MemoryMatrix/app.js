@@ -1,6 +1,6 @@
 import './scss/style.scss';
 import Mixin from '../../../helpers/Mixin';
-// import ReverseTimer from '../../Render/reverseTimer';
+import ReverseTimer from '../../Render/components/ReverseTimer';
 
 export default class MemoryMatrix {
   constructor(config, elements) {
@@ -24,7 +24,7 @@ export default class MemoryMatrix {
       container: null,
       gameField: null,
     };
-    // this.timer = new ReverseTimer(this.gameConfig);
+    this.timer = new ReverseTimer(this.gameConfig);
   }
 
   init() {
@@ -173,7 +173,7 @@ export default class MemoryMatrix {
 
   startGame() {
     const mainField = this.gameBlocks.container.querySelector('.matrix-memory-container__main');
-    // this.timer.initTimer(5, this.elements.stats.time, this.endGameHandler);
+    this.timer.initTimer(80, this.elements.stats.time, this.endGameHandler);
 
     this.difficultyLevelHandler();
     this.createGamesblocks(mainField);
