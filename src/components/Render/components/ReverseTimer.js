@@ -1,5 +1,3 @@
-import Mixin from '../../../helpers/Mixin';
-
 export default class ReverseTimer {
   constructor(config) {
     this.currentTimeSeconds = 0;
@@ -10,7 +8,6 @@ export default class ReverseTimer {
 
   initTimer(time, container, endGameMethod, interval = 1000) {
     this.timerInterval = interval;
-    console.log(Mixin)
     this.currentTimeSeconds = time;
     this.currentTimeInterval = setInterval(() => {
       const min = Math.floor(this.currentTimeSeconds / 60);
