@@ -6,6 +6,7 @@ export default {
   events: {
     hashChange: 'hashchange',
     routeChange: 'route-change',
+    gameStart: 'game-start',
     gameEnd: 'game-end',
   },
   games: {

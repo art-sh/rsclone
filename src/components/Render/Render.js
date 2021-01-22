@@ -66,7 +66,6 @@ export default class Render {
 
     const gameInstance = new this.games[id]();
     this.gameInstance = gameInstance.getGameInstance(this.$app, contentElements);
-    this.gameInstance.init();
     this.gameInstance.startGame();
   }
 
