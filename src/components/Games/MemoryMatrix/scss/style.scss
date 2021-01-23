@@ -1,4 +1,4 @@
-.field-container {
+.matrix-memory-container {
   .overlay {
       position: absolute;
       top: 0;
@@ -18,18 +18,14 @@
   align-items: center;
   width: 20rem;
   height: 20rem;
-
-  .field-main {
+  margin: 0 auto;
+  transition: 0.5s;
+  &__main {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
       width: 40%;
-
-      .header {
-          display: flex;
-      }
-
-      .game-button {
+      .matrix-memory-game-button {
           width: 3rem;
           height: 3rem;
           margin: 0.1rem;
@@ -40,12 +36,12 @@
           border-radius: 0.8rem;
           outline: none;
           &.color-block {
-            background-color: rebeccapurple !important;
+            background-color: blue !important;
             transition: 0.4s;
             pointer-events: none;
           }
           &:hover {
-              cursor: pointer;
+              cursor: pointer ;
               box-shadow: 0px 0px 5px black;
           }
       }
@@ -63,3 +59,7 @@
   pointer-events: none;
 }
 
+.game-stats-star {
+  width: 40px;
+  height: 40px;
+}

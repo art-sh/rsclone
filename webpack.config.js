@@ -136,7 +136,7 @@ module.exports = {
     }),
     new ESLintPlugin({
       threads: true,
-      // fix: true,
+      fix: true,
     }),
   ],
 };
