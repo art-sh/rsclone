@@ -116,7 +116,6 @@ export default class MemoryMatrix {
         this.checkAnswer(guessBlock);
       }
     });
-    this.elements.game.finishBtn.addEventListener('click', this.createOverlay.bind(this));
   }
 
   difficultyLevelHandler() {
@@ -267,8 +266,11 @@ export default class MemoryMatrix {
   }
 
   destroyGameInstance() {
+    clearInterval(this.timer.timerInterval);
     this.elements.game.box.removeChild(this.gameBlocks.container);
     this.elements.stats.score.innerText = '';
+    this.elements.stats.time.innerText = '';
+    this.elements.stats.icons.innerText = '';
   }
 
   getGameInstance(config, elements) {
