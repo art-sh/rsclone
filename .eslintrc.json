@@ -24,6 +24,7 @@
     "no-restricted-syntax": 1,
     "no-underscore-dangle": 0,
     "no-unused-expressions": 1,
-    "object-curly-spacing": 0
+    "object-curly-spacing": 0,
+    "prefer-destructuring": 1
    }
 }

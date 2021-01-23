@@ -1,11 +1,13 @@
 import MemoryGame from '@games/MemoryGame/app';
 import MemoryMatrix from '@games/MemoryMatrix/app';
+import CharsAndNumbers from '../Games/charsAndNumbers/app';
 
 import Mixin from '@helpers/Mixin';
 
 import Header from './components/Header/Header';
 import Content from './components/Content/Content';
 import Footer from './components/Footer/Footer';
+
 
 export default class Render {
   constructor(app) {
@@ -29,7 +31,7 @@ export default class Render {
 
     this.games[this.$config.games.memoryGame.id] = MemoryGame;
     this.games[this.$config.games.memoryMatrix.id] = MemoryMatrix;
-
+    this.games[this.$config.games.charsAndNumbersGame.id] = CharsAndNumbers;
     this.elements.header.init();
     this.elements.content.init();
     this.elements.footer.init();
@@ -63,7 +65,6 @@ export default class Render {
 
   loadGame(id, contentElements) {
     if (!this.games[id]) return this.$app.router.navigate('game-list');
-
     const gameInstance = new this.games[id](this.$app, contentElements);
     this.gameInstance = gameInstance.getGameInstance(this.$app, contentElements);
     this.gameInstance.startGame();
