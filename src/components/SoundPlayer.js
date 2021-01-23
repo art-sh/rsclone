@@ -1,3 +1,5 @@
+import Mixin from '@helpers/Mixin';
+
 export default class SoundPlayer {
   /**
    * @param {App} app
@@ -7,6 +9,7 @@ export default class SoundPlayer {
 
     this.audio = new (window.AudioContext || window.webkitAudioContext)();
     this.soundBuffers = {};
+    this.defaultSounds = Mixin.handleWebpackImport(require.context('@assets/sound', true, /\.mp3/));
   }
 
   /**
@@ -45,5 +48,14 @@ export default class SoundPlayer {
    */
   removeSound(key) {
     delete this.soundBuffers[key];
+  }
+
+  /**
+   * Caching shared sounds buffer
+   */
+  loadDefaultSounds() {
+    Object.keys(this.defaultSounds).forEach((key) => {
+      this.loadSound(key, this.defaultSounds[key]);
+    });
   }
 }
