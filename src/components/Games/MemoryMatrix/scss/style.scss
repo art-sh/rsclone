@@ -18,13 +18,13 @@
   align-items: center;
   width: 20rem;
   height: 20rem;
+  margin: 0 auto;
   transition: 0.5s;
   &__main {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
       width: 40%;
-
       .matrix-memory-game-button {
           width: 3rem;
           height: 3rem;
