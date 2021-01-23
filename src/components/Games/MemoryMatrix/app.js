@@ -1,11 +1,13 @@
 import './scss/style.scss';
+import ReverseTimer from '@helpers/ReverseTimer';
 import Mixin from '../../../helpers/Mixin';
-import ReverseTimer from '../../Render/components/ReverseTimer';
 
 export default class MemoryMatrix {
-  constructor(config, elements) {
-    this.audioCollection = Mixin.handleWebpackImport(require.context('./assets/audio', true, /\.mp3/));
-    this.gameConfig = config;
+  constructor(app, elements) {
+    this.$app = app;
+    this.timer = new ReverseTimer();
+    this.$soundPlayer = app.soundPlayer;
+    this.gameConfig = app.config;
     this.elements = elements;
     this.fieldSize = 4;
     this.aciveBlocksNumber = 2;
@@ -26,7 +28,6 @@ export default class MemoryMatrix {
     };
     this.timer = new ReverseTimer(this.gameConfig);
     this.isGameEnd = false;
-    this.isGameStart = false;
   }
 
   init() {
@@ -175,16 +176,19 @@ export default class MemoryMatrix {
   }
 
   startGame() {
-    const mainField = this.gameBlocks.container.querySelector('.matrix-memory-container__main');
+    this.timer.startCount(10, this.setTimerTextContent.bind(this), this.endGameHandler.bind(this));
+    this.nextLevelHandler();
+  }
 
-    if (!this.isGameStart) {
-      console.log('tiemr');
-      this.timer.initTimer(10, this.elements.stats.time, this.endGameHandler.bind(this));
-    }
-    this.isGameStart = true;
+  setTimerTextContent() {
+    this.elements.stats.time.textContent = `${this.timer.time.minutesString}:${this.timer.time.secondsString}`;
+  }
+
+  nextLevelHandler() {
+    if (this.isGameEnd) return;
+    const mainField = this.gameBlocks.container.querySelector('.matrix-memory-container__main');
     this.difficultyLevelHandler();
     this.createGamesblocks(mainField);
-
     this.answersCount = 0;
     const gameButtons = this.gameBlocks.container.querySelectorAll('.matrix-memory-game-button');
     const activeButtons = this.randomElements();
@@ -208,35 +212,26 @@ export default class MemoryMatrix {
   checkAnswer(block) {
     this.correctAnswerhandler(block);
     this.wrongAnswerhandler(block);
-    if (this.answersCount === this.aciveBlocksNumber && !this.isGameEnd) {
+    if (this.answersCount === this.aciveBlocksNumber) {
       this.score += this.scoreMultiplier * 20;
       this.correctAnswers += 1;
       this.elements.stats.score.textContent = this.score;
-      this.blockOrApproveClicksHandler('block');
+      this.blockOrApproveClicksHandler();
 
       setTimeout(() => {
-        this.audioHandler('right');
+        this.$soundPlayer.playSound('level-next');
       }, this.audioDelay);
+
       setTimeout(() => {
         this.gameBlocks.container.style.opacity = '0';
         this.gameBlocks.container.querySelectorAll('.matrix-memory-game-button').forEach((item) => { item.style.backgroundColor = 'white'; });
       }, this.delay);
+
       setTimeout(() => {
-        this.startGame();
+        this.nextLevelHandler();
         this.gameBlocks.container.style.opacity = '1';
       }, this.startGameDelay);
     }
-  }
-
-  audioHandler(type) {
-    const audio = document.createElement('audio');
-    if (type === 'wrong') {
-      audio.setAttribute('src', `./${this.audioCollection.lose}`);
-    } else {
-      audio.setAttribute('src', `./${this.audioCollection.win}`);
-    }
-    audio.currentTime = 0;
-    audio.play();
   }
 
   correctAnswerhandler(block) {
@@ -251,21 +246,22 @@ export default class MemoryMatrix {
 
     if (!block.classList.contains('active')) {
       this.elements.stats.icons.removeChild(live);
-      this.audioHandler('wrong');
+      // this.$soundPlayer.playSound('beep-short');
     }
     if (this.elements.stats.icons.children.length === 0) {
       clearInterval(this.timer.currentTimeInterval);
-      const overlay = this.createOverlay();
-      this.gameBlocks.container.appendChild(overlay);
+      this.endGameHandler();
     }
   }
 
   endGameHandler() {
     this.isGameEnd = true;
-    this.isGameStart = false;
-    alert(this.score);
-    Mixin.dispatch(this.gameConfig.config.events.gameEnd, {
-      gameId: this.gameConfig.config.games.memoryMatrix.id,
+    this.blockOrApproveClicksHandler();
+    clearInterval(this.timer.timerInterval);
+    this.$soundPlayer.playSound('game-end');
+    console.log(this.score);
+    Mixin.dispatch(this.gameConfig.events.gameEnd, {
+      gameId: this.gameConfig.games.memoryMatrix.id,
       score: this.score,
     });
   }
@@ -276,6 +272,8 @@ export default class MemoryMatrix {
   }
 
   getGameInstance(config, elements) {
-    return new MemoryMatrix(config, elements);
+    const game = new MemoryMatrix(config, elements);
+    game.init();
+    return game;
   }
 }
