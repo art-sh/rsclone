@@ -20,6 +20,7 @@ class App {
     this.router.init(this.config, this.controller);
     this.controller.init(this.config, this.storage, this.router);
     this.storage.init(this.config);
+    this.soundPlayer.loadDefaultSounds();
   }
 }
 

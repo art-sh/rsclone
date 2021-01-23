@@ -64,7 +64,7 @@ export default class Render {
   loadGame(id, contentElements) {
     if (!this.games[id]) return this.$app.router.navigate('game-list');
 
-    const gameInstance = new this.games[id]();
+    const gameInstance = new this.games[id](this.$app, contentElements);
     this.gameInstance = gameInstance.getGameInstance(this.$app, contentElements);
     this.gameInstance.startGame();
   }
