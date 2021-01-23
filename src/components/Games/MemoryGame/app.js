@@ -190,25 +190,24 @@ export default class MemoryGame {
   gameEnd() {
     this.isGameActive = false;
     this.timer.stopCount();
-
-    // return Mixin.dispatch(this.gameConfig.events.gameEnd, {
-    //   game: this.gameConfig.id,
-    //   time: this.timer,
-    //   score: this.score,
-    // });
+    return Mixin.dispatch(this.gameConfig.events.gameEnd, {
+      game: this.gameConfig.id,
+      time: this.timer,
+      score: this.score,
+    });
   }
 
   init() {
     this.elements.game.box.append(this.getGameNode());
-    this.gameElement = document.querySelector('#memory-game');
-    this.createCards(this.fieldSize);
-    this.showCardsBeforeStart();
-    this.elements.stats.time.textContent = '00:00';
     this.finishBtn.addEventListener('click', () => this.gameEnd());
   }
 
   startGame() {
-    //
+    this.gameElement = document.querySelector('#memory-game');
+    this.createCards(this.fieldSize);
+    this.showCardsBeforeStart();
+    this.elements.stats.time.textContent = '00:00';
+    this.setScoreText(0);
   }
 
   getGameInstance(root, elements) {
