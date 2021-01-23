@@ -27,7 +27,7 @@ body {
 
 .hole:after {
   display: block;
-  background: url(../img/dirt.svg) bottom center no-repeat;
+  background: url(../assets/img/dirt.svg) bottom center no-repeat;
   background-size: contain;
   content: '';
   width: 100%;
@@ -38,7 +38,7 @@ body {
 }
 
 .mole {
-  background: url('../img/mole.svg') bottom center no-repeat;
+  background: url('../assets/img/mole.svg') bottom center no-repeat;
   background-size: 60%;
   position: absolute;
   top: 100%;
