@@ -2,8 +2,10 @@ import cardsArray from './js/cardsArray';
 import './scss/style.scss';
 
 export default class MemoryGame {
-  constructor(config, size, elements) {
-    this.gameConfig = config;
+  constructor(app, elements, size = 6) {
+    this.$app = app;
+    this.$soundPlayer = app.soundPlayer;
+    this.gameConfig = app.config;
 
     this.elements = elements;
     this.gameElement = null;
@@ -189,7 +191,7 @@ export default class MemoryGame {
   }
 
   getGameInstance(root, elements) {
-    const app = new MemoryGame(root, 6, elements);
+    const app = new MemoryGame(root, elements);
     app.init();
     return app;
   }

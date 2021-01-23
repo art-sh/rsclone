@@ -25,6 +25,7 @@
     "no-underscore-dangle": 0,
     "no-unused-expressions": 1,
     "object-curly-spacing": 1,
-    "prefer-destructuring": 1
+    "object-curly-spacing": 0,
+    "prefer-destructuring": 1,
    }
 }
