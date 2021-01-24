@@ -8,7 +8,6 @@ export default class MemoryGame {
     this.$app = app;
     this.$soundPlayer = app.soundPlayer;
     this.gameConfig = app.config;
-    this.audioCollection = Mixin.handleWebpackImport(require.context('./assets/audio', true, /\.mp3/));
     this.elements = elements;
     this.gameElement = null;
     this.firstGuess = '';
@@ -17,13 +16,12 @@ export default class MemoryGame {
     this.delay = 500;
     this.showCardsTime = 4000;
     this.timer = new ReverseTimer();
-    this.sessionTime = 30;
+    this.sessionTime = 20;
     this.timeStep = 20;
     this.score = 0;
     this.matches = 0;
     this.fieldSize = size;
     this.fieldStep = 2; // for change level
-    this.finishBtn = document.querySelector('button.game-finish');
   }
 
   getGameNode() {
@@ -121,11 +119,11 @@ export default class MemoryGame {
         if (this.matches === cardsArray.length) {
           this.timer.stopCount();
           this.destroyGameInstance();
-          this.audioHandler('win');
+          this.$soundPlayer.playSound('game-end');
           // console.log('game finished');
         } else {
           this.levelUp();
-          this.audioHandler('nextLevel');
+          this.$soundPlayer.playSound('level-next');
         }
       }, this.delay);
     }
@@ -143,24 +141,11 @@ export default class MemoryGame {
     this.showCardsBeforeStart();
   }
 
-  audioHandler(type) {
-    const audio = document.createElement('audio');
-    if (type === 'looser') {
-      audio.setAttribute('src', `./${this.audioCollection.looser}`);
-    } else if (type === 'nextLevel') {
-      audio.setAttribute('src', `./${this.audioCollection.nextLevel}`);
-    } else if (type === 'win') {
-      audio.setAttribute('src', `./${this.audioCollection.win}`);
-    }
-    audio.currentTime = 0;
-    audio.play();
-  }
-
   updateTimer(sessionTime) {
-    const finish = (time) => {
-      this.audioHandler('looser');
+    const finish = () => {
+      this.$soundPlayer.playSound('level-down');
       this.destroyGameInstance();
-      console.log('end', time);
+      // console.log('end');
     };
     this.timer.startCount(sessionTime, this.setTimeText.bind(this), finish);
   }
@@ -186,7 +171,6 @@ export default class MemoryGame {
     this.timer.stopCount();
     return Mixin.dispatch(this.gameConfig.events.gameEnd, {
       game: this.gameConfig.id,
-      time: this.timer,
       score: this.score,
     });
   }
@@ -201,7 +185,7 @@ export default class MemoryGame {
 
   init() {
     this.elements.game.box.append(this.getGameNode());
-    this.finishBtn.addEventListener('click', () => this.gameEnd());
+    this.elements.game.finishBtn.addEventListener('click', () => this.gameEnd());
   }
 
   getGameInstance(root, elements) {
