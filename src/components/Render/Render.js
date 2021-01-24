@@ -6,6 +6,7 @@ import Mixin from '@helpers/Mixin';
 import Header from './components/Header/Header';
 import Content from './components/Content/Content';
 import Footer from './components/Footer/Footer';
+import GameListPage from './components/Content/GameListPage/app';
 
 export default class Render {
   constructor(app) {
@@ -49,7 +50,11 @@ export default class Render {
     } else if (controller === 'welcome') {
       this.elements.content.setContent('welcome');
     } else if (controller === 'game-list') {
-      this.elements.content.setContent('gameList');
+      const cb = (content) => {
+        const list = new GameListPage(this.$app);
+        list.setGameListContent(content);
+      };
+      this.elements.content.setContent('gameList', cb);
     } else if (controller === 'sign-in') {
       this.elements.content.setContent('signIn');
     } else if (controller === 'sign-up') {
