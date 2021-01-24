@@ -2,7 +2,7 @@
 import Mixin from '../../../helpers/Mixin';
 import './scss/style.scss';
 
-export default class WhackAMoleGame {
+export default class WhackAMole {
   constructor(app, elements) {
     this.$app = app;
     this.$soundPlayer = app.soundPlayer;
@@ -60,7 +60,9 @@ export default class WhackAMoleGame {
     this.isScoreCheat = false;
     this.timeUp = false;
     this.showHideMoles(this.minTime, this.maxTime);
-    setTimeout(() => this.timeUp = true, this.sessionTime);
+    setTimeout(() => {
+      this.timeUp = true;
+    }, this.sessionTime);
   }
 
   levelUp() {
@@ -77,7 +79,9 @@ export default class WhackAMoleGame {
       randomHole.classList.remove('up');
       if (!this.timeUp) {
         this.showHideMoles(from, to);
-        setTimeout(() => this.isScoreCheat = false, randomTime / 5);
+        setTimeout(() => {
+          this.isScoreCheat = false;
+        }, randomTime / 5);
       } else {
         this.levelUp();
       }
@@ -137,16 +141,14 @@ export default class WhackAMoleGame {
   }
 
   init() {
-    document.body.append(this.getGameNode());
-    // this.elements.game.box.append(this.getGameNode());
+    this.elements.game.box.append(this.getGameNode());
     this.queryNodes();
     this.moles.forEach((mole) => mole.addEventListener('click', this.countScore.bind(this)));
     this.setScoreText(0);
-    this.startGame();
   }
 
-  getGameInstance(root) {
-    const app = new WhackAMoleGame(root);
+  getGameInstance(root, elements) {
+    const app = new WhackAMole(root, elements);
     app.init();
     return app;
   }
