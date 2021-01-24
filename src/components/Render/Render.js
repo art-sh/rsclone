@@ -1,13 +1,11 @@
 import MemoryGame from '@games/MemoryGame/app';
 import MemoryMatrix from '@games/MemoryMatrix/app';
-import CharsAndNumbers from '../Games/charsAndNumbers/app';
+import CharsAndNumbers from '@games/CharsAndNumbers/app';
 
 import Mixin from '@helpers/Mixin';
-
 import Header from './components/Header/Header';
 import Content from './components/Content/Content';
 import Footer from './components/Footer/Footer';
-
 
 export default class Render {
   constructor(app) {

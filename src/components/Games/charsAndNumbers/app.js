@@ -252,7 +252,7 @@ export default class CharsAndNumbers {
     this.blockOrApproveClicksHandler();
     clearInterval(this.currentTimeInterval);
     Mixin.dispatch(this.gameConfig.events.gameEnd, {
-      gameId: this.gameConfig.games.charsAndNumbersGame.id,
+      game: this.gameConfig.games.charsAndNumbersGame.id,
       score: this.score,
     });
   }
