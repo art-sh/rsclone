@@ -61,7 +61,6 @@ export default class GameListPage {
 
   setGameBlocks() {
     this.gameTitles.forEach((item) => {
-      console.log(item);
       if (item !== this.randomGameTitle) {
         const commonGameTemplate = this.getGameBlockTemplate('common');
         const commonGameConfig = this.config.games[`${item}`];
