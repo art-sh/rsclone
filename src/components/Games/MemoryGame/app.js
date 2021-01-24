@@ -9,10 +9,8 @@ export default class MemoryGame {
     this.$soundPlayer = app.soundPlayer;
     this.gameConfig = app.config;
     this.audioCollection = Mixin.handleWebpackImport(require.context('./assets/audio', true, /\.mp3/));
-
     this.elements = elements;
     this.gameElement = null;
-
     this.firstGuess = '';
     this.secondGuess = '';
     this.previousClick = null;
@@ -21,11 +19,10 @@ export default class MemoryGame {
     this.timer = new ReverseTimer();
     this.sessionTime = 30;
     this.timeStep = 20;
-    this.isGameActive = false; // for start ticking
     this.score = 0;
     this.matches = 0;
     this.fieldSize = size;
-    this.step = 2; // for change level
+    this.fieldStep = 2; // for change level
     this.finishBtn = document.querySelector('button.game-finish');
   }
 
@@ -58,15 +55,20 @@ export default class MemoryGame {
     const gameBoard = resizedArray
       .concat(resizedArray)
       .sort(() => 0.5 - Math.random());
-
     gameBoard.forEach((config) => this.gameElement.append(this.buildGameCard(config)));
   }
 
+  getAllSelected() {
+    return Array.from(this.elements.game.box.querySelectorAll('.selected'));
+  }
+
   showCardsBeforeStart() {
+    this.setTimeToNull();
     const currentCards = document.querySelectorAll('.card');
     setTimeout(() => {
       currentCards.forEach((card) => card.classList.remove('selected'));
     }, this.showCardsTime);
+    setTimeout(() => this.updateTimer(this.sessionTime), this.showCardsTime);
   }
 
   flipCard(event) {
@@ -77,10 +79,7 @@ export default class MemoryGame {
       || clicked.parentNode.classList.contains('selected')) {
       return;
     }
-    if (!this.isGameActive) {
-      this.isGameActive = true;
-      this.updateTimer(this.sessionTime);
-    }
+
     if (!this.firstGuess || !this.secondGuess) {
       if (!this.firstGuess) {
         this.firstGuess = clicked.parentNode.dataset.name;
@@ -100,10 +99,7 @@ export default class MemoryGame {
       this.score += 10;
       setTimeout(this.matchCards.bind(this), this.delay);
       this.checkIfWin();
-    } else if (this.score > 0) {
-      this.score -= 2;
-    }
-
+    } else if (this.score > 0) this.score -= 2;
     this.setScoreText(this.score);
     setTimeout(() => this.resetGuesses(), this.delay);
   }
@@ -135,30 +131,16 @@ export default class MemoryGame {
     }
   }
 
-  getAllSelected() {
-    return Array.from(this.elements.game.box.querySelectorAll('.selected'));
-  }
-
   levelUp() {
     this.gameEnd();
     this.sessionTime += this.timeStep;
-    this.fieldSize += this.step;
+    this.fieldSize += this.fieldStep;
     this.matches = 0;
     this.gameElement.innerHTML = '';
     this.createCards(this.fieldSize);
     this.firstGuess = '';
     this.secondGuess = '';
     this.showCardsBeforeStart();
-  }
-
-  updateTimer(sessionTime) {
-    const ticker = (time) => this.setTimeText(time);
-    const finish = (time) => {
-      this.audioHandler('looser');
-      this.gameEnd();
-      console.log('end', time);
-    };
-    this.timer.startCount(sessionTime, ticker, finish);
   }
 
   audioHandler(type) {
@@ -174,12 +156,25 @@ export default class MemoryGame {
     audio.play();
   }
 
-  setScoreText(string) {
-    this.elements.stats.score.textContent = string.toString();
+  updateTimer(sessionTime) {
+    const finish = (time) => {
+      this.audioHandler('looser');
+      this.destroyGameInstance();
+      console.log('end', time);
+    };
+    this.timer.startCount(sessionTime, this.setTimeText.bind(this), finish);
   }
 
   setTimeText(time) {
     this.elements.stats.time.textContent = `${time.minutesString}:${time.secondsString}`;
+  }
+
+  setTimeToNull() {
+    this.elements.stats.time.textContent = '00:00';
+  }
+
+  setScoreText(string) {
+    this.elements.stats.score.textContent = string.toString();
   }
 
   destroyGameInstance() {
@@ -188,7 +183,6 @@ export default class MemoryGame {
   }
 
   gameEnd() {
-    this.isGameActive = false;
     this.timer.stopCount();
     return Mixin.dispatch(this.gameConfig.events.gameEnd, {
       game: this.gameConfig.id,
@@ -197,17 +191,17 @@ export default class MemoryGame {
     });
   }
 
-  init() {
-    this.elements.game.box.append(this.getGameNode());
-    this.finishBtn.addEventListener('click', () => this.gameEnd());
-  }
-
   startGame() {
     this.gameElement = document.querySelector('#memory-game');
     this.createCards(this.fieldSize);
     this.showCardsBeforeStart();
-    this.elements.stats.time.textContent = '00:00';
+    this.setTimeToNull();
     this.setScoreText(0);
+  }
+
+  init() {
+    this.elements.game.box.append(this.getGameNode());
+    this.finishBtn.addEventListener('click', () => this.gameEnd());
   }
 
   getGameInstance(root, elements) {
