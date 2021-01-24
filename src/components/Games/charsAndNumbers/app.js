@@ -211,7 +211,6 @@ export default class CharsAndNumbers {
       this.difficultyHandler();
       this.addLevelContent();
     }
-    console.log(this.elements.stats.icons.children.length);
     if (this.elements.stats.icons.children.length === 0) {
       this.endGameHandler();
     }
@@ -249,7 +248,6 @@ export default class CharsAndNumbers {
 
   endGameHandler() {
     document.removeEventListener('keydown', this.bindKeyHandler);
-    console.log('end');
     this.$soundPlayer.playSound('game-end');
     this.blockOrApproveClicksHandler();
     clearInterval(this.currentTimeInterval);
