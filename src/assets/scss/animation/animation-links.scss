@@ -1,0 +1,83 @@
+.menu__link:hover {
+  animation: neon 2s infinite;
+}
+
+$neonPink: #e378a9;
+
+@keyframes neon {
+  0% {
+    text-shadow: 0 0 2px $neonPink, 0 0 5px $neonPink, 0 0 15px $neonPink;
+  }
+  10% {
+    text-shadow: 0 0 10px $neonPink, 0 0 20px $neonPink, 0 0 17px $neonPink;
+  }
+  15% {
+    text-shadow: 0 0 5px $neonPink, 0 0 10px $neonPink, 0 0 16px $neonPink;
+  }
+  20% {
+    text-shadow: 0 0 10px $neonPink, 0 0 20px $neonPink, 0 0 17px $neonPink;
+  }
+  25% {
+    text-shadow: 0 0 5px $neonPink, 0 0 10px $neonPink, 0 0 16px $neonPink;
+  }
+  30% {
+    text-shadow: 0 0 10px $neonPink, 0 0 20px $neonPink, 0 0 17px $neonPink;
+  }
+  35% {
+    text-shadow: 0 0 5px $neonPink, 0 0 10px $neonPink, 0 0 16px $neonPink;
+  }
+  40% {
+    text-shadow: 0 0 10px $neonPink, 0 0 20px $neonPink, 0 0 17px $neonPink;
+  }
+  45% {
+    text-shadow: 0 0 2px $neonPink, 0 0 5px $neonPink, 0 0 15px $neonPink;
+  }
+  50% {
+    text-shadow: 0 0 10px $neonPink, 0 0 20px $neonPink, 0 0 17px $neonPink;
+  }
+  55% {
+    text-shadow: 0 0 5px $neonPink, 0 0 10px $neonPink, 0 0 16px $neonPink;
+  }
+  60% {
+    text-shadow: 0 0 10px $neonPink, 0 0 20px $neonPink, 0 0 17px $neonPink;
+  }
+  65% {
+    text-shadow: 0 0 2px $neonPink, 0 0 5px $neonPink, 0 0 15px $neonPink;
+  }
+  70% {
+    text-shadow: 0 0 10px $neonPink, 0 0 20px $neonPink, 0 0 17px $neonPink;
+  }
+  90% {
+    text-shadow: 0 0 2px $neonPink, 0 0 5px $neonPink, 0 0 15px $neonPink;
+  }
+  91% {
+    text-shadow: none;
+  }
+  92% {
+    text-shadow: 0 0 2px $neonPink, 0 0 5px $neonPink, 0 0 15px $neonPink;
+  }
+  93% {
+    text-shadow: none;
+  }
+  94% {
+    text-shadow: 0 0 2px $neonPink, 0 0 5px $neonPink, 0 0 15px $neonPink;
+  }
+  95% {
+    text-shadow: none;
+  }
+  96% {
+    text-shadow: 0 0 2px $neonPink, 0 0 5px $neonPink, 0 0 15px $neonPink;
+  }
+  97% {
+    text-shadow: none;
+  }
+  98% {
+    text-shadow: 0 0 2px $neonPink, 0 0 5px $neonPink, 0 0 15px $neonPink;
+  }
+  99% {
+    text-shadow: none;
+  }
+  100% {
+    text-shadow: 0 0 2px $neonPink, 0 0 5px $neonPink, 0 0 15px $neonPink;
+  }
+}
