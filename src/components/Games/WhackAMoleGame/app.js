@@ -1,4 +1,4 @@
-// import ReverseTimer from '@helpers/ReverseTimer';
+import ReverseTimer from '@helpers/ReverseTimer';
 import Mixin from '../../../helpers/Mixin';
 import './scss/style.scss';
 
@@ -7,8 +7,6 @@ export default class WhackAMole {
     this.$app = app;
     this.$soundPlayer = app.soundPlayer;
     this.gameConfig = app.config;
-    this.audioCollection = Mixin.handleWebpackImport(require.context('./assets/audio', true, /\.mp3/));
-
     this.elements = elements;
     this.gameElement = null;
     this.holes = null;
@@ -17,24 +15,19 @@ export default class WhackAMole {
     this.fieldSize = 9;
     this.totalScore = 0;
     this.sessionScore = 0;
-    this.scoreToHTML = null; // выпилить при добавлении в проект
     this.isScoreCheat = false; // against repeated clicks on the mole
     this.timeUp = false; // to the end of the game
-    this.sessionTime = 5000;
+    this.timer = new ReverseTimer();
+    this.sessionTime = 10;
     this.minTime = 900;
     this.maxTime = 1000;
+    this.stopGame = null;
   }
 
   getGameNode() {
     const game = document.createElement('div');
     game.setAttribute('id', 'whackAMole-game');
-
-    // выпилится после внедрения
-    const title = document.createElement('h1');
-    title.textContent = 'Whack-a-mole!';
-    title.insertAdjacentHTML('beforeEnd', '<span class="score">0</span>');
-
-    game.append(title, this.createHoles(this.fieldSize));
+    game.append(this.createHoles(this.fieldSize));
     return game;
   }
 
@@ -62,35 +55,27 @@ export default class WhackAMole {
     this.showHideMoles(this.minTime, this.maxTime);
     setTimeout(() => {
       this.timeUp = true;
-    }, this.sessionTime);
-  }
-
-  levelUp() {
-    this.maxTime >= 100 ? this.maxTime -= 100 : this.maxTime = 100;
-    this.minTime >= 100 ? this.minTime -= 100 : this.minTime = 100;
-    this.sessionScore >= 3 ? this.startGame() : this.gameEnd();
+      this.timer.startCount(this.sessionTime, this.setTimeText.bind(this));
+    }, this.sessionTime * 1000);
   }
 
   showHideMoles(from, to) {
     const randomTime = this.randomTime(from, to);
     const randomHole = this.randomHole(this.holes);
     randomHole.classList.add('up');
-    setTimeout(() => {
+    this.stopGame = setTimeout(() => {
       randomHole.classList.remove('up');
       if (!this.timeUp) {
         this.showHideMoles(from, to);
         setTimeout(() => {
           this.isScoreCheat = false;
         }, randomTime / 5);
-      } else {
-        this.levelUp();
-      }
+      } else this.levelUp();
     }, randomTime);
   }
 
   countScore(e) {
     if (!e.isTrusted) return; // protected from cheat
-
     if (!this.isScoreCheat) {
       this.totalScore += 1;
       this.sessionScore += 1;
@@ -98,6 +83,13 @@ export default class WhackAMole {
       this.setScoreText(this.totalScore);
       this.isScoreCheat = true;
     }
+  }
+
+  levelUp() {
+    this.$soundPlayer.playSound('level-next');
+    this.maxTime >= 100 ? this.maxTime -= 100 : this.maxTime = 100;
+    this.minTime >= 100 ? this.minTime -= 100 : this.minTime = 100;
+    this.sessionScore >= 3 ? this.startGame() : this.gameEnd();
   }
 
   randomTime(min, max) {
@@ -112,9 +104,12 @@ export default class WhackAMole {
     return hole;
   }
 
+  setTimeText(time) {
+    this.elements.stats.time.textContent = `${time.minutesString}:${time.secondsString}`;
+  }
+
   setScoreText(string) {
-    this.scoreToHTML.textContent = string; // выпилить
-    // this.elements.stats.score.textContent = string.toString();
+    this.elements.stats.score.textContent = string.toString();
   }
 
   destroyGameInstance() {
@@ -123,28 +118,31 @@ export default class WhackAMole {
   }
 
   gameEnd() {
+    clearTimeout(this.stopGame);
+    this.timer.stopCount();
     this.isScoreCheat = false;
     this.timeUp = false;
-    console.log('--------------------Game End'); // здесь будет модальное окно
-
-    // return Mixin.dispatch(this.gameConfig.events.gameEnd, {
-    //   game: this.gameConfig.id,
-    //   score: this.totalScore,
-    // });
+    this.$soundPlayer.playSound('level-down');
+    // POP UP GAME OVER
+    return Mixin.dispatch(this.gameConfig.events.gameEnd, {
+      game: this.gameConfig.id,
+      score: this.totalScore,
+    });
   }
 
-  queryNodes() {
+  newGame() {
     this.gameElement = document.querySelector('#whackAMole-game');
     this.holes = document.querySelectorAll('.hole');
     this.moles = document.querySelectorAll('.mole');
-    this.scoreToHTML = document.querySelector('.score'); // ВЫПИЛИТЬ
+    this.moles.forEach((mole) => mole.addEventListener('click', this.countScore.bind(this)));
+    this.setScoreText(0);
+    this.timer.startCount(this.sessionTime, this.setTimeText.bind(this));
   }
 
   init() {
     this.elements.game.box.append(this.getGameNode());
-    this.queryNodes();
-    this.moles.forEach((mole) => mole.addEventListener('click', this.countScore.bind(this)));
-    this.setScoreText(0);
+    this.elements.game.finishBtn.addEventListener('click', () => this.gameEnd());
+    this.newGame();
   }
 
   getGameInstance(root, elements) {

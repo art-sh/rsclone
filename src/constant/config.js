@@ -31,8 +31,8 @@ export default {
     whackAMole: {
       id: 'whack-a-mole',
       name: 'Whack-A-Mole',
-      description: '',
-      rules: 'If the two cards match, your scores 10 point, the two cards are removed from the game. After this if cards do not match, you are lost 2 point and the cards are turned back over. Good luck!',
+      description: 'In order to advance through the levels of this game, the user will have to hit the target mole.',
+      rules: 'If you hit three times per level, the movement speed of the mole will increase! And be careful: aim exactly at the mole.',
     },
   },
 };
