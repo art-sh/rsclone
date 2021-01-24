@@ -1,3 +1,5 @@
+const path = require('path');
+
 const Mixin = {
   uppercaseFirstLetter(str) {
     return str[0].toUpperCase() + str.slice(1);
@@ -51,6 +53,27 @@ const Mixin = {
     node.innerHTML = template;
 
     return node.content.cloneNode(true);
+  },
+  /**
+   * @param template
+   * @return {HTMLElement}
+   */
+  getNode(template) {
+    const newContentElement = document.createElement('div');
+    newContentElement.append(Mixin.parseHTML(template));
+
+    return newContentElement.firstChild;
+  },
+  handleWebpackImport(requireFunction) {
+    const out = {};
+
+    requireFunction.keys().forEach((imagePath) => {
+      const module = requireFunction(imagePath);
+
+      out[path.basename(imagePath).split('.').shift()] = module.default;
+    });
+
+    return out;
   },
 };
 

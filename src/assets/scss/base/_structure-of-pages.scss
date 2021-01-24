@@ -1,0 +1,52 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: Acrom, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.main-container {
+  min-height: 100%;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.header {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.menu {
+  position: relative;
+  z-index: 2;
+  @media (max-width: 500px) {
+    position: static;
+  }
+}
+
+.main {
+  padding-bottom: 103px;
+  padding-left: 5%;
+  padding-right: 5%;
+  overflow: hidden;
+  @media (max-width: 500px) {
+    padding-bottom: 155px;
+  }
+}
+
+.footer {
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding-left: 5%;
+  padding-right: 5%;
+}

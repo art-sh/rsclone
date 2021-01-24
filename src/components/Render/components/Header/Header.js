@@ -4,24 +4,27 @@ import Mixin from '@helpers/Mixin';
 const template = require('./assets/template.html');
 
 export default class Header {
-  constructor(app) {
+  constructor(app, appContainer) {
     this.$app = app;
+    this.$appContainer = appContainer;
 
-    this.node = Mixin.parseHTML(template);
-
+    this.node = this.getNode();
     this.elements = {
       logo: this.node.querySelector('.logo'),
     };
+
+    this.setHeaderListeners();
   }
 
   init() {
-    this.setHeaderListeners();
-
-    return this;
+    this.$appContainer.append(this.node);
   }
 
   getNode() {
-    return this.node;
+    const node = document.createElement('header');
+    node.append(Mixin.parseHTML(template));
+
+    return node.firstChild;
   }
 
   setHeaderListeners() {
