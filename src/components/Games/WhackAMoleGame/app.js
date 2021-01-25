@@ -19,6 +19,7 @@ export default class WhackAMole {
     this.timeUp = false; // to the end of the game
     this.timer = new ReverseTimer();
     this.sessionTime = 10;
+    this.timetoMs = 1000;
     this.minTime = 900;
     this.maxTime = 1000;
     this.stopGame = null;
@@ -33,7 +34,7 @@ export default class WhackAMole {
 
   createHoles(size) {
     const gameBoard = document.createElement('div');
-    gameBoard.setAttribute('class', 'gameBoard');
+    gameBoard.setAttribute('class', 'whackAMole');
     for (let i = 0; i < size; i += 1) {
       const holeMole = this.buildHoleMole();
       gameBoard.append(holeMole);
@@ -56,7 +57,7 @@ export default class WhackAMole {
     setTimeout(() => {
       this.timeUp = true;
       this.timer.startCount(this.sessionTime, this.setTimeText.bind(this));
-    }, this.sessionTime * 1000);
+    }, this.sessionTime * this.timetoMs);
   }
 
   showHideMoles(from, to) {
