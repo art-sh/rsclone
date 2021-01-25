@@ -1,6 +1,6 @@
 import Mixin from '@helpers/Mixin';
 
-const imagesCollection = Mixin.handleWebpackImport(require.context('../img', true, /\.png/));
+const imagesCollection = Mixin.handleWebpackImport(require.context('../assets/img', true, /\.png/));
 const cardsArray = [
   {
     name: 'shell',

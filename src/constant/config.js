@@ -9,6 +9,12 @@ export default {
     gameStart: 'game-start',
     gameEnd: 'game-end',
   },
+  modalWindow: {
+    types: {
+      gameDescription: 'modal-description',
+      gameEnd: 'modal-game-end',
+    },
+  },
   games: {
     memoryMatrix: {
       name: 'Matrix Memory',
