@@ -17,7 +17,7 @@ module.exports = {
   output: {
       filename: 'test.build.js',
       path: path.resolve(__dirname, 'test'),
-      // publicPath: 'http://' + hostname + ':' + port + '/tests'
+      // publicPath: 'http://localhost:9000/test.html'
   },
   resolve: {
     alias: {
