@@ -28,5 +28,11 @@ export default {
       description: 'The memory game is a basic matching game to test the player\'s memory. In a deck of paired cards, the player needs to match each pair to win the game.',
       rules: 'You should turn flipping pairs of cards over. On each move, you will first turn one card over, then a second. If the two cards match, your scores 10 point, the two cards are removed from the game. After this if cards do not match, you are lost 2 point and the cards are turned back over. Good luck!',
     },
+    whackAMole: {
+      id: 'whack-a-mole',
+      name: 'Whack-A-Mole',
+      description: 'In order to advance through the levels of this game, the user will have to hit the target mole.',
+      rules: 'If you hit three times per level, the movement speed of the mole will increase! And be careful: aim exactly at the mole.',
+    },
   },
 };
