@@ -25,7 +25,6 @@ export default class MemoryMatrix {
       container: null,
       gameField: null,
     };
-    this.timer = new ReverseTimer(this.gameConfig);
     this.isGameEnd = false;
   }
 
@@ -155,12 +154,12 @@ export default class MemoryMatrix {
   }
 
   startGame() {
-    this.timer.startCount(80, this.setTimerTextContent.bind(this), this.endGameHandler.bind(this));
+    this.timer.startCount(5, this.setTimerTextContent.bind(this), this.endGameHandler.bind(this));
     this.nextLevelHandler();
   }
 
-  setTimerTextContent() {
-    this.elements.stats.time.textContent = `${this.timer.time.minutesString}:${this.timer.time.secondsString}`;
+  setTimerTextContent(time) {
+    this.elements.stats.time.textContent = `${time.minutesString}:${time.secondsString}`;
   }
 
   nextLevelHandler() {
