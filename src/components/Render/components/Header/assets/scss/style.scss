@@ -55,7 +55,6 @@
 
 @media (max-width: 500px) {
   .menu__list {
-    display: none; // hidden!!!!!!!!!
     align-items: center;
     position: absolute;
     top: 83px;
@@ -67,6 +66,17 @@
     z-index: 3000;
     justify-content: flex-start;
     padding-top: 20px;
+    transition: 0.4s;
+    transform-origin: right center;
+    transform: scaleX(0) translate(100%);
+    overflow-y: auto;
+    opacity: 0;
+
+    &.active {
+      transform: scaleX(1) translate(0%);
+      opacity: 1;
+    }
+
   }
 
   .burger {
@@ -87,7 +97,6 @@
       transition: .25s ease-in-out;
       height: 3px;
       background-color: #f9f9f9;
-
 
       &:nth-child(1) {
         top: 0;
@@ -125,4 +134,3 @@
     }
   }
 }
-
