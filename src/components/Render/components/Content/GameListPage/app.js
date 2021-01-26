@@ -13,6 +13,7 @@ export default class GameListPage {
       recommendedBlock: 'recommended',
       commonBlock: 'common',
     };
+    this.parametresObject = null;
   }
 
   getTemplateElementsObject(blockType = this.blockTypes.recommendedBlock) {
@@ -35,8 +36,8 @@ export default class GameListPage {
     return this.randomGameTitle;
   }
 
-  setParamsObject(title, type, rule, gameDescription, gameTitle) {
-    const gameId = this.config.games[`${gameTitle}`].id;
+  setParamsObject(title, type, rule, gameDescription, configGameKey) {
+    const gameId = this.config.games[`${configGameKey}`].id;
     return {
       type,
       container: document.querySelector('#app'),
@@ -60,19 +61,19 @@ export default class GameListPage {
   }
 
   setGameBlocks() {
-    this.gameTitles.forEach((item) => {
-      if (item !== this.randomGameTitle) {
-        const commonGameConfig = this.config.games[`${item}`];
+    this.gameTitles.forEach((configGameKey) => {
+      if (configGameKey !== this.randomGameTitle) {
+        const commonGameConfig = this.config.games[`${configGameKey}`];
         const commonGameTemplate = this.getTemplateElementsObject(this.blockTypes.commonBlock);
-        this.setContentByConfig(commonGameTemplate, commonGameConfig, item);
+        this.setContentByConfig(commonGameTemplate, commonGameConfig, configGameKey);
         this.setElementsListeners(commonGameTemplate.gameStartButton, this.parametresObject);
         this.elements.gamesList.append(commonGameTemplate.node);
       }
     });
   }
 
-  setContentByConfig(template, config, gameTitle) {
-    this.parametresObject = this.setParamsObject(config.name, this.config.modalWindow.types.gameDescription, config.rules, config.description, gameTitle);
+  setContentByConfig(template, config, configGameKey) {
+    this.parametresObject = this.setParamsObject(config.name, this.config.modalWindow.types.gameDescription, config.rules, config.description, configGameKey);
     template.gameDesc.textContent = config.description;
     template.gameTitle.textContent = config.name;
   }
