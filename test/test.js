@@ -1,9 +1,9 @@
 import '../node_modules/mocha/mocha.css';
-import Mixin from '../src/helpers/Mixin';
-import GameMatrix from '../src/components/Games/MemoryMatrix/app';
-import GameMemory from '../src/components/Games/MemoryGame/app';
-import Router from '../src/components/Router';
-import SoundPlayer from '../src/components/SoundPlayer';
+import Mixin from '@helpers/Mixin';
+import GameMatrix from '@games/MemoryMatrix/app';
+import GameMemory from '@games/MemoryGame/app';
+import Router from '@/components/Router';
+import SoundPlayer from '@/components/SoundPlayer';
 
 const {assert} = require('chai');
 

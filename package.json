@@ -3,8 +3,7 @@
   "private": true,
   "scripts": {
     "server": "cross-env NODE_ENV=development webpack-dev-server",
-    "build": "cross-env NODE_ENV=production webpack-cli",
-    "devtest": "webpack-dev-server --config webpack.tests.config.js"
+    "build": "cross-env NODE_ENV=production webpack-cli"
   },
   "browserslist": "> 0.25%, not dead",
   "license": "ISC",
