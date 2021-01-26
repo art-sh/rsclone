@@ -16,7 +16,6 @@ export default class MemoryMatrix {
     this.currentLevel = 1;
     this.currentScore = 0;
     this.scoreMultiplier = 1;
-    this.lives = ['*', '*', '*'];
     this.score = 0;
     this.visibilityDelay = 2000;
     this.startGameDelay = 1500;
@@ -38,9 +37,9 @@ export default class MemoryMatrix {
   }
 
   createLivesIcons() {
-    this.lives.forEach(() => {
+    for (let i = 0; i < 3; i += 1) {
       this.elements.stats.icons.appendChild(this.elements.templates.star.content.cloneNode(true));
-    });
+    }
   }
 
   createField() {
@@ -73,25 +72,6 @@ export default class MemoryMatrix {
       element.textContent = textContent;
     }
     return element;
-  }
-
-  createOverlay() {
-    const overlay = this.createElementFactory('div', null, 'overlay', null, null, null);
-    const overlayContainer = this.createElementFactory('div', null, 'overlay-container', null, null, null);
-    const scoreContainer = this.createElementFactory('div', null, 'score-container', null, null, null);
-    const restartGame = this.createElementFactory('button', null, 'game-restart-button', null, null, 'Restart');
-    scoreContainer.appendChild(this.createElementFactory('span', null, 'overaly-score', null, null, 'Score:'));
-    scoreContainer.appendChild(this.createElementFactory('span', null, 'overlay-score-count', null, null, `${this.score}`));
-    overlayContainer.appendChild(scoreContainer);
-    overlayContainer.appendChild(restartGame);
-    overlay.appendChild(overlayContainer);
-    restartGame.addEventListener('click', () => {
-      this.gameBlocks.container.removeChild(overlay);
-      this.resetFlags();
-      this.startGame();
-    });
-    restartGame.addEventListener('click', this.createLivesIcons.bind(this));
-    return overlay;
   }
 
   resetFlags() {
@@ -175,7 +155,7 @@ export default class MemoryMatrix {
   }
 
   startGame() {
-    this.timer.startCount(10, this.setTimerTextContent.bind(this), this.endGameHandler.bind(this));
+    this.timer.startCount(80, this.setTimerTextContent.bind(this), this.endGameHandler.bind(this));
     this.nextLevelHandler();
   }
 
@@ -256,17 +236,16 @@ export default class MemoryMatrix {
   endGameHandler() {
     this.isGameEnd = true;
     this.blockOrApproveClicksHandler();
-    clearInterval(this.timer.timerInterval);
+    this.timer.stopCount();
     this.$soundPlayer.playSound('game-end');
-    console.log(this.score);
     Mixin.dispatch(this.gameConfig.events.gameEnd, {
-      gameId: this.gameConfig.games.memoryMatrix.id,
+      game: this.gameConfig.games.memoryMatrix.id,
       score: this.score,
     });
   }
 
   destroyGameInstance() {
-    clearInterval(this.timer.timerInterval);
+    this.timer.stopCount();
     this.elements.game.box.removeChild(this.gameBlocks.container);
     this.elements.stats.score.innerText = '';
     this.elements.stats.time.innerText = '';
