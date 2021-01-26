@@ -8,6 +8,8 @@ export default class GameListPage {
   constructor(app) {
     this.$app = app;
     this.config = app.config;
+    this.elements = null;
+    this.templateElements = null;
     this.modalWindow = new ModalWindow(app);
     this.blockTypes = {
       recommendedBlock: 'recommended',
@@ -17,17 +19,20 @@ export default class GameListPage {
   }
 
   getTemplateElementsObject(blockType = this.blockTypes.recommendedBlock) {
-    let node = Mixin.getNode(templateRecommendedGame);
-    if (blockType !== 'recommended') {
+    let node;
+    if (blockType === 'recommended') {
+      node = Mixin.getNode(templateRecommendedGame);
+    } else {
       node = Mixin.getNode(templateGameBlock);
     }
-    return {
+    this.templateElements = {
       node,
       gameFrame: node.querySelector('.games__img'),
       gameTitle: node.querySelector('.games__title'),
       gameDesc: node.querySelector('.games__p'),
       gameStartButton: node.querySelector('.games__button'),
     };
+    return this.templateElements;
   }
 
   getRandomGameName() {
@@ -36,15 +41,15 @@ export default class GameListPage {
     return this.randomGameTitle;
   }
 
-  setParamsObject(title, type, rule, gameDescription, configGameKey) {
+  setParamsObject(type, configGameKey) {
     const gameId = this.config.games[`${configGameKey}`].id;
     return {
       type,
       container: document.querySelector('#app'),
       text: {
-        title,
-        rule,
-        gameDescription,
+        title: this.config.games[`${configGameKey}`].name,
+        rule: this.config.games[`${configGameKey}`].rules,
+        gameDescription: this.config.games[`${configGameKey}`].description,
       },
       callback: {
         play: () => this.$app.router.navigate(`game/${gameId}`),
@@ -53,33 +58,33 @@ export default class GameListPage {
   }
 
   setRecommendedGame() {
-    const recommendedGameTemplate = this.getTemplateElementsObject();
+    this.getTemplateElementsObject();
     const recomendedGameConfig = this.config.games[`${this.getRandomGameName()}`];
-    this.setContentByConfig(recommendedGameTemplate, recomendedGameConfig, this.randomGameTitle);
-    this.elements.gameContainer.insertBefore(recommendedGameTemplate.node, this.elements.gameContainer.firstChild);
-    this.setElementsListeners(recommendedGameTemplate.gameStartButton, this.parametresObject);
+    this.setContentByConfig(this.templateElements, recomendedGameConfig, this.randomGameTitle);
+    this.elements.gameContainer.insertBefore(this.templateElements.node, this.elements.gameContainer.firstChild);
+    this.setElementsListeners(this.templateElements, this.parametresObject);
   }
 
   setGameBlocks() {
     this.gameTitles.forEach((configGameKey) => {
       if (configGameKey !== this.randomGameTitle) {
         const commonGameConfig = this.config.games[`${configGameKey}`];
-        const commonGameTemplate = this.getTemplateElementsObject(this.blockTypes.commonBlock);
-        this.setContentByConfig(commonGameTemplate, commonGameConfig, configGameKey);
-        this.setElementsListeners(commonGameTemplate.gameStartButton, this.parametresObject);
-        this.elements.gamesList.append(commonGameTemplate.node);
+        this.getTemplateElementsObject(this.blockTypes.commonBlock);
+        this.setContentByConfig(this.templateElements, commonGameConfig, configGameKey);
+        this.setElementsListeners(this.templateElements, this.parametresObject);
+        this.elements.gamesList.append(this.templateElements.node);
       }
     });
   }
 
-  setContentByConfig(template, config, configGameKey) {
-    this.parametresObject = this.setParamsObject(config.name, this.config.modalWindow.types.gameDescription, config.rules, config.description, configGameKey);
-    template.gameDesc.textContent = config.description;
-    template.gameTitle.textContent = config.name;
+  setContentByConfig(template, currentGameConfig, configGameKey) {
+    this.parametresObject = this.setParamsObject(this.config.modalWindow.types.gameDescription, configGameKey);
+    template.gameDesc.textContent = currentGameConfig.description;
+    template.gameTitle.textContent = currentGameConfig.name;
   }
 
-  setElementsListeners(button, parametres) {
-    button.addEventListener('click', () => {
+  setElementsListeners(nodeElements, parametres) {
+    nodeElements.gameStartButton.addEventListener('click', () => {
       this.openModalWindow(parametres);
     });
   }
