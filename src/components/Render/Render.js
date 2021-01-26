@@ -6,7 +6,7 @@ import Mixin from '@helpers/Mixin';
 import Header from './components/Header/Header';
 import Content from './components/Content/Content';
 import Footer from './components/Footer/Footer';
-import GameListPage from './components/Content/GameListPage/app';
+import GameListPage from './components/GameList/app';
 
 export default class Render {
   constructor(app) {
