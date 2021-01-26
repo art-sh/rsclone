@@ -25,11 +25,6 @@ const optimizations = () => {
   const config = {};
 
   if (isProd) {
-    // config.splitChunks = {
-    //   chunks: 'all',
-    //   minSize: 20000,
-    // };
-
     config.minimizer = [
       new TerserWebpackPlugin({
         parallel: true,
@@ -97,7 +92,6 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env'],
-            // compact: false,
           },
         },
       },
