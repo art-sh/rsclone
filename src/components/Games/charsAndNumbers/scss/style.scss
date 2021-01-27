@@ -1,0 +1,112 @@
+.game-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    flex: 1;
+    width: 42rem;
+    height: 22rem;
+    border: 1px solid black;
+    background-image: url('../assets/img/background.jpg');
+    background-position: center;
+    background-size: cover;
+    .game-field {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;;
+        width: 56%;
+        height: 88%;
+
+        .active {
+          .number-question {
+            color: black !important;
+          }
+          .char-question {
+            color: black !important;
+          }
+        }
+        .number-question-block {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            height: 50%;
+            .number-question {
+                text-transform: uppercase;
+                font: bold normal 1.5rem/110% Arial, sans-serif;
+                color: gray;
+            }
+            .number-block-content {
+                width: 20%;
+                height: 40px;
+                text-align: center;
+                .number-first-content-item {
+                    font: normal normal 2rem/110% Arial, sans-serif;
+                }
+                .number-second-content-item {
+                    font: normal normal 2rem/110% Arial, sans-serif;
+                }
+            }
+        }
+        .divider {
+            width: 80%;
+            border: 1px solid black;
+        }
+        .char-question-block {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            height: 50%;
+            .char-question {
+                text-transform: uppercase;
+                font: bold normal 1.5rem/110% Arial, sans-serif;
+                color: gray;
+            }
+
+            .char-block-content {
+                width: 20%;
+                height: 40px;
+                text-align: center;
+                .char-first-content-item {
+                    font: normal normal 2rem/110% Arial, sans-serif;
+                }
+                .char-second-content-item {
+                    font: normal normal 2rem/110% Arial, sans-serif;
+                }
+            }
+        }
+
+    }
+    .button-container {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 70%;
+        height: 15%;
+        & > button {
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: center;
+            justify-content: space-around;
+            width: 30%;
+            height: 90%;
+            outline: none;
+            border-radius: 10px;
+            border: none;
+            font: bold normal 1rem/110% Arial, sans-serif;
+            background-color: brown;
+            &:hover {
+                cursor: pointer;
+                transition: 0.4s;
+                transform: scale(1.03);
+            }
+        }
+        .yes-answer {
+            flex-direction: row;
+        }
+    }
+}
+
+
