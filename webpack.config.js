@@ -25,11 +25,6 @@ const optimizations = () => {
   const config = {};
 
   if (isProd) {
-    config.splitChunks = {
-      chunks: 'all',
-      minSize: 20000,
-    };
-
     config.minimizer = [
       new TerserWebpackPlugin({
         parallel: true,
@@ -43,13 +38,18 @@ const optimizations = () => {
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),
-  entry: ['@babel/polyfill', './app.js'],
+  entry: {
+    frontend: ['@babel/polyfill', './app.js'],
+    test: `mocha-loader!${path.resolve(__dirname, 'test', 'test.js')}`,
+  },
   mode: process.env.NODE_ENV,
   devtool: isDev ? 'source-map' : false,
   optimization: optimizations(),
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: `assets/js/app${isProd ? '~[hash]' : ''}.js`,
+    filename: (module) => {
+      if (['frontend', 'test'].includes(module.chunk.name)) return `[name]/assets/js/app${isProd ? '~[hash]' : ''}.js`;
+    },
     publicPath: '/',
   },
   resolve: {
@@ -87,7 +87,7 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        exclude: '/node_modules/',
+        exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
@@ -100,7 +100,7 @@ module.exports = {
         use: {
           loader: 'file-loader',
           options: {
-            outputPath: 'assets/img',
+            outputPath: 'frontend/assets/img',
           },
         },
       },
@@ -109,7 +109,7 @@ module.exports = {
         use: {
           loader: 'file-loader',
           options: {
-            outputPath: 'assets/fonts',
+            outputPath: 'frontend/assets/fonts',
           },
         },
       },
@@ -118,7 +118,7 @@ module.exports = {
         use: {
           loader: 'file-loader',
           options: {
-            outputPath: 'assets/sound',
+            outputPath: 'frontend/assets/sound',
           },
         },
       },
@@ -130,9 +130,16 @@ module.exports = {
       template: 'index.html',
       minify: isProd,
       favicon: 'assets/img/icons/favicon.png',
+      chunks: ['frontend'],
+    }),
+    new HTMLWebpackPlugin({
+      filename: 'test.html',
+      minify: isProd,
+      favicon: 'assets/img/icons/favicon.png',
+      chunks: ['test'],
     }),
     new MiniCssExtractPlugin({
-      filename: `assets/css/style${isProd ? '~[hash]' : ''}.css`,
+      filename: `[name]/assets/css/style${isProd ? '~[hash]' : ''}.css`,
     }),
     new ESLintPlugin({
       threads: true,

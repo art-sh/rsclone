@@ -1,11 +1,13 @@
 import MemoryGame from '@games/MemoryGame/app';
 import MemoryMatrix from '@games/MemoryMatrix/app';
+import WhackAMole from '@games/WhackAMoleGame/app';
 
 import Mixin from '@helpers/Mixin';
 
 import Header from './components/Header/Header';
 import Content from './components/Content/Content';
 import Footer from './components/Footer/Footer';
+import GameListPage from './components/GameList/app';
 
 export default class Render {
   constructor(app) {
@@ -29,6 +31,7 @@ export default class Render {
 
     this.games[this.$config.games.memoryGame.id] = MemoryGame;
     this.games[this.$config.games.memoryMatrix.id] = MemoryMatrix;
+    this.games[this.$config.games.whackAMole.id] = WhackAMole;
 
     this.elements.header.init();
     this.elements.content.init();
@@ -49,7 +52,11 @@ export default class Render {
     } else if (controller === 'welcome') {
       this.elements.content.setContent('welcome');
     } else if (controller === 'game-list') {
-      this.elements.content.setContent('gameList');
+      const cb = (content) => {
+        const list = new GameListPage(this.$app);
+        list.setGameListContent(content);
+      };
+      this.elements.content.setContent('gameList', cb);
     } else if (controller === 'sign-in') {
       this.elements.content.setContent('signIn');
     } else if (controller === 'sign-up') {

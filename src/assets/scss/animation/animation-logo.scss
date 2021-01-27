@@ -1,0 +1,18 @@
+.logo {
+  animation: opacity 5s infinite;
+}
+
+.rs-logo__img:hover {
+  animation: opacity 5s infinite;
+}
+
+@keyframes opacity {
+  0%, 100% {
+    transform: scale(0.9);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

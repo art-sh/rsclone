@@ -95,6 +95,11 @@ export default class Content {
           star: node.querySelector('#game-stats-star'),
         },
       };
+    } if (type === 'gameList') {
+      return {
+        gameContainer: node.querySelector('.games'),
+        gamesList: node.querySelector('.games__list'),
+      };
     }
 
     return {};
