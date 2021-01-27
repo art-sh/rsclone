@@ -3,7 +3,9 @@
   "private": true,
   "scripts": {
     "server": "cross-env NODE_ENV=development webpack-dev-server",
-    "build": "cross-env NODE_ENV=production webpack-cli"
+    "build": "cross-env NODE_ENV=production webpack-cli",
+    "backend": "nodemon -w backend --delay 2.5 backend/app.js",
+    "full": "concurrently -k \"npm run server\" \"npm run backend\""
   },
   "browserslist": "> 0.25%, not dead",
   "license": "ISC",
@@ -15,6 +17,7 @@
     "babel-loader": "^8.2.2",
     "chai": "^4.2.0",
     "clean-webpack-plugin": "^3.0.0",
+    "concurrently": "^5.3.0",
     "copy-webpack-plugin": "^6.4.1",
     "cross-env": "^7.0.3",
     "css-loader": "^5.0.1",
@@ -32,6 +35,7 @@
     "mocha": "^8.2.1",
     "mocha-loader": "^5.1.5",
     "node-sass": "^5.0.0",
+    "nodemon": "^2.0.7",
     "optimize-css-assets-webpack-plugin": "^5.0.4",
     "raw-loader": "^4.0.2",
     "sass-loader": "^10.1.0",
@@ -41,5 +45,8 @@
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql2": "^2.2.5"
+  }
 }
