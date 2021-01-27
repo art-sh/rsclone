@@ -79,7 +79,10 @@ export default class Render {
 
   setListeners() {
     Mixin.listen(this.$config.events.routeChange, () => {
-      if (this.gameInstance) this.gameInstance.destroyGameInstance();
+      if (this.gameInstance) {
+        this.gameInstance.destroyGameInstance();
+        this.gameInstance = null;
+      }
     });
   }
 }
