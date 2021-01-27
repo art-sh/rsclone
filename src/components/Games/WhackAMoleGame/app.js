@@ -93,8 +93,7 @@ export default class WhackAMole {
       this.startGame();
       this.$soundPlayer.playSound('level-next');
     } else {
-      this.gameEnd();
-      this.disableFinishBtn();
+      this.destroyGameInstance();
       this.$soundPlayer.playSound('level-down');
     }
   }
@@ -131,6 +130,7 @@ export default class WhackAMole {
   }
 
   gameEnd() {
+    this.disableFinishBtn();
     clearTimeout(this.stopGame);
     this.timer.stopCount();
     this.gameElement.remove();
@@ -157,8 +157,7 @@ export default class WhackAMole {
     this.elements.game.box.append(this.getGameNode());
     this.newGame();
     this.elements.game.finishBtn.addEventListener('click', () => {
-      this.gameEnd();
-      this.disableFinishBtn();
+      this.destroyGameInstance();
       this.$soundPlayer.playSound('level-down');
     });
   }
