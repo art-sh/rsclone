@@ -126,15 +126,11 @@ export default class WhackAMole {
   }
 
   destroyGameInstance() {
-    console.log('destroyGameInstance');
-
     this.gameEnd();
     this.gameElement.remove();
   }
 
   gameEnd() {
-    console.log('game end');
-
     clearTimeout(this.stopGame);
     this.timer.stopCount();
     this.gameElement.remove();
@@ -158,8 +154,6 @@ export default class WhackAMole {
   }
 
   init() {
-    console.log('init');
-
     this.elements.game.box.append(this.getGameNode());
     this.newGame();
     this.elements.game.finishBtn.addEventListener('click', () => {
