@@ -1,9 +1,9 @@
 import MemoryGame from '@games/MemoryGame/app';
 import MemoryMatrix from '@games/MemoryMatrix/app';
+import CharsAndNumbers from '@games/CharsAndNumbers/app';
 import WhackAMole from '@games/WhackAMoleGame/app';
 
 import Mixin from '@helpers/Mixin';
-
 import Header from './components/Header/Header';
 import Content from './components/Content/Content';
 import Footer from './components/Footer/Footer';
@@ -31,6 +31,7 @@ export default class Render {
 
     this.games[this.$config.games.memoryGame.id] = MemoryGame;
     this.games[this.$config.games.memoryMatrix.id] = MemoryMatrix;
+    this.games[this.$config.games.charsAndNumbersGame.id] = CharsAndNumbers;
     this.games[this.$config.games.whackAMole.id] = WhackAMole;
 
     this.elements.header.init();

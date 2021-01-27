@@ -1,10 +1,14 @@
 import './scss/style.scss';
+import ReverseTimer from '@helpers/ReverseTimer';
 import Mixin from '../../../helpers/Mixin';
 
 export default class CharsAndNumbers {
-  constructor(config, elements) {
-    this.config = config;
+  constructor(app, elements) {
+    this.$app = app;
+    this.gameConfig = app.config;
     this.elements = elements;
+    this.timer = new ReverseTimer();
+    this.$soundPlayer = app.soundPlayer;
     this.gameBlocks = {
       container: null,
       gameField: null,
@@ -27,7 +31,7 @@ export default class CharsAndNumbers {
     };
     this.letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
     this.vowelsLetters = ['A', 'E', 'I', 'O', 'U', 'Y'];
-    this.lives = 3;
+    this.lives = ['*', '*', '*'];
     this.containerIndex = 0;
     this.difficulty = 5;
     this.choosenContainer = null;
@@ -41,10 +45,12 @@ export default class CharsAndNumbers {
     this.timerInterval = 1000;
     this.currentTimeSeconds = 0;
     this.currentTimeInterval = 0;
+    this.scoreBase = 20;
   }
 
   createField() {
     this.elements.stats.score.textContent = 0;
+    this.createLivesIcons();
     this.gameBlocks.container = this.createElementFactory('div', null, 'game-container', null, null, null);
     this.gameBlocks.gameField = this.createElementFactory('div', null, 'game-field', null, null, null);
     this.gameBlocks.noButton = this.createElementFactory('button', null, 'no-answer', null, null, 'NO');
@@ -57,9 +63,9 @@ export default class CharsAndNumbers {
     this.gameBlocks.noButton.appendChild(leftArrow);
     this.gameBlocks.yesButton = this.createElementFactory('button', null, 'yes-answer', null, null, 'YES');
     this.gameBlocks.yesButton.appendChild(rightArrow);
-    this.gameBlocks.gameField.appendChild(this.createQuestionBlock());
+    this.gameBlocks.gameField.appendChild(this.createNumberQuestionBlock());
     this.gameBlocks.gameField.appendChild(this.createElementFactory('div', null, 'divider', null, null, null));
-    this.gameBlocks.gameField.appendChild(this.createQuestionBlock('char'));
+    this.gameBlocks.gameField.appendChild(this.createCharQuestionBlock());
     this.gameBlocks.container.appendChild(this.gameBlocks.gameField);
     const buttonContainer = this.createElementFactory('div', null, 'button-container', null, null, null);
     buttonContainer.appendChild(this.gameBlocks.noButton);
@@ -68,26 +74,66 @@ export default class CharsAndNumbers {
     this.gameBlocks.container.appendChild(buttonContainer);
   }
 
-  createQuestionBlock(type = 'number') {
-    const questionBlock = this.createElementFactory('div', null, `${type}-question-block`, null, null, null);
-    const questionElement = this.createElementFactory('span', null, `${type}-question`, null, null, 'Is even number?');
-    if (type === 'char') {
-      questionElement.textContent = 'Is vowel letter?';
-    }
-    const contentBlock = this.createElementFactory('div', null, `${type}-block-content`, null, null, null);
-    const firstContent = this.createElementFactory('span', null, `${type}-first-content-item`, null, null, null);
-    const secondContent = this.createElementFactory('span', null, `${type}-second-content-item`, null, null, null);
+  createLivesIcons() {
+    this.lives.forEach(() => {
+      this.elements.stats.icons.appendChild(this.elements.templates.star.content.cloneNode(true));
+    });
+  }
+
+  // createQuestionBlock(type = 'number') {
+  //   const questionBlock = this.createElementFactory('div', null, `${type}-question-block`, null, null, null);
+  //   const questionElement = this.createElementFactory('span', null, `${type}-question`, null, null, 'Is even number?');
+  //   if (type === 'char') {
+  //     questionElement.textContent = 'Is vowel letter?';
+  //   }
+  //   const contentBlock = this.createElementFactory('div', null, `${type}-block-content`, null, null, null);
+  //   const firstContent = this.createElementFactory('span', null, `${type}-first-content-item`, null, null, null);
+  //   const secondContent = this.createElementFactory('span', null, `${type}-second-content-item`, null, null, null);
+  //   questionBlock.appendChild(questionElement);
+  //   questionBlock.appendChild(questionElement);
+  //   if (type === 'char') {
+  //     this.gameBlocks.contentContainer.charContent.container = questionBlock;
+  //     this.gameBlocks.contentContainer.charContent.firstContent = firstContent;
+  //     this.gameBlocks.contentContainer.charContent.secondContent = secondContent;
+  //   } else {
+  //     this.gameBlocks.contentContainer.numberContent.container = questionBlock;
+  //     this.gameBlocks.contentContainer.numberContent.firstContent = firstContent;
+  //     this.gameBlocks.contentContainer.numberContent.secondContent = secondContent;
+  //   }
+  //   contentBlock.appendChild(firstContent);
+  //   contentBlock.appendChild(secondContent);
+  //   questionBlock.appendChild(contentBlock);
+  //   return questionBlock;
+  // }
+
+  createNumberQuestionBlock() {
+    const questionBlock = this.createElementFactory('div', null, 'number-question-block', null, null, null);
+    const questionElement = this.createElementFactory('span', null, 'number-question', null, null, 'Is even number?');
+    const contentBlock = this.createElementFactory('div', null, 'number-block-content', null, null, null);
+    const firstContent = this.createElementFactory('span', null, 'number-first-content-item', null, null, null);
+    const secondContent = this.createElementFactory('span', null, 'number-second-content-item', null, null, null);
     questionBlock.appendChild(questionElement);
     questionBlock.appendChild(questionElement);
-    if (type === 'char') {
-      this.gameBlocks.contentContainer.charContent.container = questionBlock;
-      this.gameBlocks.contentContainer.charContent.firstContent = firstContent;
-      this.gameBlocks.contentContainer.charContent.secondContent = secondContent;
-    } else {
-      this.gameBlocks.contentContainer.numberContent.container = questionBlock;
-      this.gameBlocks.contentContainer.numberContent.firstContent = firstContent;
-      this.gameBlocks.contentContainer.numberContent.secondContent = secondContent;
-    }
+    this.gameBlocks.contentContainer.numberContent.container = questionBlock;
+    this.gameBlocks.contentContainer.numberContent.firstContent = firstContent;
+    this.gameBlocks.contentContainer.numberContent.secondContent = secondContent;
+    contentBlock.appendChild(firstContent);
+    contentBlock.appendChild(secondContent);
+    questionBlock.appendChild(contentBlock);
+    return questionBlock;
+  }
+
+  createCharQuestionBlock() {
+    const questionBlock = this.createElementFactory('div', null, 'char-question-block', null, null, null);
+    const questionElement = this.createElementFactory('span', null, 'char-question', null, null, 'Is vowel letter?');
+    const contentBlock = this.createElementFactory('div', null, 'char-block-content', null, null, null);
+    const firstContent = this.createElementFactory('span', null, 'char-first-content-item', null, null, null);
+    const secondContent = this.createElementFactory('span', null, 'char-second-content-item', null, null, null);
+    questionBlock.appendChild(questionElement);
+    questionBlock.appendChild(questionElement);
+    this.gameBlocks.contentContainer.charContent.container = questionBlock;
+    this.gameBlocks.contentContainer.charContent.firstContent = firstContent;
+    this.gameBlocks.contentContainer.charContent.secondContent = secondContent;
     contentBlock.appendChild(firstContent);
     contentBlock.appendChild(secondContent);
     questionBlock.appendChild(contentBlock);
@@ -152,13 +198,14 @@ export default class CharsAndNumbers {
       }
       this.checkGuess();
     });
-    document.addEventListener('keydown', this.keyboarArrowClickHandler.bind(this));
-    this.elements.game.finishBtn.addEventListener('click', this.endGameHandler.bind(this));
+    this.bindKeyHandler = this.keyboarArrowClickHandler.bind(this);
+    document.addEventListener('keydown', this.bindKeyHandler);
   }
 
-  clearTextContent(first, second) {
-    first.textContent = '';
-    second.textContent = '';
+  clearTextContent(...args) {
+    args.forEach((textElement) => {
+      textElement.textContent = '';
+    });
   }
 
   difficultyHandler() {
@@ -200,8 +247,7 @@ export default class CharsAndNumbers {
       this.difficultyHandler();
       this.addLevelContent();
     }
-
-    if (this.lives <= 0) {
+    if (this.elements.stats.icons.children.length === 0) {
       this.endGameHandler();
     }
   }
@@ -209,72 +255,69 @@ export default class CharsAndNumbers {
   correctAnswerHandler() {
     if (this.guess === this.answer) {
       this.guessCount += 1;
-      this.score += this.scoreMultipliyer * 20;
+      this.$soundPlayer.playSound('level-next');
+      this.score += this.scoreMultipliyer * this.scoreBase;
       this.elements.stats.score.textContent = this.score;
     }
   }
 
   wrongAnswerHandler() {
+    const live = this.elements.stats.icons.querySelector('.game-status_custom');
     if (this.guess !== this.answer) {
+      // this.$soundPlayer.playSound('level-next');
+      this.elements.stats.icons.removeChild(live);
       this.guessCount += 1;
-      this.lives -= 1;
     }
   }
 
-  updateTimer() {
-    this.currentTimeSeconds = 80;
-    this.currentTimeInterval = setInterval(() => {
-      // if (!this.isGameActive) return;
-
-      const min = Math.floor(this.currentTimeSeconds / 60);
-      const sec = this.currentTimeSeconds % 60;
-
-      this.currentTimeSeconds -= 1;
-      this.setTimeText(`${this.addZero(min)}:${this.addZero(sec)}`);
-      if (min === 0 && sec === 0) {
-        this.endGameHandler();
-      }
-    }, this.timerInterval);
+  setTimerTextContent(time) {
+    this.elements.stats.time.textContent = `${time.minutesString}:${time.secondsString}`;
   }
 
-  setTimeText(string) {
-    this.elements.stats.time.textContent = string.toString();
-  }
-
-  addZero(num) {
-    return num.toString().padStart(2, '0');
+  blockOrApproveClicksHandler(type = 'block') {
+    if (type === 'block') {
+      this.gameBlocks.buttonWrapper.classList.add('no-clicks');
+    } else {
+      this.gameBlocks.buttonWrapper.classList.remove('no-clicks');
+    }
   }
 
   endGameHandler() {
-    clearInterval(this.currentTimeInterval);
-    alert('GAME OVER');
-    Mixin.dispatch(this.$app.config.events.gameEnd, {
-      gameId: this.config.games.charsAndNumbersGame.id,
+    document.removeEventListener('keydown', this.bindKeyHandler);
+    this.$soundPlayer.playSound('game-end');
+    this.blockOrApproveClicksHandler();
+    this.timer.stopCount();
+    Mixin.dispatch(this.gameConfig.events.gameEnd, {
+      game: this.gameConfig.games.charsAndNumbersGame.id,
       score: this.score,
     });
   }
 
   startGame() {
+    this.blockOrApproveClicksHandler('approve');
+    this.timer.startCount(55, this.setTimerTextContent.bind(this), this.endGameHandler.bind(this));
     this.choseContentContainer();
     this.listenersHandler();
     this.addLevelContent();
   }
 
   destroyGameInstance() {
-    clearInterval(this.currentTimeInterval);
-    document.removeEventListener('keydown', this.keyboarArrowClickHandler.bind(this));
+    this.timer.stopCount();
+    document.removeEventListener('keydown', this.bindKeyHandler);
     this.elements.game.box.removeChild(this.gameBlocks.container);
+    this.elements.stats.score.innerText = '';
+    this.elements.stats.time.innerText = '';
+    this.elements.stats.icons.innerText = '';
   }
 
-  getGameInstance(config, elements) {
-    return new CharsAndNumbers(config, elements);
+  getGameInstance(app, elements) {
+    const game = new CharsAndNumbers(app, elements);
+    game.init();
+    return game;
   }
 
   init() {
-    this.setTimeText(`${this.addZero(1)}:${this.addZero(20)}`);
-    this.updateTimer();
     this.createField();
     this.elements.game.box.appendChild(this.gameBlocks.container);
-    this.startGame();
   }
 }
