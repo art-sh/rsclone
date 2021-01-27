@@ -245,7 +245,7 @@ export default class MemoryMatrix {
 
   destroyGameInstance() {
     this.timer.stopCount();
-    this.elements.game.box.removeChild(this.gameBlocks.container);
+    this.gameBlocks.container.remove();
     this.elements.stats.score.innerText = '';
     this.elements.stats.time.innerText = '';
     this.elements.stats.icons.innerText = '';
