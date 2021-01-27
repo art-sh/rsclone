@@ -87,10 +87,16 @@ export default class WhackAMole {
   }
 
   levelUp() {
-    this.$soundPlayer.playSound('level-next');
     this.maxTime >= 100 ? this.maxTime -= 100 : this.maxTime = 100;
     this.minTime >= 100 ? this.minTime -= 100 : this.minTime = 100;
-    this.sessionScore >= 3 ? this.startGame() : this.gameEnd();
+    if (this.sessionScore >= 3) {
+      this.startGame();
+      this.$soundPlayer.playSound('level-next');
+    } else {
+      this.gameEnd();
+      this.disableFinishBtn();
+      this.$soundPlayer.playSound('level-down');
+    }
   }
 
   randomTime(min, max) {
@@ -113,18 +119,29 @@ export default class WhackAMole {
     this.elements.stats.score.textContent = string.toString();
   }
 
+  disableFinishBtn() {
+    this.elements.game.finishBtn.disabled = true;
+    this.elements.game.finishBtn.addClass('button_disabled');
+    this.elements.game.finishBtn.style.cursor = 'default';
+  }
+
   destroyGameInstance() {
+    console.log('destroyGameInstance');
+
     this.gameEnd();
     this.gameElement.remove();
   }
 
   gameEnd() {
+    console.log('game end');
+
     clearTimeout(this.stopGame);
     this.timer.stopCount();
+    this.gameElement.remove();
     this.isScoreCheat = false;
     this.timeUp = false;
-    this.$soundPlayer.playSound('level-down');
     // POP UP GAME OVER
+
     return Mixin.dispatch(this.gameConfig.events.gameEnd, {
       game: this.gameConfig.id,
       score: this.totalScore,
@@ -141,9 +158,15 @@ export default class WhackAMole {
   }
 
   init() {
+    console.log('init');
+
     this.elements.game.box.append(this.getGameNode());
-    this.elements.game.finishBtn.addEventListener('click', () => this.gameEnd());
     this.newGame();
+    this.elements.game.finishBtn.addEventListener('click', () => {
+      this.gameEnd();
+      this.disableFinishBtn();
+      this.$soundPlayer.playSound('level-down');
+    });
   }
 
   getGameInstance(root, elements) {
