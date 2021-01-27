@@ -9,6 +9,12 @@ export default {
     gameStart: 'game-start',
     gameEnd: 'game-end',
   },
+  modalWindow: {
+    types: {
+      gameDescription: 'modal-description',
+      gameEnd: 'modal-game-end',
+    },
+  },
   games: {
     memoryMatrix: {
       name: 'Matrix Memory',
@@ -27,6 +33,12 @@ export default {
       id: 'chars-and-numbers',
       description: 'Game for the increasing reaction speed  and  logic',
       rules: 'At the beginning of each round, the playing field is divided into 2 parts. After some time, a combination of a letter and a number appears in one of the parts and a question that must be answered as quickly as possible by pressing the yes/no buttons.. You can use the arrows on the keyboard.',
+    },
+    whackAMole: {
+      id: 'whack-a-mole',
+      name: 'Whack-A-Mole',
+      description: 'In order to advance through the levels of this game, the user will have to hit the target mole.',
+      rules: 'If you hit three times per level, the movement speed of the mole will increase! And be careful: aim exactly at the mole.',
     },
   },
 };

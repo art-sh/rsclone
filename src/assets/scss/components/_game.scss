@@ -45,8 +45,10 @@
   max-width: 800px;
   min-height: 350px;
   margin: auto;
-  background-color: #f9f9f9;
   margin-bottom: 40px;
+  background: rgba(71, 43, 131, 0.24);
+  backdrop-filter: blur(3px);
+  border-radius: 10px;
 }
 
 .game-finish {

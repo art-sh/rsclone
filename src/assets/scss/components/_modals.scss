@@ -2,137 +2,135 @@
   overflow: hidden;
 }
 
-.overlay {
+.modal {
   position: fixed;
+  left: 0;
   top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(148, 115, 218, 0.45);
-  z-index: 900;
-  display: flex;
-  align-items: center;
-  overflow: auto;
-
-  /*HIDE!!!!*/
-  display: none;
-}
-
-.modal__box {
-  background: #472B83;
-  box-shadow: 0px 4px 5px rgba(133, 131, 131, 0.2);
-  border-radius: 10px;
-  max-width: 700px;
-  position: absolute;
-  z-index: 1000;
-  box-sizing: border-box;
-  left: 0;
   right: 0;
-  margin: auto;
-  transition-duration: 700ms;
-  padding: 15px 15px 70px 40px;
-}
-
-.modal__box:after {
-  content: '';
-  display: block;
-  width: 270px;
-  height: 84px;
-  background-image: url("@assets/img/logo-sign.png");
-  position: absolute;
-  bottom: 15px;
-  right: 20px;
-}
-
-.modal-title {
-  font-family: Acrom, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 24px;
-  line-height: 29px;
-  letter-spacing: 0.015em;
-  text-transform: capitalize;
-  color: #F9F9F9;
-  margin-bottom: 25px;
-}
-
-.button-close {
-  background: none;
-  border: none;
+  height: 100vh;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  z-index: -1;
+  transition: all .25s;
+  overflow: auto;
   cursor: pointer;
-  display: block;
-  margin-left: auto;
-}
 
-/*-------------Game--------------*/
+  $modal: &;
 
-.game-result {
-  margin-bottom: 40px;
-}
-
-.game-result__item {
-  margin-bottom: 15px;
-  &:last-child {
-    margin-bottom: 0;
+  &.show {
+    visibility: visible;
+    opacity: 1;
+    z-index: 900;
   }
-}
 
-.game-result__title {
-  display: inline-block;
-  margin-right: 10px;
-  font-family: Acrom, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 18px;
-  line-height: 22px;
-  color: #F9F9F9;
-}
+  &__block {
+    background: $header-bg;
+    box-shadow: 0 4px 5px $color-black-1;
+    border-radius: 10px;
+    max-width: 700px;
+    position: absolute;
+    z-index: 1000;
+    box-sizing: border-box;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transition-delay: .25s;
+    transition-duration: 500ms;
+    transform: translateY(calc(-50vh - 100%));
+    padding: 45px 70px 70px 38px;
+    margin: 0 auto;
+    cursor: default;
 
-.game-result__score, .game-result__time, .game-result__achives {
-  display: inline-block;
-  font-family: Acrom, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 18px;
-  line-height: 22px;
-  color: #F9F9F9;
-}
+    #{$modal}.show & {
+      transform: translateY(-50%);
+    }
 
-.game-restart {
-  margin-right: 25px;
-  display: inline-block;
-}
+    &:after {
+      content: '';
+      display: block;
+      width: 270px;
+      height: 84px;
+      background-image: url("@assets/img/logo-sign.png");
+      position: absolute;
+      bottom: 15px;
+      right: 20px;
+    }
 
-.game-quit {
-  display: inline-block;
-}
+    &-header {
+      position: absolute;
+      top: 15px;
+      right: 15px;
 
+      &-button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        margin-left: auto;
 
+        &:hover {
+          opacity: .75;
+        }
+      }
+    }
 
-/*--------------Home-----------*/
-.about-game__desc {
-  margin-bottom: 20px;
-  margin-right: 35px;
-}
+    &-content {
+      margin-bottom: 38px;
 
-.about-game__p {
-  font-family: Acrom, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 140%;
-  color: #F9F9F9;
-  margin-bottom: 10px;
-}
+      &-line {
+        margin-bottom: 20px;
 
-.about-game_subtitle {
-  font-family: Acrom, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 18px;
-  line-height: 1.2;
-  letter-spacing: 0.015em;
-  text-transform: capitalize;
-  color: #F9F9F9;
-  margin-bottom: 10px;
+        $high: #{&}--high;
+
+        &--high {
+          margin: 15px 0;
+        }
+
+        &-header {
+          padding-bottom: 10px;
+          font-size: 18px;
+          line-height: 120%;
+          color: $color-white-1;
+
+          #{$high} & {
+            display: inline;
+            margin-right: 10px;
+          }
+
+          &.text-title {
+            font-size: 24px;
+          }
+        }
+
+        &-text {
+          color: $color-white-1;
+          font-size: 14px;
+          line-height: 140%;
+          letter-spacing: 0.015em;
+
+          #{$high} & {
+            font-size: 18px;
+            line-height: 120%;
+          }
+        }
+      }
+    }
+
+    &-button-group {
+      display: flex;
+
+      & > * {
+        margin-right: 25px;
+      }
+    }
+  }
+
+  &__background {
+    background: rgba(148, 115, 218, 0.45);
+    height: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
 }
