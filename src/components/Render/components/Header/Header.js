@@ -13,7 +13,7 @@ export default class Header {
       logo: this.node.querySelector('.logo'),
       burger: this.node.querySelector('#burger'),
       burgerMenu: this.node.querySelector('#burger__menu'),
-      burgerLinks: this.node.querySelectorAll('#burger__menu .menu__link'),
+      burgerLinks: this.node.querySelectorAll('.menu__list .menu__link'),
     };
 
     this.setHeaderListeners();
@@ -30,7 +30,7 @@ export default class Header {
     return node.firstChild;
   }
 
-  burgerMethod() {
+  toggleBurgerMenu() {
     this.elements.burger.classList.toggle('active');
     this.elements.burgerMenu.classList.toggle('active');
     if (this.elements.burgerMenu.classList.contains('active')) {
@@ -40,9 +40,18 @@ export default class Header {
     }
   }
 
+  hideBurgerMenu() {
+    if (this.elements.burgerMenu.classList.contains('active')) {
+      this.elements.burger.classList.remove('active');
+      this.elements.burgerMenu.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+  }
+
   setHeaderListeners() {
-    this.elements.logo.addEventListener('click', () => this.burgerMethod());
-    this.elements.burger.addEventListener('click', () => this.burgerMethod());
-    this.elements.burgerLinks.forEach((link) => link.addEventListener('click', () => this.burgerMethod()));
+    this.elements.logo.addEventListener('click', () => this.hideBurgerMenu());
+    this.elements.burger.addEventListener('click', () => this.toggleBurgerMenu());
+    this.elements.burgerLinks.forEach((link) => link.addEventListener('click', () => this.hideBurgerMenu()));
+    window.addEventListener('resize', () => this.hideBurgerMenu());
   }
 }
