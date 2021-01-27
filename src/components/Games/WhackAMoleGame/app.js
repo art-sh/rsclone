@@ -121,7 +121,7 @@ export default class WhackAMole {
 
   disableFinishBtn() {
     this.elements.game.finishBtn.disabled = true;
-    this.elements.game.finishBtn.addClass('button_disabled');
+    // this.elements.game.finishBtn.classList.add('button_disabled');
     this.elements.game.finishBtn.style.cursor = 'default';
   }
 
