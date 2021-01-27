@@ -304,7 +304,7 @@ export default class CharsAndNumbers {
   destroyGameInstance() {
     this.timer.stopCount();
     document.removeEventListener('keydown', this.bindKeyHandler);
-    this.elements.game.box.removeChild(this.gameBlocks.container);
+    this.gameBlocks.container.remove();
     this.elements.stats.score.innerText = '';
     this.elements.stats.time.innerText = '';
     this.elements.stats.icons.innerText = '';
