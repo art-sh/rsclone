@@ -14,7 +14,11 @@ export default class Content {
     this.$appContainer = appContainer;
 
     this.elementContent = null;
-    this.elements = {};
+    this.node = this.getNode();
+    this.elements = {
+      toggleThemeDark: document.querySelector('.theme-status_dark'),
+      toggleThemeLight: document.querySelector('.theme-status_light'),
+    };
     this.templates = {
       game: templateGame,
       welcome: templateWelcome,
@@ -24,6 +28,7 @@ export default class Content {
       profile: templateProfile,
       statistic: templateStatistic,
     };
+    // this.setContentListeners();
   }
 
   init() {
@@ -73,8 +78,12 @@ export default class Content {
     });
   }
 
+  toggleThemes() {
+    console.log('change theme!');
+  }
+
   setContentListeners() {
-    //
+    // this.elements.toggleThemeDark.addEventListener('click', () => this.toggleThemes());
   }
 
   getNodeElements(node, type) {
