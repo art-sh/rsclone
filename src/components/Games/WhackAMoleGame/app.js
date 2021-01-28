@@ -121,7 +121,7 @@ export default class WhackAMole {
 
   disableFinishBtn() {
     this.elements.game.finishBtn.disabled = true;
-    // this.elements.game.finishBtn.classList.add('button_disabled');
+    this.elements.game.finishBtn.classList.add('button_disabled');
     this.elements.game.finishBtn.style.cursor = 'default';
   }
 
@@ -133,9 +133,9 @@ export default class WhackAMole {
       text: {
         score: this.totalScore,
       },
-      // callback: {
-      //   restart: () => this.startGame(),
-      // },
+      callback: {
+        restart: () => this.startGame(),
+      },
     });
   }
 
