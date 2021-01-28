@@ -1,4 +1,5 @@
 import ReverseTimer from '@helpers/ReverseTimer';
+import ModalWindow from '@/components/Render/components/ModalWindow/app';
 import Mixin from '../../../helpers/Mixin';
 import './scss/style.scss';
 
@@ -93,7 +94,7 @@ export default class WhackAMole {
       this.startGame();
       this.$soundPlayer.playSound('level-next');
     } else {
-      this.destroyGameInstance();
+      this.gameEnd();
       this.$soundPlayer.playSound('level-down');
     }
   }
@@ -124,6 +125,20 @@ export default class WhackAMole {
     this.elements.game.finishBtn.style.cursor = 'default';
   }
 
+  showModalWindow() {
+    const modal = new ModalWindow(this.$app);
+    modal.showModal({
+      type: this.gameConfig.modalWindow.types.gameEnd,
+      container: this.gameElement,
+      text: {
+        score: this.totalScore,
+      },
+      // callback: {
+      //   restart: () => this.startGame(),
+      // },
+    });
+  }
+
   destroyGameInstance() {
     this.gameEnd();
     this.gameElement.remove();
@@ -133,10 +148,10 @@ export default class WhackAMole {
     this.disableFinishBtn();
     clearTimeout(this.stopGame);
     this.timer.stopCount();
+    this.showModalWindow();
     this.gameElement.remove();
     this.isScoreCheat = false;
     this.timeUp = false;
-    // POP UP GAME OVER
 
     return Mixin.dispatch(this.gameConfig.events.gameEnd, {
       game: this.gameConfig.id,
@@ -155,11 +170,11 @@ export default class WhackAMole {
 
   init() {
     this.elements.game.box.append(this.getGameNode());
-    this.newGame();
     this.elements.game.finishBtn.addEventListener('click', () => {
-      this.destroyGameInstance();
+      this.gameEnd();
       this.$soundPlayer.playSound('level-down');
     });
+    this.newGame();
   }
 
   getGameInstance(root, elements) {
