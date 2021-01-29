@@ -17,6 +17,7 @@ export default class GameListPage {
       common: 'common',
     };
 
+    this.imagesCollection = Mixin.handleWebpackImport(require.context('./assets/img', true, /\.png/));
     this.templates = {
       [this.gameBlockTypes.recommended]: templateRecommendedGame,
       [this.gameBlockTypes.common]: templateCommonGame,
@@ -88,6 +89,7 @@ export default class GameListPage {
   }
 
   setContentByConfig(gameElements, gameConfig) {
+    gameElements.gameFrame.src = this.imagesCollection[gameConfig.id];
     gameElements.gameDescription.textContent = gameConfig.description;
     gameElements.gameTitle.textContent = gameConfig.name;
   }

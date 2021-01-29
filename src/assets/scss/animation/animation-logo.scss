@@ -1,18 +1,54 @@
 .logo {
-  animation: opacity 5s infinite;
+  animation: header-logo-animate 4s infinite 2s;
 }
 
 .rs-logo__img:hover {
-  animation: opacity 5s infinite;
+  animation: footer-logo-animate 1s infinite;
 }
 
-@keyframes opacity {
+@keyframes header-logo-animate {
+  $rotateDegree: 1deg;
+  $opacityLow: 0.75;
+
   0%, 100% {
-    transform: scale(0.9);
-    opacity: 0.6;
+    opacity: 1;
   }
-  50% {
+  66% {
+    transform: rotate(0);
+    opacity: $opacityLow;
+  }
+  70% {
+    transform: rotate($rotateDegree);
+    opacity: $opacityLow;
+  }
+  74% {
+    transform: rotate(-$rotateDegree);
+    opacity: $opacityLow;
+  }
+  78% {
+    transform: rotate($rotateDegree);
+    opacity: $opacityLow;
+  }
+  82% {
+    transform: rotate(-$rotateDegree);
+    opacity: $opacityLow;
+  }
+  86% {
+    transform: rotate(0);
+    opacity: $opacityLow;
+  }
+  90% {
+    opacity: 1;
+  }
+}
+
+@keyframes footer-logo-animate {
+  0%, 100% {
     transform: scale(1);
     opacity: 1;
+  }
+  50% {
+    transform: scale(0.95);
+    opacity: 0.75;
   }
 }

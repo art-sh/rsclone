@@ -11,7 +11,7 @@ export default class Header {
     this.node = this.getNode();
     this.elements = {
       logo: this.node.querySelector('.logo'),
-      burger: this.node.querySelector('#burger'),
+      burgerButton: this.node.querySelector('.menu__burger-button'),
       burgerMenu: this.node.querySelector('#burger__menu'),
       burgerLinks: this.node.querySelectorAll('.menu__list .menu__link'),
     };
@@ -30,28 +30,30 @@ export default class Header {
     return node.firstChild;
   }
 
-  toggleBurgerMenu() {
-    this.elements.burger.classList.toggle('active');
-    this.elements.burgerMenu.classList.toggle('active');
-    if (this.elements.burgerMenu.classList.contains('active')) {
-      document.body.style.overflow = 'hidden';
+  burgerMenuToggle() {
+    if (document.body.classList.contains('menu-show')) {
+      this.burgerMenuHide();
     } else {
-      document.body.style.overflow = 'auto';
+      this.burgerMenuShow();
     }
   }
 
-  hideBurgerMenu() {
-    if (this.elements.burgerMenu.classList.contains('active')) {
-      this.elements.burger.classList.remove('active');
-      this.elements.burgerMenu.classList.remove('active');
-      document.body.style.overflow = 'auto';
-    }
+  burgerMenuResizeCheck() {
+    if (document.body.classList.contains('menu-show') && window.innerWidth > 500) this.burgerMenuHide();
+  }
+
+  burgerMenuHide() {
+    document.body.classList.remove('menu-show');
+  }
+
+  burgerMenuShow() {
+    document.body.classList.add('menu-show');
   }
 
   setHeaderListeners() {
-    this.elements.logo.addEventListener('click', () => this.hideBurgerMenu());
-    this.elements.burger.addEventListener('click', () => this.toggleBurgerMenu());
-    this.elements.burgerLinks.forEach((link) => link.addEventListener('click', () => this.hideBurgerMenu()));
-    window.addEventListener('resize', () => this.hideBurgerMenu());
+    this.elements.burgerButton.addEventListener('click', () => this.burgerMenuToggle());
+
+    window.addEventListener('resize', () => this.burgerMenuResizeCheck());
+    Mixin.listen(this.$app.config.events.routeChange, () => this.burgerMenuHide());
   }
 }

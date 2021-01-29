@@ -120,7 +120,7 @@ export default class MemoryGame {
           this.timer.stopCount();
           this.destroyGameInstance();
           this.$soundPlayer.playSound('game-end');
-          // console.log('game finished');
+          // POP UP YOU WIN
         } else {
           this.levelUp();
           this.$soundPlayer.playSound('level-next');
@@ -145,7 +145,7 @@ export default class MemoryGame {
     const finish = () => {
       this.$soundPlayer.playSound('level-down');
       this.destroyGameInstance();
-      // console.log('end');
+      // POP UP GAME OVER
     };
     this.timer.startCount(sessionTime, this.setTimeText.bind(this), finish);
   }
@@ -162,6 +162,12 @@ export default class MemoryGame {
     this.elements.stats.score.textContent = string.toString();
   }
 
+  disableFinishBtn() {
+    this.elements.game.finishBtn.disabled = true;
+    // this.elements.game.finishBtn.classList.add('button_disabled');
+    this.elements.game.finishBtn.style.cursor = 'default';
+  }
+
   destroyGameInstance() {
     this.gameEnd();
     this.gameElement.remove();
@@ -169,6 +175,7 @@ export default class MemoryGame {
 
   gameEnd() {
     this.timer.stopCount();
+    this.disableFinishBtn();
     return Mixin.dispatch(this.gameConfig.events.gameEnd, {
       game: this.gameConfig.id,
       score: this.score,
@@ -185,7 +192,10 @@ export default class MemoryGame {
 
   init() {
     this.elements.game.box.append(this.getGameNode());
-    this.elements.game.finishBtn.addEventListener('click', () => this.gameEnd());
+    this.elements.game.finishBtn.addEventListener('click', () => {
+      this.destroyGameInstance();
+      this.$soundPlayer.playSound('level-down');
+    });
   }
 
   getGameInstance(root, elements) {
