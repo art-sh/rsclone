@@ -8,6 +8,7 @@ import Header from './components/Header/Header';
 import Content from './components/Content/Content';
 import Footer from './components/Footer/Footer';
 import GameListPage from './components/GameList/app';
+import BackgroundStars from './components/BackgroundStars/app';
 
 export default class Render {
   constructor(app) {
@@ -21,6 +22,7 @@ export default class Render {
       header: new Header(this.$app, appContainer),
       content: new Content(this.$app, appContainer),
       footer: new Footer(this.$app, appContainer),
+      backgroundStars: new BackgroundStars(this.$app, appContainer),
     };
     this.gameInstance = null;
     this.games = {};
@@ -37,6 +39,7 @@ export default class Render {
     this.elements.header.init();
     this.elements.content.init();
     this.elements.footer.init();
+    this.elements.backgroundStars.init();
 
     this.setListeners();
   }
