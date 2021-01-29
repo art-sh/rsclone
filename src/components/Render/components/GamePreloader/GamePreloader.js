@@ -12,7 +12,7 @@ export default class GamePreloader {
       container: this.getLoaderContainer(),
     };
 
-    Mixin.listen(this.$app.config.events.routeChange, this.destroyLoader.bind(this));
+    this.setLoaderListeners();
   }
 
   getLoaderContainer() {
@@ -36,6 +36,6 @@ export default class GamePreloader {
   }
 
   setLoaderListeners() {
-    //
+    Mixin.listen(this.$app.config.events.routeChange, this.destroyLoader.bind(this), true);
   }
 }
