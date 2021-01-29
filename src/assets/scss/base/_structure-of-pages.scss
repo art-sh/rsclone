@@ -16,7 +16,7 @@ body {
 body {
   overflow-y: scroll;
 
-  &.modal-show {
+  &.modal-show, &.menu-show {
     overflow-y: hidden;
 
     .main-container {
