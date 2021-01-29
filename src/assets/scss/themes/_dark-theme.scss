@@ -1,6 +1,7 @@
 .main-container_dark {
   background: linear-gradient(179.79deg, #9473DA -1.13%, #1B1033 99.82%);
 
+  /*--- Game list ---*/
   .game-title {
     color: #F9F9F9;
   }
@@ -11,6 +12,55 @@
 
   .game-status__state {
     color: #f9f9f9;
+  }
+
+  /*--- Statistic ---*/
+  .statistic__title {
+    color: #F9F9F9;
+  }
+
+  .statistic__table {
+    color: #F9F9F9;
+  }
+
+  .achievements__title {
+    font-weight: 250;
+    color: #F9F9F9;
+  }
+
+  /*--- Profile ---*/
+  .transparent-wrapper {
+    background: rgba(71, 43, 131, 0.24);
+  }
+
+  .profile__title {
+    color: #F9F9F9;
+  }
+
+  .profile__row {
+    color: #F9F9F9;
+
+    span {
+      font-weight: 250;
+    }
+
+    .sound-status {
+      font-weight: 250;
+      &.active {
+        font-weight: bold;
+      }
+    }
+
+    .theme-status {
+      font-weight: 250;
+      &.active {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .profile__subtitle {
+    color: #F9F9F9;
   }
 }
 
