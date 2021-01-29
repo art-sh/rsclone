@@ -15,10 +15,7 @@ export default class Content {
 
     this.elementContent = null;
     this.node = this.getNode();
-    this.elements = {
-      toggleThemeDark: document.querySelector('.theme-status_dark'),
-      toggleThemeLight: document.querySelector('.theme-status_light'),
-    };
+    this.elements = {};
     this.templates = {
       game: templateGame,
       welcome: templateWelcome,
@@ -28,7 +25,6 @@ export default class Content {
       profile: templateProfile,
       statistic: templateStatistic,
     };
-    // this.setContentListeners();
   }
 
   init() {
@@ -78,12 +74,31 @@ export default class Content {
     });
   }
 
-  toggleThemes() {
-    console.log('change theme!');
+  addDarkTheme() {
+    if (!this.elements.toggleThemeDark.classList.contains('active')) {
+      console.log('change theme to dark!');
+      this.elements.toggleThemeDark.classList.add('active');
+      document.querySelector('.main-container').classList.add('.main-container_dark');
+      this.elements.toggleThemeLight.classList.remove('active');
+      document.querySelector('.main-container').classList.remove('.main-container_light');
+    }
   }
 
-  setContentListeners() {
-    // this.elements.toggleThemeDark.addEventListener('click', () => this.toggleThemes());
+  addLightTheme() {
+    if (!this.elements.toggleThemeLight.classList.contains('active')) {
+      console.log('change theme to light!');
+      this.elements.toggleThemeLight.classList.add('active');
+      document.querySelector('.main-container').classList.add('.main-container_light');
+      this.elements.toggleThemeDark.classList.remove('active');
+      document.querySelector('.main-container').classList.remove('.main-container_dark');
+    }
+  }
+
+  setContentListeners(elements, type) {
+    if (type === 'profile') {
+      elements.toggleThemeDark.addEventListener('click', () => this.addDarkTheme());
+      elements.toggleThemeLight.addEventListener('click', () => this.addLightTheme());
+    }
   }
 
   getNodeElements(node, type) {
@@ -108,6 +123,11 @@ export default class Content {
       return {
         gameContainer: node.querySelector('.games'),
         gamesList: node.querySelector('.games__list'),
+      };
+    } if (type === 'profile') {
+      return {
+        toggleThemeDark: node.querySelector('.theme-status_dark'),
+        toggleThemeLight: node.querySelector('.theme-status_light'),
       };
     }
 
