@@ -76,7 +76,6 @@ export default class Content {
 
   addDarkTheme() {
     if (!this.elements.toggleThemeDark.classList.contains('active')) {
-      console.log('change theme to dark!');
       this.elements.toggleThemeDark.classList.add('active');
       document.querySelector('.main-container').classList.add('main-container_dark');
       this.elements.toggleThemeLight.classList.remove('active');
@@ -86,7 +85,6 @@ export default class Content {
 
   addLightTheme() {
     if (!this.elements.toggleThemeLight.classList.contains('active')) {
-      console.log('change theme to light!');
       this.elements.toggleThemeLight.classList.add('active');
       document.querySelector('.main-container').classList.add('main-container_light');
       this.elements.toggleThemeDark.classList.remove('active');
