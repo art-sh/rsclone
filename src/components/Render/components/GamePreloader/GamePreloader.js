@@ -3,30 +3,31 @@ import Mixin from '@helpers/Mixin';
 
 const template = require('./assets/template.html');
 
-export default class Loader321 {
+export default class GamePreloader {
   constructor(app) {
     this.$app = app;
     this.template = template;
 
     this.elements = {
-      body: this.node.querySelector('body'),
+      container: this.getLoaderContainer(),
     };
 
     Mixin.listen(this.$app.config.events.routeChange, this.destroyLoader.bind(this));
   }
 
   getLoaderContainer() {
-    const node = Mixin.getNode(this.template);
-    this.setLoaderListeners();
-    return node;
+    return Mixin.getNode(this.template);
   }
 
-  showLoader() {
+  showLoader(container, callback) {
+    container.append(this.elements.container);
+    this.elements.container.ontransitionend = () => {
+      this.destroyLoader();
+      if (callback) callback();
+    };
     setTimeout(() => {
-      this.getLoaderContainer();
-      const loader = document.getElementById('loader321');
-      if (!loader.classList.contains('load__done')) loader.classList.add('load__done');
-    }, 3000);
+      this.elements.container.classList.add('game-loader--hide');
+    }, 3500);
   }
 
   destroyLoader() {
@@ -35,6 +36,6 @@ export default class Loader321 {
   }
 
   setLoaderListeners() {
-    this.elements.body.addEventListener('onload', () => this.showLoader());
+    //
   }
 }

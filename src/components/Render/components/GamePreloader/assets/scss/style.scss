@@ -36,7 +36,25 @@ $numJoin3-0: 40;
 
 $totalLen: $num1Len + $num2Len + $num3Len + $numJoin1-2 + $numJoin2-3 + $numJoin3-0;
 
-.loader321 {
+.game-loader__container {
+  opacity: 1;
+  visibility: visible;
+  transition: all 0.25s;
+  backdrop-filter: blur(3px);
+  background: rgba(148, 115, 218, 0.45);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  &.game-loader--hide {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.game-loader {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -46,8 +64,6 @@ $totalLen: $num1Len + $num2Len + $num3Len + $numJoin1-2 + $numJoin2-3 + $numJoin
   padding: $pad;
   border-radius: 20px;
   transform: translateX(-50%);
-  opacity: 1;
-  visibility: visible;
 
   &__colored-blocks {
     overflow: hidden;
@@ -144,11 +160,6 @@ $totalLen: $num1Len + $num2Len + $num3Len + $numJoin1-2 + $numJoin2-3 + $numJoin
     letter-spacing: 0.15em;
     transform: translateX(10px);
     animation: hideText $totalAT infinite;
-  }
-
-  & .load__done {
-    opacity: 0;
-    visibility: hidden;
   }
 }
 
