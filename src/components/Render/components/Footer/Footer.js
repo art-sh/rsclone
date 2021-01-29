@@ -28,7 +28,6 @@ export default class Footer {
   }
 
   changeFooterBackground() {
-    console.log('change background');
     if (window.location.hash === '#/welcome' || window.location.hash === '#/sign-in' || window.location.hash === '#/sign-up') {
       // this.elements.footer.classList.add('footer_welcome');
       document.querySelector('.footer').classList.add('footer_welcome');
