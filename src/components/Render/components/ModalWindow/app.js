@@ -18,7 +18,7 @@ export default class ModalWindow {
     };
     this.elements = {};
 
-    Mixin.listen(this.$app.config.events.routeChange, this.destroyModal.bind(this));
+    Mixin.listen(this.$app.config.events.routeChange, this.destroyModal.bind(this), true);
   }
 
   /**

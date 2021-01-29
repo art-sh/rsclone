@@ -9,6 +9,7 @@ import Content from './components/Content/Content';
 import Footer from './components/Footer/Footer';
 import GameListPage from './components/GameList/app';
 import BackgroundStars from './components/BackgroundStars/app';
+import GamePreloader from './components/GamePreloader/GamePreloader';
 
 export default class Render {
   constructor(app) {
@@ -75,9 +76,10 @@ export default class Render {
   loadGame(id, contentElements) {
     if (!this.games[id]) return this.$app.router.navigate('game-list');
 
+    const preloader = new GamePreloader(this.$app);
     const gameInstance = new this.games[id](this.$app, contentElements);
     this.gameInstance = gameInstance.getGameInstance(this.$app, contentElements);
-    this.gameInstance.startGame();
+    preloader.showLoader(contentElements.node, () => this.gameInstance.startGame());
   }
 
   setListeners() {
