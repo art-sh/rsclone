@@ -25,6 +25,10 @@ export default class Footer {
   }
 
   setFooterListeners() {
-
+    window.addEventListener('keydown', (event) => {
+      if (event.keyCode === 81 || event.which === 81) {
+        console.log('Q');
+      }
+    });
   }
 }

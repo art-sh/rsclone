@@ -13,6 +13,7 @@ export default {
     types: {
       gameDescription: 'modal-description',
       gameEnd: 'modal-game-end',
+      hotKeys: 'modal-hot-keys',
     },
   },
   games: {
