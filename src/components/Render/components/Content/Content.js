@@ -78,9 +78,9 @@ export default class Content {
     if (!this.elements.toggleThemeDark.classList.contains('active')) {
       console.log('change theme to dark!');
       this.elements.toggleThemeDark.classList.add('active');
-      document.querySelector('.main-container').classList.add('.main-container_dark');
+      document.querySelector('.main-container').classList.add('main-container_dark');
       this.elements.toggleThemeLight.classList.remove('active');
-      document.querySelector('.main-container').classList.remove('.main-container_light');
+      document.querySelector('.main-container').classList.remove('main-container_light');
     }
   }
 
@@ -88,9 +88,9 @@ export default class Content {
     if (!this.elements.toggleThemeLight.classList.contains('active')) {
       console.log('change theme to light!');
       this.elements.toggleThemeLight.classList.add('active');
-      document.querySelector('.main-container').classList.add('.main-container_light');
+      document.querySelector('.main-container').classList.add('main-container_light');
       this.elements.toggleThemeDark.classList.remove('active');
-      document.querySelector('.main-container').classList.remove('.main-container_dark');
+      document.querySelector('.main-container').classList.remove('main-container_dark');
     }
   }
 
