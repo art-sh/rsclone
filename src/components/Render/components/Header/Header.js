@@ -14,7 +14,6 @@ export default class Header {
       burger: this.node.querySelector('#burger'),
       burgerMenu: this.node.querySelector('#burger__menu'),
       burgerLinks: this.node.querySelectorAll('.menu__list .menu__link'),
-      menu: this.node.querySelector('.menu'),
     };
 
     this.setHeaderListeners();
@@ -49,21 +48,10 @@ export default class Header {
     }
   }
 
-  changeMenuVisibility() {
-    if (window.location.hash === '#/welcome' || window.location.hash === '#/sign-in' || window.location.hash === '#/sign-up') {
-      if (!this.elements.menu.classList.contains('menu_welcome')) {
-        this.elements.menu.classList.add('menu_welcome');
-      }
-    } else if (this.elements.menu.classList.contains('menu_welcome')) {
-      this.elements.menu.classList.remove('menu_welcome');
-    }
-  }
-
   setHeaderListeners() {
     this.elements.logo.addEventListener('click', () => this.hideBurgerMenu());
     this.elements.burger.addEventListener('click', () => this.toggleBurgerMenu());
     this.elements.burgerLinks.forEach((link) => link.addEventListener('click', () => this.hideBurgerMenu()));
     window.addEventListener('resize', () => this.hideBurgerMenu());
-    window.addEventListener('hashchange', () => this.changeMenuVisibility());
   }
 }

@@ -92,11 +92,22 @@ export default class Content {
     }
   }
 
+  addWelcomeTheme() {
+    if (window.location.hash === '#/welcome' || window.location.hash === '#/sign-in' || window.location.hash === '#/sign-up') {
+      if (!document.querySelector('.main-container').classList.contains('main-container_welcome')) {
+        document.querySelector('.main-container').classList.add('main-container_welcome');
+      }
+    } else {
+      document.querySelector('.main-container').classList.remove('main-container_welcome');
+    }
+  }
+
   setContentListeners(elements, type) {
     if (type === 'profile') {
       elements.toggleThemeDark.addEventListener('click', () => this.addDarkTheme());
       elements.toggleThemeLight.addEventListener('click', () => this.addLightTheme());
     }
+    window.addEventListener('hashchange', () => this.addWelcomeTheme());
   }
 
   getNodeElements(node, type) {

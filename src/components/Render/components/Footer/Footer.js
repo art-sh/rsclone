@@ -9,9 +9,7 @@ export default class Footer {
     this.$appContainer = appContainer;
 
     this.node = this.getNode();
-    this.elements = {
-      footer: this.node.querySelector('.footer'),
-    };
+    this.elements = {};
 
     this.setFooterListeners();
   }
@@ -27,16 +25,5 @@ export default class Footer {
     return node.firstChild;
   }
 
-  changeFooterBackground() {
-    if (window.location.hash === '#/welcome' || window.location.hash === '#/sign-in' || window.location.hash === '#/sign-up') {
-      // this.elements.footer.classList.add('footer_welcome');
-      document.querySelector('.footer').classList.add('footer_welcome');
-    } else {
-      document.querySelector('.footer').classList.remove('footer_welcome');
-    }
-  }
-
-  setFooterListeners() {
-    window.addEventListener('hashchange', () => this.changeFooterBackground());
-  }
+  setFooterListeners() {}
 }
