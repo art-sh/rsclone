@@ -74,40 +74,29 @@ export default class Content {
     });
   }
 
-  addDarkTheme() {
-    if (!this.elements.toggleThemeDark.classList.contains('active')) {
-      this.elements.toggleThemeDark.classList.add('active');
-      document.querySelector('.main-container').classList.add('main-container_dark');
-      this.elements.toggleThemeLight.classList.remove('active');
-      document.querySelector('.main-container').classList.remove('main-container_light');
-    }
+  changeTheme() {
+    document.body.classList.toggle('theme-dark');
+    document.body.classList.toggle('theme-light');
+    this.elements.toggleThemeDark.classList.toggle('active');
+    this.elements.toggleThemeLight.classList.toggle('active');
   }
 
-  addLightTheme() {
-    if (!this.elements.toggleThemeLight.classList.contains('active')) {
-      this.elements.toggleThemeLight.classList.add('active');
-      document.querySelector('.main-container').classList.add('main-container_light');
-      this.elements.toggleThemeDark.classList.remove('active');
-      document.querySelector('.main-container').classList.remove('main-container_dark');
-    }
-  }
-
-  addWelcomeTheme() {
-    if (window.location.hash === '#/welcome' || window.location.hash === '#/sign-in' || window.location.hash === '#/sign-up') {
-      if (!document.querySelector('.main-container').classList.contains('main-container_welcome')) {
-        document.querySelector('.main-container').classList.add('main-container_welcome');
-      }
-    } else {
-      document.querySelector('.main-container').classList.remove('main-container_welcome');
-    }
-  }
+  // addWelcomeTheme() {
+  //   if (window.location.hash === '#/welcome' || window.location.hash === '#/sign-in' || window.location.hash === '#/sign-up') {
+  //     if (!document.querySelector('.main-container').classList.contains('main-container_welcome')) {
+  //       document.querySelector('.main-container').classList.add('main-container_welcome');
+  //     }
+  //   } else {
+  //     document.querySelector('.main-container').classList.remove('main-container_welcome');
+  //   }
+  // }
 
   setContentListeners(elements, type) {
     if (type === 'profile') {
-      elements.toggleThemeDark.addEventListener('click', () => this.addDarkTheme());
-      elements.toggleThemeLight.addEventListener('click', () => this.addLightTheme());
+      elements.toggleThemeDark.addEventListener('click', () => this.changeTheme());
+      elements.toggleThemeLight.addEventListener('click', () => this.changeTheme());
     }
-    window.addEventListener('hashchange', () => this.addWelcomeTheme());
+    // window.addEventListener('hashchange', () => this.addWelcomeTheme());
   }
 
   getNodeElements(node, type) {
