@@ -30,22 +30,24 @@ export default class Header {
     return node.firstChild;
   }
 
-  toggleBurgerMenu() {
-    this.elements.burger.classList.toggle('active');
-    this.elements.burgerMenu.classList.toggle('active');
-    if (this.elements.burgerMenu.classList.contains('active')) {
-      document.body.style.overflow = 'hidden';
+  burgerMenuToggle() {
+    if (document.body.classList.contains('menu-show')) {
+      this.burgerMenuHide();
     } else {
-      document.body.style.overflow = 'auto';
+      this.burgerMenuShow();
     }
   }
 
-  hideBurgerMenu() {
-    if (this.elements.burgerMenu.classList.contains('active')) {
-      this.elements.burger.classList.remove('active');
-      this.elements.burgerMenu.classList.remove('active');
-      document.body.style.overflow = 'auto';
-    }
+  burgerMenuResizeCheck() {
+    if (document.body.classList.contains('menu-show') && window.innerWidth > 500) this.burgerMenuHide();
+  }
+
+  burgerMenuHide() {
+    document.body.classList.remove('menu-show');
+  }
+
+  burgerMenuShow() {
+    document.body.classList.add('menu-show');
   }
 
   keyboardHandler(event) {
@@ -67,10 +69,9 @@ export default class Header {
   }
 
   setHeaderListeners() {
-    this.elements.logo.addEventListener('click', () => this.hideBurgerMenu());
-    this.elements.burger.addEventListener('click', () => this.toggleBurgerMenu());
-    this.elements.burgerLinks.forEach((link) => link.addEventListener('click', () => this.hideBurgerMenu()));
-    window.addEventListener('resize', () => this.hideBurgerMenu());
-    window.addEventListener('keydown', this.keyboardHandler);
+    this.elements.burgerButton.addEventListener('click', () => this.burgerMenuToggle());
+    window.addEventListener('keydown', (event) => this.keyboardHandler(event));
+    window.addEventListener('resize', () => this.burgerMenuResizeCheck());
+    Mixin.listen(this.$app.config.events.routeChange, () => this.burgerMenuHide());
   }
 }

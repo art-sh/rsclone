@@ -20,7 +20,7 @@ export default class ModalWindow {
     };
     this.elements = {};
 
-    Mixin.listen(this.$app.config.events.routeChange, this.destroyModal.bind(this));
+    Mixin.listen(this.$app.config.events.routeChange, this.destroyModal.bind(this), true);
   }
 
   /**
@@ -48,7 +48,7 @@ export default class ModalWindow {
       if (type === this.types.gameEnd && elementKey === 'background') return;
 
       element.addEventListener('click', () => {
-        elements.node.classList.remove('show');
+        document.body.classList.remove('modal-show');
         elements.node.ontransitionend = () => {
           this.destroyModal();
 
@@ -160,7 +160,7 @@ export default class ModalWindow {
    * @return void
    */
   show() {
-    this.elements.node.classList.add('show');
+    document.body.classList.add('modal-show');
   }
 
   /**
