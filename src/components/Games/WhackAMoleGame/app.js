@@ -1,4 +1,5 @@
 import ReverseTimer from '@helpers/ReverseTimer';
+import ModalWindow from '@/components/Render/components/ModalWindow/app';
 import Mixin from '../../../helpers/Mixin';
 import './scss/style.scss';
 
@@ -87,10 +88,15 @@ export default class WhackAMole {
   }
 
   levelUp() {
-    this.$soundPlayer.playSound('level-next');
     this.maxTime >= 100 ? this.maxTime -= 100 : this.maxTime = 100;
     this.minTime >= 100 ? this.minTime -= 100 : this.minTime = 100;
-    this.sessionScore >= 3 ? this.startGame() : this.gameEnd();
+    if (this.sessionScore >= 3) {
+      this.startGame();
+      this.$soundPlayer.playSound('level-next');
+    } else {
+      this.gameEnd();
+      this.$soundPlayer.playSound('level-down');
+    }
   }
 
   randomTime(min, max) {
@@ -113,18 +119,40 @@ export default class WhackAMole {
     this.elements.stats.score.textContent = string.toString();
   }
 
+  disableFinishBtn() {
+    this.elements.game.finishBtn.disabled = true;
+    this.elements.game.finishBtn.classList.add('button_disabled');
+    this.elements.game.finishBtn.style.cursor = 'default';
+  }
+
+  showModalWindow() {
+    const modal = new ModalWindow(this.$app);
+    modal.showModal({
+      type: this.gameConfig.modalWindow.types.gameEnd,
+      container: this.gameElement,
+      text: {
+        score: this.totalScore,
+      },
+      callback: {
+        restart: () => this.startGame(),
+      },
+    });
+  }
+
   destroyGameInstance() {
     this.gameEnd();
     this.gameElement.remove();
   }
 
   gameEnd() {
+    this.disableFinishBtn();
     clearTimeout(this.stopGame);
     this.timer.stopCount();
+    this.showModalWindow();
+    this.gameElement.remove();
     this.isScoreCheat = false;
     this.timeUp = false;
-    this.$soundPlayer.playSound('level-down');
-    // POP UP GAME OVER
+
     return Mixin.dispatch(this.gameConfig.events.gameEnd, {
       game: this.gameConfig.id,
       score: this.totalScore,
@@ -142,7 +170,10 @@ export default class WhackAMole {
 
   init() {
     this.elements.game.box.append(this.getGameNode());
-    this.elements.game.finishBtn.addEventListener('click', () => this.gameEnd());
+    this.elements.game.finishBtn.addEventListener('click', () => {
+      this.gameEnd();
+      this.$soundPlayer.playSound('level-down');
+    });
     this.newGame();
   }
 
