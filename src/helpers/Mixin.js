@@ -9,9 +9,9 @@ const Mixin = {
 
     Object.getOwnPropertyNames(object).forEach((prop) => {
       if (Object.prototype.hasOwnProperty.call(object, prop)
-          && object[prop] !== null
-          && (typeof object[prop] === 'object' || typeof object[prop] === 'function')
-          && !Object.isFrozen(object[prop])
+        && object[prop] !== null
+        && (typeof object[prop] === 'object' || typeof object[prop] === 'function')
+        && !Object.isFrozen(object[prop])
       ) {
         Mixin.deepFreeze(object[prop]);
       }
@@ -38,8 +38,10 @@ const Mixin = {
 
     return out;
   },
-  listen(event, handler) {
-    document.addEventListener(event, handler);
+  listen(event, handler, once = false) {
+    document.addEventListener(event, handler, {
+      once,
+    });
   },
   dispatch(event, data = null) {
     const props = {};

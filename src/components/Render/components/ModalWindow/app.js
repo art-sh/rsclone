@@ -18,7 +18,7 @@ export default class ModalWindow {
     };
     this.elements = {};
 
-    Mixin.listen(this.$app.config.events.routeChange, this.destroyModal.bind(this));
+    Mixin.listen(this.$app.config.events.routeChange, this.destroyModal.bind(this), true);
   }
 
   /**
@@ -30,23 +30,27 @@ export default class ModalWindow {
     this.elements = this.getModalElements(type, node);
 
     this.fillElementsByParams(params.text, this.elements);
-    this.setModalListeners(params.callback, this.elements);
+    this.setModalListeners(type, params.callback, this.elements);
 
     return node;
   }
 
   /**
+   * @param {string} type
    * @param {object} params
    * @param {object} elements
    */
-  setModalListeners(params, elements) {
-    Object.entries(elements.buttons).forEach(([, element]) => {
+  setModalListeners(type, params, elements) {
+    Object.entries(elements.buttons).forEach(([elementKey, element]) => {
       if (!element) return;
+      if (type === this.types.gameEnd && elementKey === 'background') return;
 
       element.addEventListener('click', () => {
-        elements.node.classList.remove('show');
+        document.body.classList.remove('modal-show');
         elements.node.ontransitionend = () => {
           this.destroyModal();
+
+          if (type === this.types.gameEnd && ['close', 'quit'].includes(elementKey)) this.$app.router.navigate('game-list');
         };
       });
     });
@@ -140,7 +144,7 @@ export default class ModalWindow {
    * @return void
    */
   show() {
-    this.elements.node.classList.add('show');
+    document.body.classList.add('modal-show');
   }
 
   /**
