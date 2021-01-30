@@ -14,7 +14,6 @@ export default class Content {
     this.$appContainer = appContainer;
 
     this.elementContent = null;
-    this.node = this.getNode();
     this.elements = {};
     this.templates = {
       game: templateGame,
@@ -81,22 +80,11 @@ export default class Content {
     this.elements.toggleThemeLight.classList.toggle('active');
   }
 
-  // addWelcomeTheme() {
-  //   if (window.location.hash === '#/welcome' || window.location.hash === '#/sign-in' || window.location.hash === '#/sign-up') {
-  //     if (!document.querySelector('.main-container').classList.contains('main-container_welcome')) {
-  //       document.querySelector('.main-container').classList.add('main-container_welcome');
-  //     }
-  //   } else {
-  //     document.querySelector('.main-container').classList.remove('main-container_welcome');
-  //   }
-  // }
-
   setContentListeners(elements, type) {
     if (type === 'profile') {
       elements.toggleThemeDark.addEventListener('click', () => this.changeTheme());
       elements.toggleThemeLight.addEventListener('click', () => this.changeTheme());
     }
-    // window.addEventListener('hashchange', () => this.addWelcomeTheme());
   }
 
   getNodeElements(node, type) {

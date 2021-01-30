@@ -49,21 +49,10 @@ export default class Header {
     }
   }
 
-  changeHeaderElements() {
-    if (window.location.hash === '#/welcome' || window.location.hash === '#/sign-in' || window.location.hash === '#/sign-up') {
-      this.elements.menu.classList.add('menu_welcome');
-      document.querySelector('.header').classList.add('header_welcome');
-    } else {
-      this.elements.menu.classList.remove('menu_welcome');
-      document.querySelector('.header').classList.remove('header_welcome');
-    }
-  }
-
   setHeaderListeners() {
     this.elements.logo.addEventListener('click', () => this.hideBurgerMenu());
     this.elements.burger.addEventListener('click', () => this.toggleBurgerMenu());
     this.elements.burgerLinks.forEach((link) => link.addEventListener('click', () => this.hideBurgerMenu()));
     window.addEventListener('resize', () => this.hideBurgerMenu());
-    window.addEventListener('hashchange', () => this.changeHeaderElements());
   }
 }
