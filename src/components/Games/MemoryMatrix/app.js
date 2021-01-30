@@ -167,6 +167,7 @@ export default class MemoryMatrix {
 
   startGame() {
     this.resetFlags();
+    this.disableFinishBtn('on');
     this.timer.startCount(44, this.setTimerTextContent.bind(this), this.endGameHandler.bind(this));
     this.nextLevelHandler();
   }
@@ -260,10 +261,15 @@ export default class MemoryMatrix {
     });
   }
 
-  disableFinishBtn() {
+  disableFinishBtn(mode = 'off') {
     this.elements.game.finishBtn.disabled = true;
-    // this.elements.game.finishBtn.classList.add('button_disabled');
+    this.elements.game.finishBtn.classList.add('button_disabled');
     this.elements.game.finishBtn.style.cursor = 'default';
+    if (mode === 'on') {
+      this.elements.game.finishBtn.disabled = false;
+      this.elements.game.finishBtn.classList.remove('button_disabled');
+      this.elements.game.finishBtn.style.cursor = 'pointer';
+    }
   }
 
   endGameHandler() {
