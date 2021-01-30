@@ -9,6 +9,7 @@ export default class Footer {
     this.$appContainer = appContainer;
 
     this.node = this.getNode();
+    this.shiftBtn = false;
 
     this.setFooterListeners();
   }
@@ -24,11 +25,23 @@ export default class Footer {
     return node.firstChild;
   }
 
+  keyboardHandler(event) {
+    if (event.keyCode === 16 || event.which === 16) {
+      this.shiftBtn = true;
+    }
+    if ((event.keyCode === 65 && this.shiftBtn) || (event.which === 65 && this.shiftBtn)) {
+      this.shiftBtn = false;
+      // this.$app.router.navigate('game-list');
+      console.log('about app');
+    }
+    if ((event.keyCode === 82 && this.shiftBtn) || (event.which === 82 && this.shiftBtn)) {
+      this.shiftBtn = false;
+      // this.$app.router.navigate('statistic');
+      console.log('web site');
+    }
+  }
+
   setFooterListeners() {
-    window.addEventListener('keydown', (event) => {
-      if (event.keyCode === 81 || event.which === 81) {
-        console.log('Q');
-      }
-    });
+    window.addEventListener('keydown', (event) => this.keyboardHandler(event));
   }
 }

@@ -11,10 +11,12 @@ export default class Header {
     this.node = this.getNode();
     this.elements = {
       logo: this.node.querySelector('.logo'),
-      burger: this.node.querySelector('#burger'),
+      burgerButton: this.node.querySelector('.menu__burger-button'),
       burgerMenu: this.node.querySelector('#burger__menu'),
       burgerLinks: this.node.querySelectorAll('.menu__list .menu__link'),
     };
+
+    this.shiftBtn = false;
 
     this.setHeaderListeners();
   }
@@ -51,25 +53,26 @@ export default class Header {
   }
 
   keyboardHandler(event) {
-    if (event.keyCode === 27 || event.which === 27) {
-      console.log('logo');
+    if (event.keyCode === 16 || event.which === 16) {
+      this.shiftBtn = true;
     }
-    if (event.keyCode === 90 || event.which === 90) {
-      console.log('Game list Z');
+    if ((event.keyCode === 71 && this.shiftBtn) || (event.which === 71 && this.shiftBtn)) {
+      this.shiftBtn = false;
+      this.$app.router.navigate('game-list');
     }
-    if (event.keyCode === 88 || event.which === 88) {
-      console.log('Statistic X');
+    if ((event.keyCode === 83 && this.shiftBtn) || (event.which === 83 && this.shiftBtn)) {
+      this.shiftBtn = false;
+      this.$app.router.navigate('statistic');
     }
-    if (event.keyCode === 67 || event.which === 67) {
-      console.log('Profile C');
-    }
-    if (event.keyCode === 121 || event.which === 121) {
-      console.log('Menu (F10)');
+    if ((event.keyCode === 80 && this.shiftBtn) || (event.which === 80 && this.shiftBtn)) {
+      this.shiftBtn = false;
+      this.$app.router.navigate('profile');
     }
   }
 
   setHeaderListeners() {
     this.elements.burgerButton.addEventListener('click', () => this.burgerMenuToggle());
+
     window.addEventListener('keydown', (event) => this.keyboardHandler(event));
     window.addEventListener('resize', () => this.burgerMenuResizeCheck());
     Mixin.listen(this.$app.config.events.routeChange, () => this.burgerMenuHide());
