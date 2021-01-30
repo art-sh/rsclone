@@ -1,31 +1,17 @@
 .main_welcome {
   background-color: #472B83;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  align-items: center;
-  justify-content: center;
-  margin-top: -1px;
 
-  &:before {
-    display: none;
-  }
-
-  &:after {
-    display: none;
+  &.main_greetings {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   .header:after {
     display: none;
   }
 
-  .header {
-    background-color: transparent;
-  }
-
-  .menu {
-    display: none;
-  }
 
   .welcome-info {
     position: relative;
@@ -71,7 +57,7 @@
   .button-sign-in {
     margin-right: 30px;
     @media (max-width: 600px) {
-      margin-right: 15px;
+      margin-right: 5%;
     }
   }
 

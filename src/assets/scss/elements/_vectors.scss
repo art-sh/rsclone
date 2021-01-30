@@ -1,6 +1,25 @@
 .header {
   position: relative;
-  z-index: 2;
+  z-index: 3;
+
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 372px;
+    height: 774px;
+    background-image: url('@assets/img/vector-right-top.svg');
+    top: 0;
+    right: -40px;
+    z-index: 1;
+    @media (max-width: 500px) {
+      display: none;
+    }
+  }
+
+  &.header_welcome:after {
+    display: none;
+  }
 }
 
 .main {
@@ -45,17 +64,4 @@
   }
 }
 
-.header:after {
-  content: '';
-  display: block;
-  position: absolute;
-  width: 372px;
-  height: 774px;
-  background-image: url('@assets/img/vector-right-top.svg');
-  top: 0;
-  right: -40px;
-  z-index: 1;
-  @media (max-width: 500px) {
-    display: none;
-  }
-}
+
