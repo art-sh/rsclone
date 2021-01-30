@@ -42,6 +42,11 @@
     padding: 45px 70px 70px 38px;
     margin: 0 auto;
     cursor: default;
+    @media (max-height: 500px) {
+      @media (max-width: 480px) {
+        top: 80%;
+      }
+    }
 
     .modal-show & {
       transform: translateY(-50%);
@@ -125,8 +130,15 @@
     &-button-group {
       display: flex;
 
-      & > * {
+      @media (max-width: 500px) {
+        flex-direction: column;
+      }
+
+      .button-restart {
         margin-right: 25px;
+        @media (max-width: 500px) {
+          margin-bottom: 10px;
+        }
       }
     }
   }
@@ -137,5 +149,15 @@
     position: absolute;
     left: 0;
     right: 0;
+  }
+}
+
+.modal.modal-finish-game {
+  .modal__block {
+    @media (max-height: 500px) {
+      @media (max-width: 480px) {
+        top: 50%;
+      }
+    }
   }
 }
