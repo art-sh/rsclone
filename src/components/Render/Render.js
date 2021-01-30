@@ -83,6 +83,8 @@ export default class Render {
         this.gameInstance.destroyGameInstance();
         this.gameInstance = null;
       }
+
+      document.body.classList.remove('game-button-finish-clicked');
     });
   }
 }

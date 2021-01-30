@@ -73,8 +73,10 @@ export default class Content {
     });
   }
 
-  setContentListeners() {
-    //
+  setContentListeners(elements, contentType) {
+    if (contentType === 'game') {
+      elements.game.finishBtn.addEventListener('click', () => document.body.classList.add('game-button-finish-clicked'));
+    }
   }
 
   getNodeElements(node, type) {

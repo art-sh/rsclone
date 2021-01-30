@@ -35,6 +35,11 @@
   }
 }
 
+.game-button-finish-clicked .game-finish {
+  pointer-events: none;
+  cursor: default;
+}
+
 @keyframes neonPuls {
   0% {
     box-shadow: 0 0 2px #BF2F71, 0 0 5px #BF2F71, 0 0 15px #BF2F71;

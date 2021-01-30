@@ -39,7 +39,6 @@ export default class MemoryMatrix {
 
   createLivesIcons() {
     for (let i = 0; i < this.livesCount; i += 1) {
-      console.log('qweqwe');
       this.elements.stats.icons.appendChild(this.elements.templates.star.content.cloneNode(true));
     }
   }
