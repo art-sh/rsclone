@@ -7,11 +7,11 @@
   align-items: center;
 }
 
-.menu_welcome {
-  display: none;
-}
-
 .menu {
+  .page-welcome & {
+    display: none;
+  }
+
   &__list {
     display: flex;
     justify-content: flex-end;

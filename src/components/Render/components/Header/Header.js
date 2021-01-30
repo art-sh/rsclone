@@ -14,7 +14,6 @@ export default class Header {
       burgerButton: this.node.querySelector('.menu__burger-button'),
       burgerMenu: this.node.querySelector('#burger__menu'),
       burgerLinks: this.node.querySelectorAll('.menu__list .menu__link'),
-      menu: this.node.querySelector('.menu'),
     };
 
     this.setHeaderListeners();

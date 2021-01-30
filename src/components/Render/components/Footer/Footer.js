@@ -9,9 +9,7 @@ export default class Footer {
     this.$appContainer = appContainer;
 
     this.node = this.getNode();
-    this.elements = {
-      footer: this.node.querySelector('.footer'),
-    };
+    this.elements = {};
 
     this.setFooterListeners();
   }
@@ -27,5 +25,7 @@ export default class Footer {
     return node.firstChild;
   }
 
-  setFooterListeners() {}
+  setFooterListeners() {
+
+  }
 }
