@@ -8,6 +8,8 @@ import Header from './components/Header/Header';
 import Content from './components/Content/Content';
 import Footer from './components/Footer/Footer';
 import GameListPage from './components/GameList/app';
+import BackgroundStars from './components/BackgroundStars/app';
+import GamePreloader from './components/GamePreloader/GamePreloader';
 
 export default class Render {
   constructor(app) {
@@ -21,6 +23,7 @@ export default class Render {
       header: new Header(this.$app, appContainer),
       content: new Content(this.$app, appContainer),
       footer: new Footer(this.$app, appContainer),
+      backgroundStars: new BackgroundStars(this.$app, appContainer),
     };
     this.gameInstance = null;
     this.games = {};
@@ -37,6 +40,7 @@ export default class Render {
     this.elements.header.init();
     this.elements.content.init();
     this.elements.footer.init();
+    this.elements.backgroundStars.init();
 
     this.setListeners();
   }
@@ -72,9 +76,10 @@ export default class Render {
   loadGame(id, contentElements) {
     if (!this.games[id]) return this.$app.router.navigate('game-list');
 
+    const preloader = new GamePreloader(this.$app);
     const gameInstance = new this.games[id](this.$app, contentElements);
     this.gameInstance = gameInstance.getGameInstance(this.$app, contentElements);
-    this.gameInstance.startGame();
+    preloader.showLoader(contentElements.node, () => this.gameInstance.startGame());
   }
 
   setListeners() {

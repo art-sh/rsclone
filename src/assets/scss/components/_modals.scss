@@ -18,7 +18,7 @@
 
   $modal: &;
 
-  &.show {
+  .modal-show & {
     visibility: visible;
     opacity: 1;
     z-index: 900;
@@ -42,7 +42,7 @@
     margin: 0 auto;
     cursor: default;
 
-    #{$modal}.show & {
+    .modal-show & {
       transform: translateY(-50%);
     }
 
@@ -55,6 +55,7 @@
       position: absolute;
       bottom: 15px;
       right: 20px;
+      z-index: -1;
     }
 
     &-header {
