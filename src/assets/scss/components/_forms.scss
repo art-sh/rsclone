@@ -25,6 +25,11 @@
   text-decoration-line: underline;
   color: #F9F9F9;
   margin-bottom: 20px;
+  transition-duration: 300ms;
+
+  &:hover {
+    color: #FFBD59;
+  }
 }
 
 .form__field {
@@ -37,7 +42,7 @@
 
 .form__input {
   background: #F9F9F9;
-  border: 1px solid #6175C0;
+  border: 1px solid #9473DA;
   box-sizing: border-box;
   font-family: Acrom, sans-serif;
   font-style: normal;
