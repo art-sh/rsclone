@@ -41,6 +41,7 @@ module.exports = {
   entry: {
     frontend: ['@babel/polyfill', './app.js'],
     test: `mocha-loader!${path.resolve(__dirname, 'test', 'test.js')}`,
+    notFound: './components/Render/components/Not-found/app.js',
   },
   mode: process.env.NODE_ENV,
   devtool: isDev ? 'source-map' : false,
@@ -48,7 +49,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: (module) => {
-      if (['frontend', 'test'].includes(module.chunk.name)) return `[name]/assets/js/app${isProd ? '~[hash]' : ''}.js`;
+      if (['frontend', 'test', 'notFound'].includes(module.chunk.name)) return `[name]/assets/js/app${isProd ? '~[hash]' : ''}.js`;
     },
     publicPath: '/',
   },
@@ -137,6 +138,13 @@ module.exports = {
       minify: isProd,
       favicon: 'assets/img/icons/favicon.png',
       chunks: ['test'],
+    }),
+    new HTMLWebpackPlugin({
+      filename: '404.html',
+      minify: isProd,
+      favicon: 'assets/img/icons/favicon.png',
+      chunks: ['notFound'],
+      template: 'components/Render/components/Not-found/assets/404.html',
     }),
     new MiniCssExtractPlugin({
       filename: `[name]/assets/css/style${isProd ? '~[hash]' : ''}.css`,
