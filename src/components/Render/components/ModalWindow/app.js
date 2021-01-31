@@ -103,7 +103,6 @@ export default class ModalWindow {
         text: {
           title: node.querySelector('.text-title'),
           score: node.querySelector('.text-score'),
-          time: node.querySelector('.text-time'),
           achievement: node.querySelector('.text-achievements'),
         },
         buttons: {

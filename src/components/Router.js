@@ -11,6 +11,7 @@ export default class Router {
     this.$config = config;
     this.$controller = controller;
 
+    this.setRouterListeners();
     this.setHashChangeListener();
 
     setTimeout(() => window.dispatchEvent(new Event(this.$config.events.hashChange)));
@@ -43,5 +44,22 @@ export default class Router {
 
   setPath(path) {
     window.location.pathname = path;
+  }
+
+  setRouterListeners() {
+    Mixin.listen(this.$app.config.events.routeChange, this.setCurrentPageClasses.bind());
+  }
+
+  setCurrentPageClasses(e) {
+    const {body} = document;
+    const bodyClasses = Array.from(body.classList);
+
+    bodyClasses.forEach((className) => {
+      if (!className.includes('page-')) return;
+
+      body.classList.remove(className);
+    });
+
+    body.classList.add(`page-${e.detail.route.controller}`);
   }
 }

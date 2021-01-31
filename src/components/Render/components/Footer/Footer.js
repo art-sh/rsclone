@@ -11,7 +11,7 @@ export default class Footer {
     this.config = app.config;
 
     this.node = this.getNode();
-    this.shiftBtn = false;
+    this.elements = {};
 
     this.setFooterListeners();
   }
@@ -31,7 +31,7 @@ export default class Footer {
     const modal = new ModalWindow(this.$app);
     modal.showModal({
       type: this.config.modalWindow.types.hotKeys,
-      container: document.querySelector('#app'),
+      container: this.$appContainer,
       text: {
         title: this.config.hotKeysInfo.title,
         info: this.config.hotKeysInfo.info,
@@ -40,15 +40,10 @@ export default class Footer {
   }
 
   keyboardHandler(event) {
-    if (event.keyCode === 16 || event.which === 16) {
-      this.shiftBtn = true;
-    }
-    if ((event.keyCode === 72 && this.shiftBtn) || (event.which === 72 && this.shiftBtn)) {
-      this.shiftBtn = false;
+    if ((event.keyCode === 72 && event.shiftKey) || (event.which === 72 && event.shiftKey)) {
       this.showHotKeys();
     }
-    if ((event.keyCode === 82 && this.shiftBtn) || (event.which === 82 && this.shiftBtn)) {
-      this.shiftBtn = false;
+    if ((event.keyCode === 82 && event.shiftKey) || (event.which === 82 && event.shiftKey)) {
       window.open('https://rs.school/', '_blank');
     }
   }
