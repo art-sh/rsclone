@@ -81,6 +81,9 @@ export default class Content {
   }
 
   setContentListeners(elements, type) {
+    if (type === 'game') {
+      elements.game.finishBtn.addEventListener('click', () => document.body.classList.add('game-button-finish-clicked'));
+    }
     if (type === 'profile') {
       elements.toggleThemeDark.addEventListener('click', () => this.changeTheme());
       elements.toggleThemeLight.addEventListener('click', () => this.changeTheme());

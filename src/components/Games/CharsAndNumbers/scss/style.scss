@@ -8,9 +8,7 @@
     height: 22rem;
     margin: 0 auto;
     border: 1px solid black;
-    background-image: url('../assets/img/background.jpg');
-    background-position: center;
-    background-size: cover;
+    background-color: #FDFDFD;
     .game-field {
         display: flex;
         flex-direction: column;
@@ -35,7 +33,7 @@
             height: 50%;
             .number-question {
                 text-transform: uppercase;
-                font: bold normal 1.5rem/110% Arial, sans-serif;
+                font: bold normal 1.5rem/110% Acrom, sans-serif;
                 color: gray;
             }
             .number-block-content {
@@ -43,16 +41,18 @@
                 height: 40px;
                 text-align: center;
                 .number-first-content-item {
-                    font: normal normal 2rem/110% Arial, sans-serif;
+                  color: #ffbd59;
+                    font: normal normal 2rem/110% Acrom, sans-serif;
                 }
                 .number-second-content-item {
-                    font: normal normal 2rem/110% Arial, sans-serif;
+                  color: #ffbd59;
+                    font: normal normal 2rem/110% Acrom, sans-serif;
                 }
             }
         }
         .divider {
             width: 80%;
-            border: 1px solid black;
+            border: 1px solid#ffbd59;
         }
         .char-question-block {
             display: flex;
@@ -62,7 +62,7 @@
             height: 50%;
             .char-question {
                 text-transform: uppercase;
-                font: bold normal 1.5rem/110% Arial, sans-serif;
+                font: bold normal 1.5rem/110% Acrom, sans-serif;
                 color: gray;
             }
 
@@ -71,10 +71,12 @@
                 height: 40px;
                 text-align: center;
                 .char-first-content-item {
-                    font: normal normal 2rem/110% Arial, sans-serif;
+                  color: #ffbd59;
+                    font: normal normal 2rem/110% Acrom, sans-serif;
                 }
                 .char-second-content-item {
-                    font: normal normal 2rem/110% Arial, sans-serif;
+                  color: #ffbd59;
+                    font: normal normal 2rem/110% Acrom, sans-serif;
                 }
             }
         }
@@ -99,8 +101,8 @@
             outline: none;
             border-radius: 10px;
             border: none;
-            font: bold normal 1rem/110% Arial, sans-serif;
-            background-color: brown;
+            font: bold normal 1rem/110% Acrom, sans-serif;
+            background-color: #ffbd59;
             &:hover {
                 cursor: pointer;
                 transition: 0.4s;

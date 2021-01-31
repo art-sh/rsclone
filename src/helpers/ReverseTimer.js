@@ -44,6 +44,8 @@ export default class ReverseTimer {
 
     this.currentTimeSeconds = timeSeconds;
 
+    if (tickCallback) tickCallback({ ...this.time });
+
     this.timerInterval = setInterval(() => {
       this.currentTimeSeconds -= 1;
 

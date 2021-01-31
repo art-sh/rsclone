@@ -21,12 +21,13 @@ export default class GamePreloader {
 
   showLoader(container, callback) {
     container.append(this.elements.container);
-    this.elements.container.ontransitionend = () => {
-      this.destroyLoader();
-      if (callback) callback();
-    };
+
     setTimeout(() => {
-      this.elements.container.classList.add('game-loader--hide');
+      setTimeout(() => {
+        this.destroyLoader();
+        if (callback) callback();
+      }, 250);
+      if (this.elements.container) this.elements.container.classList.add('game-loader--hide');
     }, 3500);
   }
 

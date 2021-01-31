@@ -79,7 +79,10 @@ export default class Render {
     const preloader = new GamePreloader(this.$app);
     const gameInstance = new this.games[id](this.$app, contentElements);
     this.gameInstance = gameInstance.getGameInstance(this.$app, contentElements);
-    preloader.showLoader(contentElements.node, () => this.gameInstance.startGame());
+
+    preloader.showLoader(contentElements.node, () => {
+      if (this.gameInstance) this.gameInstance.startGame();
+    });
   }
 
   setListeners() {
@@ -88,6 +91,8 @@ export default class Render {
         this.gameInstance.destroyGameInstance();
         this.gameInstance = null;
       }
+
+      document.body.classList.remove('game-button-finish-clicked');
     });
   }
 }

@@ -39,7 +39,6 @@ export default class MemoryMatrix {
 
   createLivesIcons() {
     for (let i = 0; i < this.livesCount; i += 1) {
-      console.log('qweqwe');
       this.elements.stats.icons.appendChild(this.elements.templates.star.content.cloneNode(true));
     }
   }
@@ -48,7 +47,6 @@ export default class MemoryMatrix {
     this.gameBlocks.container = this.createElementFactory('div', null, 'matrix-memory-container', null, null, null);
     this.gameBlocks.gameField = this.createElementFactory('div', null, 'matrix-memory-container__main', null, null, null);
     this.gameBlocks.container.appendChild(this.gameBlocks.gameField);
-    // this.createLivesIcons();
     this.createGamesblocks(this.gameBlocks.gameField);
     this.listenersHandlers(this.gameBlocks.container);
     return this.gameBlocks.container;
@@ -168,6 +166,7 @@ export default class MemoryMatrix {
 
   startGame() {
     this.resetFlags();
+    this.disableFinishBtn('on');
     this.timer.startCount(44, this.setTimerTextContent.bind(this), this.endGameHandler.bind(this));
     this.nextLevelHandler();
   }
@@ -238,7 +237,7 @@ export default class MemoryMatrix {
 
     if (!block.classList.contains('active')) {
       this.elements.stats.icons.removeChild(live);
-      // this.$soundPlayer.playSound('beep-short');
+      this.$soundPlayer.playSound('answer-wrong');
     }
     if (this.elements.stats.icons.children.length === 0) {
       this.timer.stopCount();
@@ -261,10 +260,15 @@ export default class MemoryMatrix {
     });
   }
 
-  disableFinishBtn() {
+  disableFinishBtn(mode = 'off') {
     this.elements.game.finishBtn.disabled = true;
-    // this.elements.game.finishBtn.classList.add('button_disabled');
+    this.elements.game.finishBtn.classList.add('button_disabled');
     this.elements.game.finishBtn.style.cursor = 'default';
+    if (mode === 'on') {
+      this.elements.game.finishBtn.disabled = false;
+      this.elements.game.finishBtn.classList.remove('button_disabled');
+      this.elements.game.finishBtn.style.cursor = 'pointer';
+    }
   }
 
   endGameHandler() {
