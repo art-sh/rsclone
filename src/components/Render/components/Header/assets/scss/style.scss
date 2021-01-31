@@ -26,6 +26,10 @@
 
       &:last-child {
         margin-right: 0;
+
+        & .menu__list-item-link::after {
+          display: none;
+        }
       }
 
       &-link {
@@ -37,6 +41,26 @@
         line-height: 19px;
         letter-spacing: 0.015em;
         text-decoration: none;
+        position: relative;
+
+        &::after {
+          content: '';
+          position: absolute;
+          background: #FFBD59;
+          top: 10px;
+          left: 0;
+          width: 30px;
+          height: 5px;
+          z-index: -1;
+          opacity: 0;
+          transition: 0.5s;
+        }
+
+        &:hover::after {
+          top: 14px;
+          opacity: 0.9;
+        }
+
       }
     }
   }
@@ -135,4 +159,9 @@
       }
     }
   }
+}
+
+.menu__icon:hover path {
+  transition: 0.5s;
+  fill: #FAB942;
 }

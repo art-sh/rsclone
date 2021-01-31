@@ -34,6 +34,10 @@ body {
     & > .header {
       padding-left: 5%;
       padding-right: 5%;
+      @media (min-width: 1600px) {
+        padding-left: 18%;
+        padding-right: 18%;
+      }
 
       & > .menu {
         position: relative;
@@ -53,6 +57,10 @@ body {
       @media (max-width: 500px) {
         // padding-bottom: 155px;
       }
+      @media (min-width: 1600px) {
+        padding-left: 18%;
+        padding-right: 18%;
+      }
     }
 
     & > .footer {
@@ -62,6 +70,10 @@ body {
       width: 100%;
       padding-left: 5%;
       padding-right: 5%;
+      @media (min-width: 1600px) {
+        padding-left: 18%;
+        padding-right: 18%;
+      }
     }
   }
 }
