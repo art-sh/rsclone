@@ -1,6 +1,10 @@
 .header {
   position: relative;
   z-index: 15;
+
+  &.header_welcome:after {
+    display: none;
+  }
 }
 
 .main {

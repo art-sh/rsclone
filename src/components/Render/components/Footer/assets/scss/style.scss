@@ -6,6 +6,10 @@
   justify-content: space-between;
   align-items: center;
 
+  .page-welcome & {
+    background-color: #472B83;
+  }
+
   @media (max-width: 600px) {
     flex-direction: column;
   }

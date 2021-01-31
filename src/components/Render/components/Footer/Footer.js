@@ -9,6 +9,7 @@ export default class Footer {
     this.$appContainer = appContainer;
 
     this.node = this.getNode();
+    this.elements = {};
 
     this.setFooterListeners();
   }

@@ -1,38 +1,17 @@
-.main-container_welcome {
+.main_welcome {
   background-color: #472B83;
+
+  &.main_greetings {
     display: flex;
     flex-direction: column;
-
-  &:before {
-    display: none;
-  }
-
-  &:after {
-    display: none;
+    align-items: center;
+    justify-content: center;
   }
 
   .header:after {
     display: none;
   }
 
-  .header {
-    background-color: transparent;
-  }
-
-  .menu {
-    display: none;
-  }
-
-  .footer {
-    background-color: transparent;
-  }
-
-  .main_welcome {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
-  }
 
   .welcome-info {
     position: relative;
@@ -78,7 +57,7 @@
   .button-sign-in {
     margin-right: 30px;
     @media (max-width: 600px) {
-      margin-right: 15px;
+      margin-right: 5%;
     }
   }
 
@@ -86,9 +65,9 @@
     position: absolute;
     top: 0;
     left: 0;
+    right: 0;
+    margin: auto;
     max-height: 100vh;
     overflow: hidden;
   }
 }
-
-
