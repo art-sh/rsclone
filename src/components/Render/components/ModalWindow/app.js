@@ -2,6 +2,7 @@ import Mixin from '@helpers/Mixin';
 
 const templateGameDescription = require('./assets/templates/game-description.html');
 const templateGameEnd = require('./assets/templates/game-end.html');
+const templateHotKeys = require('./assets/templates/hot-keys.html');
 
 export default class ModalWindow {
   /**
@@ -15,6 +16,7 @@ export default class ModalWindow {
     this.templates = {
       [this.types.gameDescription]: templateGameDescription,
       [this.types.gameEnd]: templateGameEnd,
+      [this.types.hotKeys]: templateHotKeys,
     };
     this.elements = {};
 
@@ -101,7 +103,6 @@ export default class ModalWindow {
         text: {
           title: node.querySelector('.text-title'),
           score: node.querySelector('.text-score'),
-          time: node.querySelector('.text-time'),
           achievement: node.querySelector('.text-achievements'),
         },
         buttons: {
@@ -109,6 +110,20 @@ export default class ModalWindow {
           background: node.querySelector('.modal__background'),
           restart: node.querySelector('.button-restart'),
           quit: node.querySelector('.button-quit'),
+        },
+      };
+    }
+
+    if (type === this.types.hotKeys) {
+      return {
+        node,
+        text: {
+          title: node.querySelector('.text-title'),
+          info: node.querySelector('.text-description'),
+        },
+        buttons: {
+          close: node.querySelector('.button-close'),
+          background: node.querySelector('.modal__background'),
         },
       };
     }

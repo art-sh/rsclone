@@ -8,6 +8,16 @@
   pointer-events: none;
   user-select: none;
 
+  .page-welcome & {
+    display: none;
+  }
+
+  @media (max-width: 500px) {
+    & {
+      display: none;
+    }
+  }
+
   &__block {
     position: absolute;
     display: flex;

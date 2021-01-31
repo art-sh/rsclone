@@ -28,6 +28,8 @@ body {
     min-height: 100%;
     position: relative;
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
 
     & > .header {
       padding-left: 5%;
@@ -43,19 +45,20 @@ body {
     }
 
     & > .main {
-      padding-bottom: 103px;
+      // padding-bottom: 103px;
       padding-left: 5%;
       padding-right: 5%;
       overflow: hidden;
+      flex-grow: 1;
       @media (max-width: 500px) {
-        padding-bottom: 155px;
+        // padding-bottom: 155px;
       }
     }
 
     & > .footer {
       box-sizing: border-box;
-      position: absolute;
-      bottom: 0;
+      // position: absolute;
+      // bottom: 0;
       width: 100%;
       padding-left: 5%;
       padding-right: 5%;

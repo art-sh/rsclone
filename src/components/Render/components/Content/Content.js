@@ -73,9 +73,20 @@ export default class Content {
     });
   }
 
-  setContentListeners(elements, contentType) {
-    if (contentType === 'game') {
+  changeTheme() {
+    document.body.classList.toggle('theme-dark');
+    document.body.classList.toggle('theme-light');
+    this.elements.toggleThemeDark.classList.toggle('active');
+    this.elements.toggleThemeLight.classList.toggle('active');
+  }
+
+  setContentListeners(elements, type) {
+    if (type === 'game') {
       elements.game.finishBtn.addEventListener('click', () => document.body.classList.add('game-button-finish-clicked'));
+    }
+    if (type === 'profile') {
+      elements.toggleThemeDark.addEventListener('click', () => this.changeTheme());
+      elements.toggleThemeLight.addEventListener('click', () => this.changeTheme());
     }
   }
 
@@ -101,6 +112,11 @@ export default class Content {
       return {
         gameContainer: node.querySelector('.games'),
         gamesList: node.querySelector('.games__list'),
+      };
+    } if (type === 'profile') {
+      return {
+        toggleThemeDark: node.querySelector('.theme-status_dark'),
+        toggleThemeLight: node.querySelector('.theme-status_light'),
       };
     }
 

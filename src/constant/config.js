@@ -13,6 +13,7 @@ export default {
     types: {
       gameDescription: 'modal-description',
       gameEnd: 'modal-game-end',
+      hotKeys: 'modal-hot-keys',
     },
   },
   games: {
@@ -40,5 +41,9 @@ export default {
       description: 'In order to advance through the levels of this game, the user will have to hit the target mole.',
       rules: 'If you hit three times per level, the movement speed of the mole will increase! And be careful: aim exactly at the mole.',
     },
+  },
+  hotKeysInfo: {
+    title: 'Use this hot keys to open some pages',
+    info: '"Shift + G" - Game list \n "Shift + S" - Statistics \n "Shift + P" - Profile \n "Shift + R" - The Rolling Scopes School Web site \n "Shift + H" - Hot keys instructions',
   },
 };
