@@ -4,7 +4,7 @@ const auth = require('../auth/app');
 const mixin = require('../../helpers/mixin');
 
 router.post('/login', (req, res) => {
-  if (req.headers.AppToken) return mixin.jsonBad({message: 'You are already logged in'}, 400, res);
+  if (req.headers['app-token']) return mixin.jsonBad({message: 'You are already logged in'}, 400, res);
   if (!req.body.password) return mixin.jsonBad({message: 'Password is empty'}, 400, res);
 
   const cb = (result) => {
@@ -14,16 +14,19 @@ router.post('/login', (req, res) => {
       return mixin.jsonBad({message: 'Login or password mismatch'}, 400, res);
     }
 
+    const outModel = {...result.result[0]};
+    delete outModel.password;
+
     res
-      .header('AppToken', auth.getNewToken({_id: result.result.login}))
-      .send(mixin.jsonOk({message: 'Success authenticated'}));
+      .header('App-Token', auth.getNewToken({_login: result.result[0].login}))
+      .send(mixin.jsonOk(outModel));
   };
 
-  modelUser.findByLogin(req.body.login || '', cb);
+  modelUser.findByLogin(req.body.login, cb);
 });
 
 router.post('/register', (req, res) => {
-  if (req.headers.AppToken) return mixin.jsonBad({message: 'You are already registered'}, 400, res);
+  if (req.headers['app-token']) return mixin.jsonBad({message: 'You are already registered'}, 400, res);
   if (!req.body) return mixin.jsonBad({message: 'Bad form data'}, 400, res);
 
   const modelFields = {
@@ -39,9 +42,12 @@ router.post('/register', (req, res) => {
   const cb = (result) => {
     if (result.error) return mixin.jsonBad({message: 'That login is busy'}, 400, res);
 
+    const outModel = {...modelFields};
+    delete outModel.password;
+
     res
-      .header('App-Token', auth.getNewToken({_id: result.result.login}))
-      .json(mixin.jsonOk({message: 'Success registered'}));
+      .header('App-Token', auth.getNewToken({_login: result.result[0].login}))
+      .json(mixin.jsonOk(outModel));
   };
 
   modelUser.write(modelFields, cb);

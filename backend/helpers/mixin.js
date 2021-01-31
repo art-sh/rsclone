@@ -1,4 +1,4 @@
-const Mixin = {
+const mixin = {
   jsonOk(data, res = null) {
     if (!res) {
       return {
@@ -29,4 +29,4 @@ const Mixin = {
   },
 };
 
-module.exports = Mixin;
+module.exports = mixin;

@@ -30,8 +30,6 @@ const User = {
     const queryCallback = (err, result) => {
       if (result) delete result.password;
 
-      console.log(result);
-
       searchCallback({
         error: (err) ? err.sqlMessage : null,
         result,
@@ -39,6 +37,18 @@ const User = {
     };
 
     db.query('SELECT * FROM users WHERE login = ?', [login], queryCallback);
+  },
+  updateField(login, field, value, searchCallback) {
+    const queryCallback = (err, result) => {
+      if (result) delete result.password;
+
+      searchCallback({
+        error: (err) ? err.sqlMessage : null,
+        result,
+      });
+    };
+
+    db.query(`UPDATE users SET ${field} = ? WHERE login = ?`, [value, login], queryCallback);
   },
 };
 

@@ -7,12 +7,24 @@ module.exports = {
     return jwt.sign(params, constants.appTokenSecret);
   },
   verifyToken(token) {
-    return jwt.verify(token, constants.appTokenSecret);
+    try {
+      return jwt.verify(token, constants.appTokenSecret);
+    } catch (e) {
+      return false;
+    }
   },
   getHashByString(string) {
     return bcrypt.hashSync(string);
   },
   compareHashes(string, hashToCompare) {
     return bcrypt.compareSync(string, hashToCompare);
+  },
+  getUserLoginByToken(token) {
+    if (!token) return false;
+
+    const tokenParsed = this.verifyToken(token);
+    if (!tokenParsed || !tokenParsed._login) return false;
+
+    return tokenParsed._login;
   },
 };

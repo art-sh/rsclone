@@ -7,6 +7,8 @@ const app = express();
 
 const routesNotFound = require('./components/routes/not-found.routes');
 const routesAuth = require('./components/routes/auth.routes');
+const routesUser = require('./components/routes/user.routes');
+const routesScore = require('./components/routes/score.routes');
 
 app.use(bodyParser.text());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -14,6 +16,8 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use('/api', routesAuth);
+app.use('/user', routesUser);
+app.use('/score', routesScore);
 app.use('*', routesNotFound);
 
 app.listen(constants.port, (error) => {
