@@ -147,10 +147,11 @@ export default class CharsAndNumbers {
   listenersHandler() {
     this.gameBlocks.buttonWrapper.addEventListener('click', (e) => {
       const target = e.target.closest('button');
+      const targetTextContent = target.textContent.split('').filter((item) => item.charCodeAt() >= 65 && item.charCodeAt() <= 90).join('');
       if (!target) return;
-      if (target.textContent === 'YES') {
+      if (targetTextContent === 'YES') {
         this.guess = true;
-      } else if (target.textContent === 'NO') {
+      } else if (targetTextContent === 'NO') {
         this.guess = false;
       }
       this.checkGuess();
@@ -181,15 +182,15 @@ export default class CharsAndNumbers {
   }
 
   difficultyHandler() {
-    if (this.answersCount >= 0 && this.answersCount < 5) {
+    if (this.answersCount >= 0 && this.answersCount < 8) {
       this.difficulty = 5;
-    } else if (this.answersCount >= 5 && this.answersCount <= 10) {
+    } else if (this.answersCount >= 9 && this.answersCount <= 14) {
       this.difficulty = 4;
       this.scoreMultipliyer = 1.6;
-    } else if (this.answersCount >= 10 && this.answersCount <= 15) {
+    } else if (this.answersCount >= 15 && this.answersCount <= 20) {
       this.difficulty = 3;
       this.scoreMultipliyer = 2.5;
-    } else if (this.answersCount >= 16 && this.answersCount <= 20) {
+    } else if (this.answersCount >= 21 && this.answersCount <= 24) {
       this.difficulty = 2;
       this.scoreMultipliyer = 2.5;
     } else {

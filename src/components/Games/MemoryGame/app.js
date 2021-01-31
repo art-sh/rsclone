@@ -1,10 +1,11 @@
 import ReverseTimer from '@helpers/ReverseTimer';
+import ModalWindow from '../../Render/components/ModalWindow/app';
 import Mixin from '../../../helpers/Mixin';
 import cardsArray from './js/cardsArray';
 import './scss/style.scss';
 
 export default class MemoryGame {
-  constructor(app, elements, size = 6) {
+  constructor(app, elements, size = 2) {
     this.$app = app;
     this.$soundPlayer = app.soundPlayer;
     this.gameConfig = app.config;
@@ -16,12 +17,12 @@ export default class MemoryGame {
     this.delay = 500;
     this.showCardsTime = 4000;
     this.timer = new ReverseTimer();
-    this.sessionTime = 20;
-    this.timeStep = 20;
     this.score = 0;
     this.matches = 0;
     this.fieldSize = size;
     this.fieldStep = 2; // for change level
+    this.scoreStep = 99;
+    this.scoreMultipliyer = 1;
   }
 
   getGameNode() {
@@ -48,12 +49,20 @@ export default class MemoryGame {
 
   createCards(size) {
     const resizedArray = cardsArray
-      .sort(() => 0.5 - Math.random())
       .slice(0, size);
     const gameBoard = resizedArray
-      .concat(resizedArray)
-      .sort(() => 0.5 - Math.random());
-    gameBoard.forEach((config) => this.gameElement.append(this.buildGameCard(config)));
+      .slice()
+      .concat(resizedArray);
+    const sortedGameBoard = this.shuffle(gameBoard.slice());
+    sortedGameBoard.forEach((config) => this.gameElement.append(this.buildGameCard(config)));
+  }
+
+  shuffle(array) {
+    for (let i = array.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
   }
 
   getAllSelected() {
@@ -61,12 +70,11 @@ export default class MemoryGame {
   }
 
   showCardsBeforeStart() {
-    this.setTimeToNull();
     const currentCards = document.querySelectorAll('.card');
+    this.gameElement.style.opacity = 1;
     setTimeout(() => {
       currentCards.forEach((card) => card.classList.remove('selected'));
     }, this.showCardsTime);
-    setTimeout(() => this.updateTimer(this.sessionTime), this.showCardsTime);
   }
 
   flipCard(event) {
@@ -94,7 +102,7 @@ export default class MemoryGame {
   validateAndCount() {
     if (this.firstGuess === this.secondGuess) {
       this.matches += 1;
-      this.score += 10;
+      this.score += +(this.scoreStep * this.scoreMultipliyer).toFixed();
       setTimeout(this.matchCards.bind(this), this.delay);
       this.checkIfWin();
     } else if (this.score > 0) this.score -= 2;
@@ -113,14 +121,22 @@ export default class MemoryGame {
     this.getAllSelected().forEach((card) => card.classList.remove('selected'));
   }
 
+  resetFlags() {
+    this.score = 0;
+    this.matches = 0;
+    this.fieldSize = 2;
+    this.scoreMultipliyer = 1;
+  }
+
   checkIfWin() {
-    if (this.matches === this.fieldSize) {
+    const numberOfCards = this.gameElement.children.length;
+    if (this.matches === numberOfCards / 2) {
       setTimeout(() => {
         if (this.matches === cardsArray.length) {
           this.timer.stopCount();
           this.destroyGameInstance();
+          this.gameEnd();
           this.$soundPlayer.playSound('game-end');
-          // POP UP YOU WIN
         } else {
           this.levelUp();
           this.$soundPlayer.playSound('level-next');
@@ -130,8 +146,8 @@ export default class MemoryGame {
   }
 
   levelUp() {
-    this.gameEnd();
-    this.sessionTime += this.timeStep;
+    this.gameElement.style.opacity = 0;
+    this.scoreMultipliyer += 0.7;
     this.fieldSize += this.fieldStep;
     this.matches = 0;
     this.gameElement.innerHTML = '';
@@ -141,41 +157,51 @@ export default class MemoryGame {
     this.showCardsBeforeStart();
   }
 
-  updateTimer(sessionTime) {
-    const finish = () => {
-      this.$soundPlayer.playSound('level-down');
-      this.destroyGameInstance();
-      // POP UP GAME OVER
-    };
-    this.timer.startCount(sessionTime, this.setTimeText.bind(this), finish);
-  }
-
   setTimeText(time) {
     this.elements.stats.time.textContent = `${time.minutesString}:${time.secondsString}`;
-  }
-
-  setTimeToNull() {
-    this.elements.stats.time.textContent = '00:00';
   }
 
   setScoreText(string) {
     this.elements.stats.score.textContent = string.toString();
   }
 
-  disableFinishBtn() {
+  disableFinishBtn(mode = 'off') {
     this.elements.game.finishBtn.disabled = true;
-    // this.elements.game.finishBtn.classList.add('button_disabled');
+    this.elements.game.finishBtn.classList.add('button_disabled');
     this.elements.game.finishBtn.style.cursor = 'default';
+    if (mode === 'on') {
+      this.elements.game.finishBtn.disabled = false;
+      this.elements.game.finishBtn.classList.remove('button_disabled');
+      this.elements.game.finishBtn.style.cursor = 'pointer';
+    }
   }
 
   destroyGameInstance() {
-    this.gameEnd();
+    this.timer.stopCount();
+    clearTimeout(this.stepGameInterval);
     this.gameElement.remove();
+  }
+
+  showModalWindow() {
+    const modal = new ModalWindow(this.$app);
+    modal.showModal({
+      type: this.gameConfig.modalWindow.types.gameEnd,
+      container: document.querySelector('#app'),
+      text: {
+        score: this.score,
+        title: this.gameConfig.games.memoryGame.name,
+      },
+      callback: {
+        restart: () => this.startGame(),
+      },
+    });
   }
 
   gameEnd() {
     this.timer.stopCount();
     this.disableFinishBtn();
+    this.showModalWindow();
+    this.$soundPlayer.playSound('game-end');
     return Mixin.dispatch(this.gameConfig.events.gameEnd, {
       game: this.gameConfig.id,
       score: this.score,
@@ -183,19 +209,24 @@ export default class MemoryGame {
   }
 
   startGame() {
-    this.gameElement = document.querySelector('#memory-game');
+    this.resetFlags();
+    this.timer.startCount(120, this.setTimeText.bind(this), this.gameEnd.bind(this));
+    this.disableFinishBtn('on');
+    document.body.classList.remove('game-button-finish-clicked');
+    this.gameElement.innerHTML = '';
     this.createCards(this.fieldSize);
     this.showCardsBeforeStart();
-    this.setTimeToNull();
     this.setScoreText(0);
   }
 
+  setListeners() {
+    this.elements.game.finishBtn.addEventListener('click', this.gameEnd.bind(this));
+  }
+
   init() {
-    this.elements.game.box.append(this.getGameNode());
-    this.elements.game.finishBtn.addEventListener('click', () => {
-      this.destroyGameInstance();
-      this.$soundPlayer.playSound('level-down');
-    });
+    this.gameElement = this.getGameNode();
+    this.elements.game.box.append(this.gameElement);
+    this.setListeners();
   }
 
   getGameInstance(root, elements) {

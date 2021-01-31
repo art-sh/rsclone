@@ -82,12 +82,11 @@ export default class WhackAMole {
     this.resetFlagsHandler();
     this.timer.stopCount();
     this.generateHoles();
-
     clearTimeout(this.stepGameInterval);
     this.showHideMoles();
 
     this.elements.stats.score.textContent = '0';
-    this.timer.startCount(60, this.setTimeText.bind(this), this.gameEnd.bind(this));
+    this.timer.startCount(80, this.setTimeText.bind(this), this.gameEnd.bind(this));
     document.body.classList.remove('game-button-finish-clicked');
   }
 
@@ -95,7 +94,6 @@ export default class WhackAMole {
     const currentHole = this.holesCollection.filter((item) => item.element.classList.contains('up'))[0];
     const avaialableHoles = this.holesCollection.filter((item) => !item.element.classList.contains('up'));
     const randomHole = this.randomHole(avaialableHoles);
-
     if (currentHole) {
       currentHole.element.classList.remove('up');
     }
@@ -109,7 +107,6 @@ export default class WhackAMole {
     this.stepGameInterval = setTimeout(() => {
       if (!randomHole.isAnswered) this.livesCount -= 1;
       if (!this.livesCount) return this.gameEnd();
-
       if (this.answeredCount <= 7) {
         this.showHideMoles();
       } else {
@@ -122,7 +119,6 @@ export default class WhackAMole {
     const holeObject = this.holesCollection.find((item) => item.id === id);
 
     if (holeObject.isAnswered) return;
-
     holeObject.isAnswered = true;
     holeObject.element.classList.add('clicked');
     this.totalScore += +(this.scoreStep * this.scoreMultipliyer).toFixed(0);
@@ -153,7 +149,7 @@ export default class WhackAMole {
   resetFlagsHandler() {
     this.livesCount = 10;
     this.totalScore = 0;
-    this.stepTime = 700;
+    this.stepTime = 1000;
     this.stepGameInterval = null;
     this.scoreStep = 99;
     this.scoreMultipliyer = 1;

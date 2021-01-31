@@ -21,6 +21,9 @@
 .game-status__item {
   margin-bottom: 12px;
   &:last-child {
+    display: inline-block;
+    width: 100%;
+    height: 30px;
     margin-bottom: 0;
   }
 }
@@ -42,6 +45,8 @@
 }
 
 .game-box {
+  display: flex;
+  align-items: center;
   max-width: 800px;
   min-height: 350px;
   margin: auto;

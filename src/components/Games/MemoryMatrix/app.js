@@ -47,7 +47,6 @@ export default class MemoryMatrix {
     this.gameBlocks.container = this.createElementFactory('div', null, 'matrix-memory-container', null, null, null);
     this.gameBlocks.gameField = this.createElementFactory('div', null, 'matrix-memory-container__main', null, null, null);
     this.gameBlocks.container.appendChild(this.gameBlocks.gameField);
-    // this.createLivesIcons();
     this.createGamesblocks(this.gameBlocks.gameField);
     this.listenersHandlers(this.gameBlocks.container);
     return this.gameBlocks.container;
@@ -238,7 +237,7 @@ export default class MemoryMatrix {
 
     if (!block.classList.contains('active')) {
       this.elements.stats.icons.removeChild(live);
-      // this.$soundPlayer.playSound('beep-short');
+      this.$soundPlayer.playSound('answer-wrong');
     }
     if (this.elements.stats.icons.children.length === 0) {
       this.timer.stopCount();
