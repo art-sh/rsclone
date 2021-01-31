@@ -8,7 +8,9 @@
   pointer-events: none;
   user-select: none;
 
-  .page-welcome & {
+  .page-welcome &,
+  .page-sign-in &,
+  .page-sign-up & {
     display: none;
   }
 
