@@ -3,52 +3,52 @@ import Mixin from '@helpers/Mixin';
 const imagesCollection = Mixin.handleWebpackImport(require.context('../assets/img', true, /\.png/));
 const cardsArray = [
   {
-    name: 'shell',
-    img: imagesCollection.blueshell,
+    name: 'apple',
+    img: imagesCollection.apple,
+  },
+  {
+    name: 'ball',
+    img: imagesCollection.ball,
+  },
+  {
+    name: 'bee',
+    img: imagesCollection.bee,
+  },
+  {
+    name: 'compass',
+    img: imagesCollection.compass,
+  },
+  {
+    name: 'elephant',
+    img: imagesCollection.elephant,
+  },
+  {
+    name: 'four',
+    img: imagesCollection.four,
+  },
+  {
+    name: 'flower',
+    img: imagesCollection.flower,
+  },
+  {
+    name: 'leaf',
+    img: imagesCollection.leaf,
+  },
+  {
+    name: 'music',
+    img: imagesCollection.music,
+  },
+  {
+    name: 'sneakers',
+    img: imagesCollection.sneakers,
   },
   {
     name: 'star',
     img: imagesCollection.star,
   },
   {
-    name: 'bobomb',
-    img: imagesCollection.bobomb,
-  },
-  {
-    name: 'mario',
-    img: imagesCollection.mario,
-  },
-  {
-    name: 'luigi',
-    img: imagesCollection.luigi,
-  },
-  {
-    name: 'peach',
-    img: imagesCollection.peach,
-  },
-  {
-    name: '1up',
-    img: imagesCollection['1up'],
-  },
-  {
-    name: 'mushroom',
-    img: imagesCollection.mushroom,
-  },
-  {
-    name: 'thwomp',
-    img: imagesCollection.thwomp,
-  },
-  {
-    name: 'bulletbill',
-    img: imagesCollection.bulletbill,
-  },
-  {
-    name: 'coin',
-    img: imagesCollection.coin,
-  },
-  {
-    name: 'goomba',
-    img: imagesCollection.goomba,
+    name: 'turtle',
+    img: imagesCollection.turtle,
   },
 ];
 
