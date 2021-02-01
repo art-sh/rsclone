@@ -5,7 +5,8 @@
     "server": "cross-env NODE_ENV=development webpack-dev-server",
     "build": "cross-env NODE_ENV=production webpack-cli",
     "backend": "nodemon -w backend --delay 1.5 backend/app.js",
-    "full": "concurrently -k \"npm run server\" \"npm run backend\""
+    "full": "concurrently -k \"npm run server\" \"npm run backend\"",
+    "start": "node backend/app.js"
   },
   "browserslist": "> 0.25%, not dead",
   "license": "ISC",
