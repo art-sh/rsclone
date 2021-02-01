@@ -46,4 +46,5 @@ export default {
     title: 'Use this hot keys to open some pages',
     info: '"Shift + G" - Game list \n "Shift + S" - Statistics \n "Shift + P" - Profile \n "Shift + R" - The Rolling Scopes School Web site \n "Shift + H" - Hot keys instructions',
   },
+  baseURL: 'https://brain-wars-backend.herokuapp.com',
 };

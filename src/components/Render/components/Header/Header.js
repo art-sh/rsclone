@@ -50,22 +50,9 @@ export default class Header {
     document.body.classList.add('menu-show');
   }
 
-  keyboardHandler(event) {
-    if ((event.keyCode === 71 && event.shiftKey) || (event.which === 71 && event.shiftKey)) {
-      this.$app.router.navigate('game-list');
-    }
-    if ((event.keyCode === 83 && event.shiftKey) || (event.which === 83 && event.shiftKey)) {
-      this.$app.router.navigate('statistic');
-    }
-    if ((event.keyCode === 80 && event.shiftKey) || (event.which === 80 && event.shiftKey)) {
-      this.$app.router.navigate('profile');
-    }
-  }
-
   setHeaderListeners() {
     this.elements.burgerButton.addEventListener('click', () => this.burgerMenuToggle());
 
-    window.addEventListener('keydown', (event) => this.keyboardHandler(event));
     window.addEventListener('resize', () => this.burgerMenuResizeCheck());
     Mixin.listen(this.$app.config.events.routeChange, () => this.burgerMenuHide());
   }

@@ -74,6 +74,7 @@
 
 .authors__item {
   margin-bottom: 7px;
+  transition: 0.4s;
 
   &:last-child {
     margin-bottom: 0;
@@ -87,4 +88,13 @@
 
 .authots__name {
   margin-right: 5px;
+}
+
+.page-welcome,
+.page-sign-in,
+.page-sign-up {
+  .footer__hotkeys {
+    opacity: 0;
+    pointer-events: none;
+  }
 }

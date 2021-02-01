@@ -6,7 +6,10 @@ const HttpClient = {
     const responseType = params.responseType || 'json';
 
     fetch(url, fetchParams)
-      .then((response) => response[responseType]())
+      .then((response) => ({
+        result: response[responseType](),
+        response,
+      }))
       .then((result) => callbackSuccess && callbackSuccess(result))
       .catch((error) => callbackError && callbackError(error));
   },

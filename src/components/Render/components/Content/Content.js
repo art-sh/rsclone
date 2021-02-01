@@ -1,4 +1,5 @@
 import Mixin from '@helpers/Mixin';
+import HttpClient from '@helpers/HttpClient';
 
 const templateGame = require('./assets/templates/game.html');
 const templateWelcome = require('./assets/templates/welcome.html');
@@ -80,6 +81,68 @@ export default class Content {
     this.elements.toggleThemeLight.classList.toggle('active');
   }
 
+  async successResponseHandler(response, type) {
+    if (type === 'login') {
+      const result = await response.result;
+      const appToken = response.response.headers.get('app-token');
+      if (appToken && response.response.ok) {
+        this.$app.storage.storage.userToken = appToken;
+        Object.assign(this.$app.storage.storage.userInfo, result.response);
+        this.$app.router.navigate('game-list');
+      } else {
+        this.elements.errorMessageContainer.textContent = result.response.message;
+      }
+    } else if (type === 'register') {
+      const result = await response.result;
+      if (response.response.ok) {
+        return this.$app.router.navigate('game-list');
+      }
+      if (!response.response.ok) this.elements.errorMessageContainer.textContent = result.response.message;
+    }
+  }
+
+  backendRequestHandler(type) {
+    const currentForm = document.forms[0];
+    currentForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const formData = new FormData(currentForm);
+      const outInner = Array.from(formData.entries())
+        .reduce((out, item) => {
+          out.push(`${encodeURIComponent(item[0])}=${encodeURIComponent(item[1])}`);
+          return out;
+        }, []);
+      if (type === 'register' && currentForm.elements.password.value === currentForm.elements.passwordCheck.value) {
+        HttpClient.send(`${this.$app.config.baseURL}/auth/${type}`, {
+          fetch: {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: outInner.join('&'),
+          },
+          success: async (response) => {
+            this.successResponseHandler(response, type);
+          },
+        });
+      } else if (type === 'login') {
+        HttpClient.send(`${this.$app.config.baseURL}/auth/${type}`, {
+          fetch: {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: outInner.join('&'),
+          },
+          success: async (response) => {
+            this.successResponseHandler(response, type);
+          },
+        });
+      } else {
+        this.elements.errorMessageContainer.textContent = 'Password does not match';
+      }
+    });
+  }
+
   setContentListeners(elements, type) {
     if (type === 'game') {
       elements.game.finishBtn.addEventListener('click', () => document.body.classList.add('game-button-finish-clicked'));
@@ -87,6 +150,13 @@ export default class Content {
     if (type === 'profile') {
       elements.toggleThemeDark.addEventListener('click', () => this.changeTheme());
       elements.toggleThemeLight.addEventListener('click', () => this.changeTheme());
+    }
+
+    if (type === 'signIn') {
+      this.backendRequestHandler('login');
+    }
+    if (type === 'signUp') {
+      this.backendRequestHandler('register');
     }
   }
 
@@ -117,6 +187,14 @@ export default class Content {
       return {
         toggleThemeDark: node.querySelector('.theme-status_dark'),
         toggleThemeLight: node.querySelector('.theme-status_light'),
+      };
+    } if (type === 'signIn') {
+      return {
+        errorMessageContainer: node.querySelector('.form-errors-block'),
+      };
+    } if (type === 'signUp') {
+      return {
+        errorMessageContainer: node.querySelector('.form-errors-container'),
       };
     }
 

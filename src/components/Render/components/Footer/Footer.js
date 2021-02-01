@@ -40,16 +40,30 @@ export default class Footer {
   }
 
   keyboardHandler(event) {
+    if (['#/sign-up', '#/sign-in', '#/welcome'].includes(window.location.hash)) return;
+
     if ((event.keyCode === 72 && event.shiftKey) || (event.which === 72 && event.shiftKey)) {
       this.showHotKeys();
     }
+
     if ((event.keyCode === 82 && event.shiftKey) || (event.which === 82 && event.shiftKey)) {
       window.open('https://rs.school/', '_blank');
+    }
+
+    if ((event.keyCode === 71 && event.shiftKey) || (event.which === 71 && event.shiftKey)) {
+      this.$app.router.navigate('game-list');
+    }
+    if ((event.keyCode === 83 && event.shiftKey) || (event.which === 83 && event.shiftKey)) {
+      this.$app.router.navigate('statistic');
+    }
+    if ((event.keyCode === 80 && event.shiftKey) || (event.which === 80 && event.shiftKey)) {
+      this.$app.router.navigate('profile');
     }
   }
 
   setFooterListeners() {
     window.addEventListener('keydown', (event) => this.keyboardHandler(event));
+
     setTimeout(() => {
       const hotKeys = document.querySelector('#hot-keys');
       hotKeys.addEventListener('click', (event) => {
