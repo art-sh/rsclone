@@ -1,12 +1,12 @@
 const config = {
   port: process.env.PORT || 5000,
   database: {
-    host: 'by141.atservers.net',
-    database: 'adminmoiokna_brainwars',
-    login: 'brain-wars',
-    password: 'e71l93HS1XnS2wCxJFbv',
+    host: process.env.DB_HOST,
+    database: process.env.DB_DATABASE,
+    login: process.env.DB_LOGIN,
+    password: process.env.DB_PASSWORD,
   },
-  appTokenSecret: 'vFUT8DgikrX1uZVut1ybsAJGhmY4xCZyvUJsVpmCOdvdH3JPkB',
+  appTokenSecret: process.env.APP_TOKEN_SECRET,
 };
 
 module.exports = config;

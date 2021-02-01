@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -19,7 +20,7 @@ app.use('*', (req, res, next) => {
   next();
 });
 
-app.use('/api', routesAuth);
+app.use('/auth', routesAuth);
 app.use('/user', routesUser);
 app.use('/score', routesScore);
 app.use('*', routesNotFound);

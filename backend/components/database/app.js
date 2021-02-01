@@ -29,14 +29,17 @@ class Database {
   }
 
   query(query, params = null, cb = null) {
-    const callback = (connection) => {
-      connection.query(query, params, (err, result) => {
-        if (err) return cb(err, null);
-        if (cb) return cb(null, result);
+    const paramsClone = [...params].map((item) => ((typeof item === 'string') ? Buffer.from(item, 'utf-8') : item));
+
+    const connectionCallback = (connection) => {
+      connection.query(query, paramsClone, (err, result) => {
+        if (err) return cb({error: err.sqlMessage, result});
+
+        cb({error: null, result});
       });
     };
 
-    this.executeInConnection(callback);
+    this.executeInConnection(connectionCallback);
   }
 }
 
