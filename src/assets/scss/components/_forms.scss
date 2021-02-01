@@ -1,8 +1,10 @@
-.form_sign-up {
-  margin-top: 30px;
-  position: relative;
-  z-index: 10;
-}
+.form_sign-up,
+.form__sign-in {
+   margin-top: 30px;
+   position: relative;
+   z-index: 10;
+   margin-bottom: 40px;
+ }
 
 .form__title {
   font-family: Acrom, sans-serif;
