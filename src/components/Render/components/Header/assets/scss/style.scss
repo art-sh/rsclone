@@ -8,7 +8,9 @@
 }
 
 .menu {
-  .page-welcome & {
+  .page-welcome &,
+  .page-sign-in &,
+  .page-sign-up & {
     display: none;
   }
 
@@ -47,13 +49,14 @@
           content: '';
           position: absolute;
           background: #FFBD59;
-          top: 10px;
+          top: 24px;
           left: 0;
-          width: 30px;
+          width: 35px;
           height: 5px;
           z-index: -1;
           opacity: 0;
           transition: 0.5s;
+          animation-timing-function: ease-in;
         }
 
         &:hover::after {

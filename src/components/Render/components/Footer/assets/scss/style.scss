@@ -6,7 +6,9 @@
   justify-content: space-between;
   align-items: center;
 
-  .page-welcome & {
+  .page-welcome &,
+  .page-sign-in &,
+  .page-sign-up & {
     background-color: #472B83;
   }
 
