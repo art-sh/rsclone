@@ -1,5 +1,5 @@
 const config = {
-  port: 3000,
+  port: process.env.PORT || 5000,
   database: {
     host: 'by141.atservers.net',
     database: 'adminmoiokna_brainwars',
