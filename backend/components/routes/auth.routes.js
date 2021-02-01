@@ -18,6 +18,7 @@ router.post('/login', (req, res) => {
     delete outModel.password;
 
     res
+      .header('Access-Control-Expose-Headers', 'App-Token')
       .header('App-Token', auth.getNewToken({_login: result.result[0].login}))
       .send(mixin.jsonOk(outModel));
   };
@@ -46,6 +47,7 @@ router.post('/register', (req, res) => {
     delete outModel.password;
 
     res
+      .header('Access-Control-Expose-Headers', 'App-Token')
       .header('App-Token', auth.getNewToken({_login: result.result[0].login}))
       .json(mixin.jsonOk(outModel));
   };
