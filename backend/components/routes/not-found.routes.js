@@ -1,7 +1,8 @@
 const router = require('express').Router();
+const mixin = require('../../helpers/mixin');
 
 const errorResponse = (req, res) => {
-  res.status(404).send(res.send('Not Found'));
+  mixin.jsonBad({message: 'Not Found'}, 404, res);
 };
 
 router.get('*', errorResponse);

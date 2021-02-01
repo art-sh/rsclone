@@ -14,6 +14,10 @@ app.use(bodyParser.text());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
+app.use('*', (req, res, next) => {
+  res.header('Access-Control-Expose-Headers', 'App-Token');
+  next();
+});
 
 app.use('/api', routesAuth);
 app.use('/user', routesUser);
