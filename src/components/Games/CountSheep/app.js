@@ -116,17 +116,37 @@ export default class CountSheep {
     return answersBlock;
   }
 
-  startGame() {
-    this.gameProgress();
+  gameProgress() {
+    setTimeout(() => {
+      this.showCards();
+    }, 1000);
+    setTimeout(() => {
+      this.showAnswers();
+      this.setListeners();
+    }, 2500);
   }
 
-  gameProgress() {
-    setInterval(() => {
-      this.showCards();
-      setTimeout(() => {
-        this.showAnswers();
-      }, 1500);
-    }, 5000);
+  setListeners() {
+    this.elements.game.box.addEventListener('click', (e) => {
+      const userAnswer = e.target.closest('.answers__item');
+      let numberOfUserAnswer;
+      if (userAnswer) {
+        numberOfUserAnswer = Number(userAnswer.textContent);
+        this.checkAnswer(numberOfUserAnswer, userAnswer);
+      }
+    }, {once: true});
+  }
+
+  checkAnswer(userAnswer, userAnswerButton) {
+    if (userAnswer === this.amountOfSheep) {
+      this.$soundPlayer.playSound('pew');
+      userAnswerButton.style.backgroundColor = '#21B3A9';
+      this.gameProgress();
+    } else {
+      this.$soundPlayer.playSound('sheep');
+      userAnswerButton.style.backgroundColor = '#EA6453';
+      this.gameProgress();
+    }
   }
 
   showCards() {
@@ -136,6 +156,20 @@ export default class CountSheep {
 
   showAnswers() {
     this.gameElement.append(this.createAnswersBlock());
+  }
+
+  setTimeText(time) {
+    this.elements.stats.time.textContent = `${time.minutesString}:${time.secondsString}`;
+  }
+
+  setScoreText(string) {
+    this.elements.stats.score.textContent = string.toString();
+  }
+
+  startGame() {
+    this.gameProgress();
+    this.timer.startCount(120, this.setTimeText.bind(this));
+    this.setScoreText(0);
   }
 
   init() {
