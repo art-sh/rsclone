@@ -15,6 +15,7 @@
     background-size: 75%;
     background-repeat: no-repeat;
     background-position: center;
+    background-image: url("../assets/img/sheep.png");
     box-shadow: 0px 4px 4px rgba(71, 43, 131, 0.68);
     @media (max-width: 500px) {
       height: 40px;
@@ -35,7 +36,6 @@
     background-color: #9473DA;
     border-radius: 10px;
     box-shadow: 0px 4px 4px rgba(71, 43, 131, 0.68);
-    opacity: 0.2;
     @media (max-width: 500px) {
       top: 65px;
       width: 265px;

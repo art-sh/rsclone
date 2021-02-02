@@ -1,7 +1,7 @@
 import ReverseTimer from '@helpers/ReverseTimer';
 // import ModalWindow from '../../Render/components/ModalWindow/app';
 // import Mixin from '../../../helpers/Mixin';
-import cardsArray from './js/cardsArray';
+// import cardsArray from './js/cardsArray';
 import './scss/style.scss';
 
 export default class CountSheep {
@@ -38,7 +38,6 @@ export default class CountSheep {
     const card = document.createElement('div');
     card.classList.add('card');
     card.dataset.number = currentNumber;
-    card.style.backgroundImage = `url(${cardsArray[0].img})`;
     if (status === 'hide') {
       card.style.visibility = 'hidden';
     }
@@ -61,8 +60,6 @@ export default class CountSheep {
         this.gameElement.append(this.buildGameCard(i, 'hide'));
       }
     }
-
-    this.gameElement.append(this.createAnswersBlock());
   }
 
   getSortedRandomNumbers(lastNumberOfRange, amountOfNumbers) {
@@ -82,6 +79,7 @@ export default class CountSheep {
 
   getOptionsOfAnswers() {
     const wrongAnswers = [];
+    this.answers = [];
     this.answers.push(this.amountOfSheep);
     wrongAnswers.push(this.amountOfSheep - 1);
     wrongAnswers.push(this.amountOfSheep - 2);
@@ -119,8 +117,25 @@ export default class CountSheep {
   }
 
   startGame() {
+    this.gameProgress();
+  }
+
+  gameProgress() {
+    setInterval(() => {
+      this.showCards();
+      setTimeout(() => {
+        this.showAnswers();
+      }, 1500);
+    }, 5000);
+  }
+
+  showCards() {
     this.gameElement.innerHTML = '';
     this.createCards();
+  }
+
+  showAnswers() {
+    this.gameElement.append(this.createAnswersBlock());
   }
 
   init() {
