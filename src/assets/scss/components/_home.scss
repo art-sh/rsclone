@@ -81,10 +81,7 @@
 }
 
 .games__title {
-  font-family: Acrom, sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 28px;
+  @include fontSettings(28px, 500);
   line-height: 135%;
   text-transform: capitalize;
   color: $color-violet-dark;
@@ -99,10 +96,7 @@
 }
 
 .games__p {
-  font-family: Acrom, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
+  @include fontSettings(14px, normal);
   line-height: 135%;
   text-transform: capitalize;
   color: $color-grey;

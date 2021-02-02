@@ -1,8 +1,5 @@
 .statistic__title {
-  font-family: Acrom, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 28px;
+  @include fontSettings(28px, bold);
   line-height: 1.2;
   letter-spacing: 0.015em;
   color: $color-white-1;
@@ -14,10 +11,7 @@
 
 .statistic__table {
   margin-bottom: 60px;
-  font-family: Acrom, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
+  @include fontSettings(12px, normal);
   line-height: 1.2;
   letter-spacing: 0.015em;
   color: $color-white-1;
@@ -85,10 +79,7 @@
 }
 
 .achievements__title {
-  font-family: Acrom, sans-serif;
-  font-style: normal;
-  font-weight: 250;
-  font-size: 11px;
+  @include fontSettings(11px, 250);
   line-height: 13px;
   letter-spacing: 0.015em;
   color: $color-white-1;

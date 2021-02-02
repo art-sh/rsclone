@@ -3,10 +3,7 @@
   border-radius: 5px;
   border: 2px solid $color-pink-dark;
   color: $color-white-1;
-  font-family: Acrom, sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 18px;
+  @include fontSettings(18px, 500);
   line-height: 22px;
   display: flex;
   align-items: center;

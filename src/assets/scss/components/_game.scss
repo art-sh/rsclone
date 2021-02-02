@@ -1,8 +1,5 @@
 .game-title {
-  font-family: Acrom, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 36px;
+  @include fontSettings(36px, bold);
   line-height: 43px;
   letter-spacing: 0.015em;
   text-transform: capitalize;
@@ -29,10 +26,7 @@
 }
 
 .game-status__title {
-  font-family: Acrom, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
+  @include fontSettings(16px, normal);
   line-height: 19px;
   display: inline-block;
   margin-right: 6px;

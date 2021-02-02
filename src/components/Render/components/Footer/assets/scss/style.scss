@@ -1,4 +1,5 @@
 @import "../../../../../../assets/scss/abstarcts/variables";
+@import "../../../../../../assets/scss/abstarcts/mixins";
 
 .footer {
   background-color: $color-violet-black;
@@ -24,9 +25,7 @@
   flex-direction: column;
 
   & span {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 12px;
+    @include fontSettings(12px, 500);
     color: $color-white-1;
   }
 
@@ -53,10 +52,7 @@
 }
 
 .authors__link {
-  font-family: Acrom, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 11px;
+  @include fontSettings(11px, normal);
   line-height: 13px;
   text-decoration-line: underline;
   color: $color-white-1;

@@ -21,10 +21,7 @@
   }
 
   .welcome-title {
-    font-family: Acrom, sans-serif;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 48px;
+    @include fontSettings(48px, bold);
     line-height: 1.2;
     letter-spacing: 0.015em;
     color: $color-white-1;
@@ -36,10 +33,7 @@
   }
 
   .welcome-subtitle {
-    font-family: Acrom, sans-serif;
-    font-style: normal;
-    font-weight: 250;
-    font-size: 24px;
+    @include fontSettings(24px, 250);
     line-height: 1.2;
     color: $color-white-1;
     text-align: center;

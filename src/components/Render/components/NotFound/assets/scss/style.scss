@@ -1,4 +1,5 @@
 @import "../../../../../../assets/scss/abstarcts/variables";
+@import "../../../../../../assets/scss/abstarcts/mixins";
 
 .main-container_404 {
   background-color: $color-violet-black;
@@ -30,10 +31,7 @@
 }
 
 .error404__title {
-  font-family: 'Acrom', sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 72px;
+  @include fontSettings(72px, bold);
   line-height: 86px;
   letter-spacing: 0.015em;
   color: $color-white-1;
@@ -41,10 +39,7 @@
 }
 
 .error404__subtitle {
-  font-family: 'Acrom', sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 24px;
+  @include fontSettings(24px, normal);
   line-height: 1.25;
   letter-spacing: 0.015em;
   color: $color-white-1;
@@ -53,10 +48,7 @@
 }
 
 .error404__link {
-  font-family: 'Acrom', sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 18px;
+  @include fontSettings(18px, normal);
   line-height: 1.25;
   letter-spacing: 0.015em;
   text-decoration-line: underline;
