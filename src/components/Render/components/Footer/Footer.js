@@ -40,6 +40,8 @@ export default class Footer {
   }
 
   keyboardHandler(event) {
+    event.preventDefault();
+
     if ((event.keyCode === 72 && event.altKey) || (event.which === 72 && event.altKey)) {
       this.showHotKeys();
     }

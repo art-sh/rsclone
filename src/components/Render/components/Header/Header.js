@@ -51,6 +51,8 @@ export default class Header {
   }
 
   keyboardHandler(event) {
+    event.preventDefault();
+
     if ((event.keyCode === 71 && event.altKey) || (event.which === 71 && event.altKey)) {
       this.$app.router.navigate('game-list');
     }
