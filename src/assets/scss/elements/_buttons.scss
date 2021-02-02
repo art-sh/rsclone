@@ -1,9 +1,8 @@
 .button {
-  //min-width: 150px;
-  background-color: #A1285F;
+  background-color: $color-pink-dark;
   border-radius: 5px;
-  border: 2px solid #A1285F;
-  color: #f9f9f9;
+  border: 2px solid $color-pink-dark;
+  color: $color-white-1;
   font-family: Acrom, sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -13,26 +12,25 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0px 0px 10px rgba(161, 40, 95, 0.69);
+  box-shadow: 0 0 10px rgba($color-pink-dark, 0.69);
   text-decoration: none;
   transition-duration: 300ms;
-  //padding: 5px 45px 5px 45px;
   width: 156px;
   height: 31px;
 
   &:hover {
-    box-shadow: 0px 0px 15px #BF2F71;
-    background-color: #BF2F71;
-    border-color: #BF2F71;
+    box-shadow: 0 0 15px $color-pink;
+    background-color: $color-pink;
+    border-color: $color-pink;
     animation: neonPuls 2s infinite;
   }
 
   &.button_disabled {
-    background-color: #B9ACB2;
-    border-color: #B9ACB2;
+    background-color: $color-pink-grey;
+    border-color: $color-pink-grey;
     box-shadow: none;
     animation: none;
-    color: #d4d4d4;
+    color: $color-grey-white;
     cursor: auto;
     pointer-events: none;
   }
@@ -58,78 +56,78 @@
 
 @keyframes neonPuls {
   0% {
-    box-shadow: 0 0 2px #BF2F71, 0 0 5px #BF2F71, 0 0 15px #BF2F71;
+    box-shadow: 0 0 2px $color-pink, 0 0 5px $color-pink, 0 0 15px $color-pink;
   }
   10% {
-    box-shadow: 0 0 10px #BF2F71, 0 0 20px #BF2F71, 0 0 17px #BF2F71;
+    box-shadow: 0 0 10px $color-pink, 0 0 20px $color-pink, 0 0 17px $color-pink;
   }
   15% {
-    box-shadow: 0 0 5px #BF2F71, 0 0 10px #BF2F71, 0 0 16px #BF2F71;
+    box-shadow: 0 0 5px $color-pink, 0 0 10px $color-pink, 0 0 16px $color-pink;
   }
   20% {
-    box-shadow: 0 0 10px #BF2F71, 0 0 20px #BF2F71, 0 0 17px #BF2F71;
+    box-shadow: 0 0 10px $color-pink, 0 0 20px $color-pink, 0 0 17px $color-pink;
   }
   25% {
-    box-shadow: 0 0 5px #BF2F71, 0 0 10px #BF2F71, 0 0 16px #BF2F71;
+    box-shadow: 0 0 5px $color-pink, 0 0 10px $color-pink, 0 0 16px $color-pink;
   }
   30% {
-    box-shadow: 0 0 10px #BF2F71, 0 0 20px #BF2F71, 0 0 17px #BF2F71;
+    box-shadow: 0 0 10px $color-pink, 0 0 20px $color-pink, 0 0 17px $color-pink;
   }
   35% {
-    box-shadow: 0 0 5px #BF2F71, 0 0 10px #BF2F71, 0 0 16px #BF2F71;
+    box-shadow: 0 0 5px $color-pink, 0 0 10px $color-pink, 0 0 16px $color-pink;
   }
   40% {
-    box-shadow: 0 0 10px #BF2F71, 0 0 20px #BF2F71, 0 0 17px #BF2F71;
+    box-shadow: 0 0 10px $color-pink, 0 0 20px $color-pink, 0 0 17px $color-pink;
   }
   45% {
-    box-shadow: 0 0 2px #BF2F71, 0 0 5px #BF2F71, 0 0 15px #BF2F71;
+    box-shadow: 0 0 2px $color-pink, 0 0 5px $color-pink, 0 0 15px $color-pink;
   }
   50% {
-    box-shadow: 0 0 10px #BF2F71, 0 0 20px #BF2F71, 0 0 17px #BF2F71;
+    box-shadow: 0 0 10px $color-pink, 0 0 20px $color-pink, 0 0 17px $color-pink;
   }
   55% {
-    box-shadow: 0 0 5px #BF2F71, 0 0 10px #BF2F71, 0 0 16px #BF2F71;
+    box-shadow: 0 0 5px $color-pink, 0 0 10px $color-pink, 0 0 16px $color-pink;
   }
   60% {
-    box-shadow: 0 0 10px #BF2F71, 0 0 20px #BF2F71, 0 0 17px #BF2F71;
+    box-shadow: 0 0 10px $color-pink, 0 0 20px $color-pink, 0 0 17px $color-pink;
   }
   65% {
-    box-shadow: 0 0 2px #BF2F71, 0 0 5px #BF2F71, 0 0 15px #BF2F71;
+    box-shadow: 0 0 2px $color-pink, 0 0 5px $color-pink, 0 0 15px $color-pink;
   }
   70% {
-    box-shadow: 0 0 10px #BF2F71, 0 0 20px #BF2F71, 0 0 17px #BF2F71;
+    box-shadow: 0 0 10px $color-pink, 0 0 20px $color-pink, 0 0 17px $color-pink;
   }
   90% {
-    box-shadow: 0 0 2px #BF2F71, 0 0 5px #BF2F71, 0 0 15px #BF2F71;
+    box-shadow: 0 0 2px $color-pink, 0 0 5px $color-pink, 0 0 15px $color-pink;
   }
   91% {
     box-shadow: none;
   }
   92% {
-    box-shadow: 0 0 2px #BF2F71, 0 0 5px #BF2F71, 0 0 15px #BF2F71;
+    box-shadow: 0 0 2px $color-pink, 0 0 5px $color-pink, 0 0 15px $color-pink;
   }
   93% {
     box-shadow: none;
   }
   94% {
-    box-shadow: 0 0 2px #BF2F71, 0 0 5px #BF2F71, 0 0 15px #BF2F71;
+    box-shadow: 0 0 2px $color-pink, 0 0 5px $color-pink, 0 0 15px $color-pink;
   }
   95% {
     box-shadow: none;
   }
   96% {
-    box-shadow: 0 0 2px #BF2F71, 0 0 5px #BF2F71, 0 0 15px #BF2F71;
+    box-shadow: 0 0 2px $color-pink, 0 0 5px $color-pink, 0 0 15px $color-pink;
   }
   97% {
     box-shadow: none;
   }
   98% {
-    box-shadow: 0 0 2px #BF2F71, 0 0 5px #BF2F71, 0 0 15px #BF2F71;
+    box-shadow: 0 0 2px $color-pink, 0 0 5px $color-pink, 0 0 15px $color-pink;
   }
   99% {
     box-shadow: none;
   }
   100% {
-    box-shadow: 0 0 2px #BF2F71, 0 0 5px #BF2F71, 0 0 15px #BF2F71;
+    box-shadow: 0 0 2px $color-pink, 0 0 5px $color-pink, 0 0 15px $color-pink;
   }
 }

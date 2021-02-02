@@ -1,48 +1,46 @@
 .theme-light {
   .main-container {
-    background: #F9F9F9;
+    background: $color-white-1;
 
     /*--- Game list ---*/
     .game-title {
-      color: #472B83;
+      color: $color-violet-dark;
     }
 
     .game-status__title {
-      color: #333333;
+      color: $color-grey;
     }
 
     .game-status__state {
-      color: #333333;
+      color: $color-grey;
     }
 
-    /*--- Statistic ---*/
     .statistic__title {
-      color: #472B83;
+      color: $color-violet-dark;
     }
 
     .statistic__table {
-      color: #333333;
+      color: $color-grey;
       th {
-        color: #A1285F;
+        color: $color-pink-dark;
       }
     }
 
     .achievements__title {
       font-weight: normal;
-      color: #472B83;
+      color: $color-violet-dark;
     }
 
-    /*--- Profile ---*/
     .transparent-wrapper {
-      background: rgba(253, 253, 253, 0.2);
+      background: rgba($color-white-2, 0.2);
     }
 
     .profile__title {
-      color: #472B83;
+      color: $color-violet-dark;
     }
 
     .profile__row {
-      color: #333333;
+      color: $color-grey;
 
       span {
         font-weight: normal;
@@ -64,7 +62,7 @@
     }
 
     .profile__subtitle {
-      color: #472B83;
+      color: $color-violet-dark;
     }
   }
 }

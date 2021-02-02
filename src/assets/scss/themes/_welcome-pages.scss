@@ -1,5 +1,5 @@
 .main_welcome {
-  background-color: #472B83;
+  background-color: $color-violet-dark;
 
   &.main_greetings {
     display: flex;
@@ -27,7 +27,7 @@
     font-size: 48px;
     line-height: 1.2;
     letter-spacing: 0.015em;
-    color: #F9F9F9;
+    color: $color-white-1;
     text-align: center;
     margin-bottom: 24px;
     @media (max-width: 600px) {
@@ -41,7 +41,7 @@
     font-weight: 250;
     font-size: 24px;
     line-height: 1.2;
-    color: #F9F9F9;
+    color: $color-white-1;
     text-align: center;
     margin-bottom: 38px;
     @media (max-width: 600px) {

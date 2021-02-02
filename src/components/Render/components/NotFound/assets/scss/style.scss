@@ -1,5 +1,7 @@
+@import "../../../../../../assets/scss/abstarcts/variables";
+
 .main-container_404 {
-  background-color: #472B83;
+  background-color: $color-violet-black;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,7 +36,7 @@
   font-size: 72px;
   line-height: 86px;
   letter-spacing: 0.015em;
-  color: #F9F9F9;
+  color: $color-white-1;
   margin-bottom: 5px;
 }
 
@@ -45,7 +47,7 @@
   font-size: 24px;
   line-height: 1.25;
   letter-spacing: 0.015em;
-  color: #F9F9F9;
+  color: $color-white-1;
   text-align: center;
   margin-bottom: 25px;
 }
@@ -58,13 +60,13 @@
   line-height: 1.25;
   letter-spacing: 0.015em;
   text-decoration-line: underline;
-  color: #F9F9F9;
+  color: $color-white-1;
   opacity: 0.9;
   cursor: pointer;
   transition-duration: 250ms;
 
   &:hover {
-    color: #FFBD59;
+    color: $color-beige;
   }
 }
 

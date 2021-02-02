@@ -5,7 +5,7 @@
   font-size: 28px;
   line-height: 1.2;
   letter-spacing: 0.015em;
-  color: #F9F9F9;
+  color: $color-white-1;
   margin-bottom: 30px;
   @media (max-width: 670px) {
     font-size: 22px;
@@ -20,7 +20,7 @@
   font-size: 12px;
   line-height: 1.2;
   letter-spacing: 0.015em;
-  color: #F9F9F9;
+  color: $color-white-1;
   text-align: left;
 
   th{
@@ -91,5 +91,5 @@
   font-size: 11px;
   line-height: 13px;
   letter-spacing: 0.015em;
-  color: #F9F9F9;
+  color: $color-white-1;
 }

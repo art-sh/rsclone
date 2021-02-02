@@ -1,5 +1,7 @@
+@import "../../../../../../assets/scss/abstarcts/variables";
+
 .footer {
-  background-color: #2A1851;
+  background-color: $color-violet-black;
   padding-top: 15px;
   padding-bottom: 15px;
   display: flex;
@@ -9,7 +11,7 @@
   .page-welcome &,
   .page-sign-in &,
   .page-sign-up & {
-    background-color: #472B83;
+    background-color: $color-violet-dark;
   }
 
   @media (max-width: 600px) {
@@ -25,7 +27,7 @@
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
-    color: #f9f9f9;
+    color: $color-white-1;
   }
 
   @media (max-width: 600px) {
@@ -57,18 +59,18 @@
   font-size: 11px;
   line-height: 13px;
   text-decoration-line: underline;
-  color: #f9f9f9;
+  color: $color-white-1;
   transition-duration: 300ms;
 
   svg path {
-    fill: #f9f9f9;
+    fill: $color-white-1;
     transition-duration: 300ms;
   }
 
   &:hover {
-    color: #FFBD59;
+    color: $color-beige;
     svg path {
-      fill: #FFBD59;
+      fill: $color-beige;
       transition-duration: 300ms;
     }
   }

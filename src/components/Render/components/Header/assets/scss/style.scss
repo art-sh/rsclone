@@ -1,5 +1,7 @@
+@import "../../../../../../assets/scss/abstarcts/variables";
+
 .header {
-  background-color: #472B83;
+  background-color: $color-violet-dark;
   padding-top: 22px;
   padding-bottom: 18px;
   display: flex;
@@ -35,7 +37,7 @@
       }
 
       &-link {
-        color: #f9f9f9;
+        color: $color-white-1;
         font-family: Acrom, sans-serif;
         font-style: normal;
         font-weight: 500;
@@ -48,7 +50,7 @@
         &::after {
           content: '';
           position: absolute;
-          background: #FFBD59;
+          background: $color-beige;
           top: 24px;
           left: 0;
           width: 35px;
@@ -90,7 +92,7 @@
         transform: rotate(0deg);
         transition: .25s ease-in-out;
         height: 3px;
-        background-color: #f9f9f9;
+        background-color: $color-white-1;
 
         &:nth-child(1) {
           top: 0;
@@ -132,7 +134,7 @@
 
     &-list {
       position: absolute;
-      background-color: #472B83;
+      background-color: $color-violet-dark;
       width: 100%;
       height: calc(100vh - 100% - 1px);
       flex-direction: column;
@@ -166,5 +168,5 @@
 
 .menu__icon:hover path {
   transition: 0.5s;
-  fill: #FAB942;
+  fill: $color-beige;
 }
