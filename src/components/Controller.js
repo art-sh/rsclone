@@ -1,3 +1,4 @@
+import Mixin from '@helpers/Mixin';
 import Render from './Render/Render';
 
 export default class Controller {
@@ -7,8 +8,6 @@ export default class Controller {
     this.$config = null;
     this.$storage = null;
     this.$render = new Render(this.$app);
-
-    this.isAuth = true;
   }
 
   init(config, storage, router) {
@@ -21,14 +20,22 @@ export default class Controller {
   handleRoute(controller, action) {
     if (window.location.pathname !== '/') return this.$router.setPath('/');
     if (!window.location.hash) return this.$router.navigate('welcome');
-    if (!this.isCurrentUserHaveAccess(controller, action)) return this.$router.navigate('welcome');
+    if (!this.isCurrentUserHaveAccess(controller, action) && !this.isUserAuthorized()) return this.$router.navigate('welcome');
+    if (!this.isCurrentUserHaveAccess(controller, action) && this.isUserAuthorized()) return this.$router.navigate('game-list');
 
+    document.title = Mixin.uppercaseFirstLetter(action || controller || 'Brain wars');
     this.$render.renderPage(controller, action);
   }
 
-  isCurrentUserHaveAccess(controller, action) {
-    if (this.isAuth) return true;
-    if (controller === 'welcome' && !action) return true;
+  isUserAuthorized() {
+    return this.$storage.storage.userToken;
+  }
+
+  isCurrentUserHaveAccess(controller) {
+    if (!this.isUserAuthorized() && ['welcome', 'sign-up', 'sign-in'].includes(controller)) return true;
+    if (this.isUserAuthorized() && !['welcome', 'sign-up', 'sign-in'].includes(controller)) return true;
+    if (this.isUserAuthorized() && ['welcome', 'sign-up', 'sign-in'].includes(controller)) return false;
+    if (!this.isUserAuthorized() && !['welcome', 'sign-up', 'sign-in'].includes(controller)) return false;
 
     return false;
   }

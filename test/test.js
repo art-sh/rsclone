@@ -93,15 +93,16 @@ describe('Brain wars tests', () => {
     assert.strictEqual(memory.getGameNode().getAttribute('id'), 'memory-game');
   });
 
-  it('setTimeToNull() method should set time to 00:00', () => {
+  it('setScoreText() method should set score to into container', () => {
     memory.elements = {
       stats: {
-        time: document.createElement('span'),
+        score: document.createElement('span'),
       },
     };
-    memory.elements.stats.time.textContent = '12:23';
-    memory.setTimeToNull();
-    assert.strictEqual(memory.elements.stats.time.textContent, '00:00');
+    const score = '999';
+    memory.elements.stats.score.textContent = '';
+    memory.setScoreText(score);
+    assert.strictEqual(memory.elements.stats.score.textContent, score);
   });
 
   it('getAllSelected() method should return an array', () => {

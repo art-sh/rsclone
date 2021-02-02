@@ -48,7 +48,7 @@ export default class MemoryGame {
   }
 
   createCards(size) {
-    const resizedArray = cardsArray
+    const resizedArray = this.shuffle(cardsArray)
       .slice(0, size);
     const gameBoard = resizedArray
       .slice()
@@ -203,7 +203,7 @@ export default class MemoryGame {
     this.showModalWindow();
     this.$soundPlayer.playSound('game-end');
     return Mixin.dispatch(this.gameConfig.events.gameEnd, {
-      game: this.gameConfig.id,
+      game: this.gameConfig.games.memoryGame.id,
       score: this.score,
     });
   }

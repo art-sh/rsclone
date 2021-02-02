@@ -4,6 +4,23 @@ const Mixin = {
   uppercaseFirstLetter(str) {
     return str[0].toUpperCase() + str.slice(1);
   },
+  jsonDecode(string) {
+    try {
+      return JSON.parse(string);
+    } catch (e) {
+      return null;
+    }
+  },
+  jsonEncode(obj) {
+    return JSON.stringify(obj);
+  },
+  deepClearObject(object) {
+    Object.entries(object).forEach(([key, item]) => {
+      if (typeof item === 'object' && item) return Mixin.deepClearObject(item);
+
+      object[key] = null;
+    });
+  },
   deepFreeze(object) {
     Object.freeze(object);
 
@@ -76,6 +93,9 @@ const Mixin = {
     });
 
     return out;
+  },
+  addZero(num) {
+    return num.toString().padStart(2, '0');
   },
 };
 

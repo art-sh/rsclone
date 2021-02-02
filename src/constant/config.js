@@ -1,6 +1,6 @@
 export default {
   storageKeys: {
-    authorisation: '__auth',
+    app: '__app',
   },
   timeouts: {},
   events: {
@@ -8,6 +8,7 @@ export default {
     routeChange: 'route-change',
     gameStart: 'game-start',
     gameEnd: 'game-end',
+    storageUpdated: 'storage-updated',
   },
   modalWindow: {
     types: {
@@ -20,7 +21,7 @@ export default {
     memoryMatrix: {
       name: 'Matrix Memory',
       id: 'matrix-memory',
-      description: 'The “Memory Matrix” simulator helps to develop the volume of short-term memory, accuracy and speed of memorization, spatial working memory, visual memory, voluntary attention, speed of thinking.',
+      description: 'The “Memory Matrix” simulator helps to increase the volume of short-term memory, accuracy and speed of memorization, spatial working memory, visual memory, voluntary attention, speed of thinking',
       rules: 'Colored squares appear on the playing field. Your task will be to remember their location and accurately reproduce when they disappear. The time of appearance of the original value will decrease, and the field will increase. An incorrect answer results in a lower difficulty level and the loss of one of three lives.',
     },
     memoryGame: {
@@ -44,6 +45,7 @@ export default {
   },
   hotKeysInfo: {
     title: 'Use this hot keys to open some pages',
-    info: '"Alt + G" - Game list \n "Alt + S" - Statistics \n "Alt + P" - Profile \n "Alt + R" - The Rolling Scopes School Web site \n "Alt + H" - Hot keys instructions',
+    info: '"ALT + G" - Game list \n "ALT + S" - Statistics \n "ALT + P" - Profile \n "ALT + R" - The Rolling Scopes School Web site \n "ALT + H" - Hot keys instructions',
   },
+  baseURL: 'https://brain-wars-backend.herokuapp.com',
 };

@@ -47,16 +47,14 @@
 
       .sound-status {
         font-weight: normal;
-        &.active {
-          font-weight: bold;
-        }
       }
 
       .theme-status {
         font-weight: normal;
-        &.active {
-          font-weight: bold;
-        }
+      }
+
+      .theme-status_light {
+        font-weight: bold;
       }
     }
 
