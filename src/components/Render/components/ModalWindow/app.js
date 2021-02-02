@@ -5,6 +5,9 @@ const templateGameEnd = require('./assets/templates/game-end.html');
 const templateHotKeys = require('./assets/templates/hot-keys.html');
 
 export default class ModalWindow {
+  /**
+   * @param {object} app
+   */
   constructor(app) {
     this.$app = app;
     this.$modalConfig = app.config.modalWindow;
@@ -20,6 +23,9 @@ export default class ModalWindow {
     Mixin.listen(this.$app.config.events.routeChange, this.destroyModal.bind(this), true);
   }
 
+  /**
+   * @param {object} params
+   */
   getModalContainer(params) {
     const {type} = params;
     const node = Mixin.getNode(this.templates[type]);
@@ -31,6 +37,11 @@ export default class ModalWindow {
     return node;
   }
 
+  /**
+   * @param {string} type
+   * @param {object} params
+   * @param {object} elements
+   */
   setModalListeners(type, params, elements) {
     Object.entries(elements.buttons).forEach(([elementKey, element]) => {
       if (!element) return;
@@ -53,6 +64,10 @@ export default class ModalWindow {
     });
   }
 
+  /**
+   * @param {object} config
+   * @param {object} elements
+   */
   fillElementsByParams(config, elements) {
     if (!config) return;
 
@@ -61,6 +76,10 @@ export default class ModalWindow {
     });
   }
 
+  /**
+   * @param {string} type
+   * @param {HTMLElement} node
+   */
   getModalElements(type, node) {
     if (type === this.types.gameDescription) {
       return {
@@ -110,6 +129,24 @@ export default class ModalWindow {
     }
   }
 
+  /**
+   * @param {object} params
+   * @param {string} params.type Modal types
+   * @param {Element} params.container
+   * @param {{
+   *   title: string,
+   *   [gameDescription]: string,
+   *   [rule]: string,
+   *   [score]: string,
+   *   [time]: string,
+   *   [achievement]: string,
+   * }} params.text Values of text fields
+   * @param {{
+   *   [close]: function,
+   *   [play]: function
+   * }} [params.callback] Callback functions
+   * @return void
+   */
   showModal(params) {
     const node = this.getModalContainer(params);
 
@@ -118,10 +155,16 @@ export default class ModalWindow {
     window.requestAnimationFrame(() => this.show());
   }
 
+  /**
+   * @return void
+   */
   show() {
     document.body.classList.add('modal-show');
   }
 
+  /**
+   * @return void
+   */
   destroyModal() {
     if (this.elements.node) this.elements.node.remove();
     this.elements = {};
