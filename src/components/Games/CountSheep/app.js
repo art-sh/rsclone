@@ -4,7 +4,7 @@ import ReverseTimer from '@helpers/ReverseTimer';
 import cardsArray from './js/cardsArray';
 import './scss/style.scss';
 
-export default class CountThem {
+export default class CountSheep {
   constructor(app, elements) {
     this.$app = app;
     this.$soundPlayer = app.soundPlayer;
@@ -27,7 +27,7 @@ export default class CountThem {
 
   getGameNode() {
     const game = document.createElement('div');
-    game.setAttribute('id', 'count-them');
+    game.setAttribute('id', 'count-sheep');
     return game;
   }
 
@@ -94,7 +94,7 @@ export default class CountThem {
   }
 
   getGameInstance(root, elements) {
-    const app = new CountThem(root, elements);
+    const app = new CountSheep(root, elements);
     app.init();
     return app;
   }

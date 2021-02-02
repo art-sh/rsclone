@@ -41,10 +41,10 @@ export default {
       description: 'In order to advance through the levels of this game, the user will have to hit the target mole.',
       rules: 'If you hit three times per level, the movement speed of the mole will increase! And be careful: aim exactly at the mole.',
     },
-    countThem: {
-      id: 'count-them',
-      name: 'Count Them',
-      description: 'This game will help you develop spatial thinking. Play this game and you will count a flock of sheep just by looking at it.',
+    countSheep: {
+      id: 'count-sheep',
+      name: 'Count Sheep',
+      description: 'This game will help you develop spatial thinking. Play the game and you will count a flock of sheep just by looking at it.',
       rules: 'You need to count the elements on the playing field and choose only one correct answer. Be careful, because you have only three opportunities to make a mistake. Good luck!',
     },
   },
