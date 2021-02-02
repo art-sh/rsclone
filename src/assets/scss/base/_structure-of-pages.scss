@@ -49,13 +49,11 @@ body {
     }
 
     & > .main {
-      // padding-bottom: 103px;
       padding-left: 5%;
       padding-right: 5%;
       overflow: hidden;
       flex-grow: 1;
       @media (max-width: 500px) {
-        // padding-bottom: 155px;
       }
       @media (min-width: 1600px) {
         padding-left: 18%;
@@ -65,8 +63,6 @@ body {
 
     & > .footer {
       box-sizing: border-box;
-      // position: absolute;
-      // bottom: 0;
       width: 100%;
       padding-left: 5%;
       padding-right: 5%;

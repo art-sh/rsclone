@@ -20,7 +20,7 @@ export default class MemoryGame {
     this.score = 0;
     this.matches = 0;
     this.fieldSize = size;
-    this.fieldStep = 2; // for change level
+    this.fieldStep = 2;
     this.scoreStep = 99;
     this.scoreMultipliyer = 1;
   }

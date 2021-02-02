@@ -1,18 +1,13 @@
-$bgColor: #472B83;
+@import "../../../../../../assets/scss/abstarcts/variables";
 
-$numOfColBlocks: 3; // must be higher than 2
+$numOfColBlocks: 3;
 $deg: 360deg / $numOfColBlocks;
 
-$violet: #A1285F;
-$orange: #FFBD59;
-$blue: #9473DA;
-
 $blocksColors: (
-  1: $violet,
-  2: $orange,
-  3: $blue
+  1: $color-pink-dark,
+  2: $color-beige,
+  3: $color-violet-light
 );
-
 
 $size: 140px;
 $sizeBig: 200px;
@@ -86,7 +81,7 @@ $totalLen: $num1Len + $num2Len + $num3Len + $numJoin1-2 + $numJoin2-3 + $numJoin
       overflow: hidden;
       position: relative;
       height: 100%;
-      background: $bgColor;
+      background: $color-violet-dark;
       border-radius: inherit;
     }
   }

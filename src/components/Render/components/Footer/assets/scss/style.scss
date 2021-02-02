@@ -1,13 +1,18 @@
+@import "../../../../../../assets/scss/abstarcts/variables";
+@import "../../../../../../assets/scss/abstarcts/mixins";
+
 .footer {
-  background-color: #2A1851;
+  background-color: $color-violet-black;
   padding-top: 15px;
   padding-bottom: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  .page-welcome & {
-    background-color: #472B83;
+  .page-welcome &,
+  .page-sign-in &,
+  .page-sign-up & {
+    background-color: $color-violet-dark;
   }
 
   @media (max-width: 600px) {
@@ -20,10 +25,8 @@
   flex-direction: column;
 
   & span {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 12px;
-    color: #f9f9f9;
+    @include fontSettings(12px, 500);
+    color: $color-white-1;
   }
 
   @media (max-width: 600px) {
@@ -49,24 +52,21 @@
 }
 
 .authors__link {
-  font-family: Acrom, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 11px;
+  @include fontSettings(11px, normal);
   line-height: 13px;
   text-decoration-line: underline;
-  color: #f9f9f9;
+  color: $color-white-1;
   transition-duration: 300ms;
 
   svg path {
-    fill: #f9f9f9;
+    fill: $color-white-1;
     transition-duration: 300ms;
   }
 
   &:hover {
-    color: #FFBD59;
+    color: $color-beige;
     svg path {
-      fill: #FFBD59;
+      fill: $color-beige;
       transition-duration: 300ms;
     }
   }

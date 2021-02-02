@@ -1,45 +1,42 @@
 .theme-dark {
   .main-container {
-    background: linear-gradient(179.79deg, #9473DA -1.13%, #1B1033 99.82%);
+    background: linear-gradient(179.79deg, $color-violet-light -1.13%, $color-cobalt 99.82%);
 
-    /*--- Game list ---*/
     .game-title {
-      color: #F9F9F9;
+      color: $color-white-1;
     }
 
     .game-status__title {
-      color: #F9F9F9;
+      color: $color-white-1;
     }
 
     .game-status__state {
-      color: #f9f9f9;
+      color: $color-white-1;
     }
 
-    /*--- Statistic ---*/
     .statistic__title {
-      color: #F9F9F9;
+      color: $color-white-1;
     }
 
     .statistic__table {
-      color: #F9F9F9;
+      color: $color-white-1;
     }
 
     .achievements__title {
       font-weight: 250;
-      color: #F9F9F9;
+      color: $color-white-1;
     }
 
-    /*--- Profile ---*/
     .transparent-wrapper {
-      background: rgba(71, 43, 131, 0.24);
+      background: rgba($color-violet-dark, 0.24);
     }
 
     .profile__title {
-      color: #F9F9F9;
+      color: $color-white-1;
     }
 
     .profile__row {
-      color: #F9F9F9;
+      color: $color-white-1;
 
       span {
         font-weight: 250;
@@ -62,7 +59,7 @@
     }
 
     .profile__subtitle {
-      color: #F9F9F9;
+      color: $color-white-1;
     }
   }
 }
