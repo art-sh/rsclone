@@ -56,10 +56,7 @@ const Mixin = {
 
     return node.content.cloneNode(true);
   },
-  /**
-   * @param template
-   * @return {HTMLElement}
-   */
+
   getNode(template) {
     const newContentElement = document.createElement('div');
     newContentElement.append(Mixin.parseHTML(template));

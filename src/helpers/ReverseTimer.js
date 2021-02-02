@@ -13,17 +13,10 @@ export default class ReverseTimer {
     });
   }
 
-  /**
-   * @return {number}
-   */
   get currentTimeSeconds() {
     return this._currentTimeSeconds;
   }
 
-  /**
-   * @param {number} value
-   * @return {void}
-   */
   set currentTimeSeconds(value) {
     this._currentTimeSeconds = value;
 
@@ -31,13 +24,6 @@ export default class ReverseTimer {
     this.time.minutes = Math.floor(value / 60);
   }
 
-  /**
-   * @param {number} timeSeconds
-   * @param {function} tickCallback
-   * @param {function} endCallback
-   * @param {number} interval
-   * @return {*}
-   */
   startCount(timeSeconds, tickCallback = null, endCallback = null, interval = 1000) {
     if (!timeSeconds) return endCallback(this.time);
     if (this.timerInterval) this.stopCount();
@@ -59,9 +45,6 @@ export default class ReverseTimer {
     }, interval);
   }
 
-  /**
-   * @return {void}
-   */
   stopCount() {
     clearInterval(this.timerInterval);
 
@@ -69,10 +52,6 @@ export default class ReverseTimer {
     this.currentTimeSeconds = 0;
   }
 
-  /**
-   * @param {object} obj
-   * @return {object}
-   */
   getTimerProxy(obj) {
     const self = this;
 
@@ -88,10 +67,6 @@ export default class ReverseTimer {
     });
   }
 
-  /**
-   * @param {number|string} num
-   * @return {string}
-   */
   addZero(num) {
     return num.toString().padStart(2, '0');
   }

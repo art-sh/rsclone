@@ -2,7 +2,6 @@
   .main-container {
     background: linear-gradient(179.79deg, $color-violet-light -1.13%, $color-cobalt 99.82%);
 
-    /*--- Game list ---*/
     .game-title {
       color: $color-white-1;
     }
@@ -15,7 +14,6 @@
       color: $color-white-1;
     }
 
-    /*--- Statistic ---*/
     .statistic__title {
       color: $color-white-1;
     }
@@ -29,7 +27,6 @@
       color: $color-white-1;
     }
 
-    /*--- Profile ---*/
     .transparent-wrapper {
       background: rgba($color-violet-dark, 0.24);
     }
