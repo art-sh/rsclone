@@ -9,10 +9,7 @@
 }
 
 .profile__title {
-  font-family: Acrom, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 28px;
+  @include fontSettings(28px, bold);
   line-height: 1.2;
   letter-spacing: 0.015em;
   margin-bottom: 30px;
@@ -26,10 +23,7 @@
 }
 
 .profile__row {
-  font-family: Acrom, sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
+  @include fontSettings(14px, 500);
   line-height: 1.2;
   letter-spacing: 0.015em;
   margin-bottom: 20px;
@@ -46,10 +40,7 @@
 }
 
 .profile__subtitle {
-  font-family: Acrom, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 18px;
+  @include fontSettings(18px, bold);
   line-height: 1.2;
   letter-spacing: 0.015em;
   margin-bottom: 20px;

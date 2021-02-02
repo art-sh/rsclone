@@ -1,3 +1,5 @@
+@import "../../../../assets/scss/abstarcts/variables";
+
 .game-container {
     display: flex;
     flex-direction: column;
@@ -7,8 +9,8 @@
     width: 100%;
     height: 22rem;
     margin: 0 auto;
-    border: 1px solid black;
-    background-color: #FDFDFD;
+    border: 1px solid $color-black;
+    background-color: $color-white-2;
     .game-field {
         display: flex;
         flex-direction: column;
@@ -19,10 +21,10 @@
 
         .active {
           .number-question {
-            color: black !important;
+            color: $color-black !important;
           }
           .char-question {
-            color: black !important;
+            color: $color-black !important;
           }
         }
         .number-question-block {
@@ -34,25 +36,25 @@
             .number-question {
                 text-transform: uppercase;
                 font: bold normal 1.5rem/110% Acrom, sans-serif;
-                color: gray;
+                color: $color-grey-light;
             }
             .number-block-content {
                 width: 20%;
                 height: 40px;
                 text-align: center;
                 .number-first-content-item {
-                  color: #ffbd59;
+                  color: $color-beige;
                     font: normal normal 2rem/110% Acrom, sans-serif;
                 }
                 .number-second-content-item {
-                  color: #ffbd59;
+                  color: $color-beige;
                     font: normal normal 2rem/110% Acrom, sans-serif;
                 }
             }
         }
         .divider {
             width: 80%;
-            border: 1px solid#ffbd59;
+            border: 1px solid$color-beige;
         }
         .char-question-block {
             display: flex;
@@ -63,7 +65,7 @@
             .char-question {
                 text-transform: uppercase;
                 font: bold normal 1.5rem/110% Acrom, sans-serif;
-                color: gray;
+                color: $color-grey-light;
             }
 
             .char-block-content {
@@ -71,11 +73,11 @@
                 height: 40px;
                 text-align: center;
                 .char-first-content-item {
-                  color: #ffbd59;
+                  color: $color-beige;
                     font: normal normal 2rem/110% Acrom, sans-serif;
                 }
                 .char-second-content-item {
-                  color: #ffbd59;
+                  color: $color-beige;
                     font: normal normal 2rem/110% Acrom, sans-serif;
                 }
             }
@@ -102,7 +104,7 @@
             border-radius: 10px;
             border: none;
             font: bold normal 1rem/110% Acrom, sans-serif;
-            background-color: #ffbd59;
+            background-color: $color-beige;
             &:hover {
                 cursor: pointer;
                 transition: 0.4s;
