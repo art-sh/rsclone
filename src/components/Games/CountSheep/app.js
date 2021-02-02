@@ -23,7 +23,9 @@ export default class CountSheep {
     this.fieldStep = 2; // for change level
     this.scoreStep = 99;
     this.scoreMultipliyer = 1;
-    this.amountOfVisibleCardsPerRound = 0;
+    this.amountOfSheep = 0;
+    this.amountOfCards = 30;
+    this.answers = [];
   }
 
   getGameNode() {
@@ -43,11 +45,15 @@ export default class CountSheep {
     return card;
   }
 
+  getAmountOfSheep(min, max) {
+    this.amountOfSheep = Math.floor(Math.random() * (max - min + 1)) + min;
+    return this.amountOfSheep;
+  }
+
   createCards() {
-    const amountOfCards = 30;
-    this.getAmountOfVisibleCardsPerRound(1, 15);
-    const randomNumbers = this.getSortedRandomNumbers(amountOfCards, this.amountOfVisibleCardsPerRound);
-    for (let i = 1; i < amountOfCards + 1; i += 1) {
+    this.getAmountOfSheep(4, 15);
+    const randomNumbers = this.getSortedRandomNumbers(this.amountOfCards, this.amountOfSheep);
+    for (let i = 1; i < this.amountOfCards + 1; i += 1) {
       if (randomNumbers[randomNumbers.length - 1] === i) {
         this.gameElement.append(this.buildGameCard(i, 'show'));
         randomNumbers.pop();
@@ -56,12 +62,7 @@ export default class CountSheep {
       }
     }
 
-    this.gameElement.append(this.buildAnswersBlock());
-  }
-
-  getAmountOfVisibleCardsPerRound(min, max) {
-    this.amountOfVisibleCardsPerRound = Math.floor(Math.random() * (max - min + 1)) + min;
-    return this.amountOfVisibleCardsPerRound;
+    this.gameElement.append(this.createAnswersBlock());
   }
 
   getSortedRandomNumbers(lastNumberOfRange, amountOfNumbers) {
@@ -75,19 +76,46 @@ export default class CountSheep {
     return chosenNumbers.sort((a, b) => b - a);
   }
 
-  buildAnswersBlock() {
-    const answers = document.createElement('div');
-    answers.classList.add('answers');
+  shuffle(array) {
+    array.sort(() => Math.random() - 0.5);
+  }
 
+  getOptionsOfAnswers() {
+    const wrongAnswers = [];
+    this.answers.push(this.amountOfSheep);
+    wrongAnswers.push(this.amountOfSheep - 1);
+    wrongAnswers.push(this.amountOfSheep - 2);
+    wrongAnswers.push(this.amountOfSheep - 3);
+    wrongAnswers.push(this.amountOfSheep + 1);
+    wrongAnswers.push(this.amountOfSheep + 2);
+    wrongAnswers.push(this.amountOfSheep + 3);
+
+    for (let i = 0; (i < 3) && (i < wrongAnswers.length); i += 1) {
+      const r = Math.floor(Math.random() * (wrongAnswers.length - i)) + i;
+      const answer = wrongAnswers[r];
+      wrongAnswers[r] = wrongAnswers[i];
+      wrongAnswers[i] = answer;
+      this.answers.push(answer);
+    }
+
+    console.log(this.answers);
+  }
+
+  createAnswersBlock() {
+    const answersBlock = document.createElement('div');
+    answersBlock.classList.add('answers');
+    this.getOptionsOfAnswers();
+    this.shuffle(this.answers);
+    console.log(this.answers);
     let i = 0;
     while (i < 4) {
       const answersItem = document.createElement('button');
       answersItem.classList.add('answers__item');
-      answersItem.innerText = '1';
-      answers.append(answersItem);
+      answersItem.innerText = this.answers[i];
+      answersBlock.append(answersItem);
       i += 1;
     }
-    return answers;
+    return answersBlock;
   }
 
   startGame() {
