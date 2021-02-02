@@ -39,7 +39,10 @@ export default class SoundPlayer {
 
     source.connect(this.audio.destination);
     source.buffer = this.soundBuffers[key];
-    source.start(0);
+    if (document.body.classList.contains('sound-active')) {
+      console.log('asd');
+      source.start(0);
+    }
   }
 
   /**

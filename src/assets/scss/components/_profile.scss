@@ -37,6 +37,9 @@
   .sound-status {
     font-size: 16px;
     cursor: pointer;
+    .active {
+      font-weight: bold;
+    }
   }
 
   .theme-status {
@@ -53,4 +56,21 @@
   line-height: 1.2;
   letter-spacing: 0.015em;
   margin-bottom: 20px;
+}
+
+.sound-active {
+  .main-container {
+    .sound-on {
+      font-weight: bold !important;
+  }
+  }
+
+}
+
+.sound-deactive {
+  .main-container {
+    .sound-off {
+      font-weight: bold !important;
+  }
+  }
 }

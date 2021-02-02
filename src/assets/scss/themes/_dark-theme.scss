@@ -54,9 +54,10 @@
 
       .theme-status {
         font-weight: 250;
-        &.active {
-          font-weight: bold;
-        }
+      }
+
+      .theme-status_dark{
+        font-weight: bold;
       }
     }
 

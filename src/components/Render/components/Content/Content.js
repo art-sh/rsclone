@@ -47,6 +47,9 @@ export default class Content {
 
     window.requestAnimationFrame(() => {
       const newContentElement = this.getNode(this.templates[contentType]) || '';
+      const newElements = this.getNodeElements(newContentElement, contentType);
+      this.setProfileContent(newElements, contentType);
+
       const handler = () => {
         this.elementContent.ontransitionend = null;
         this.elementContent.replaceWith(newContentElement);
@@ -55,7 +58,7 @@ export default class Content {
         window.requestAnimationFrame(() => {
           window.requestAnimationFrame(() => this.elementContent.removeAttribute('style'));
 
-          this.elements = this.getNodeElements(newContentElement, contentType);
+          this.elements = newElements;
 
           this.setContentListeners(this.elements, contentType);
 
@@ -74,17 +77,50 @@ export default class Content {
     });
   }
 
-  changeTheme() {
-    document.body.classList.toggle('theme-dark');
-    document.body.classList.toggle('theme-light');
-    this.elements.toggleThemeDark.classList.toggle('active');
-    this.elements.toggleThemeLight.classList.toggle('active');
+  setProfileContent(elements, contentType) {
+    if (contentType === 'profile') {
+      const userInfoObject = this.$app.storage.storage.userInfo;
+      const date = new Date(userInfoObject.date_create * 1000);
+
+      elements.profileName.textContent = userInfoObject.name;
+      elements.registrationDate.textContent = `${Mixin.addZero(date.getDate())}.${Mixin.addZero(date.getMonth() + 1)}.${date.getFullYear()}`;
+    }
   }
 
-  async successResponseHandler(response, type) {
+  changeTheme(theme) {
+    this.$app.storage.storage.userSettings.theme = (theme === 'dark') ? 'theme-dark' : 'theme-light';
+  }
+
+  soundHandler(sound) {
+    if (sound === 'on') {
+      this.elements.soundOn.classList.add('active');
+      this.elements.soundOff.classList.remove('active');
+    } else {
+      this.elements.soundOn.classList.remove('active');
+      this.elements.soundOff.classList.add('active');
+    }
+    this.$app.storage.storage.userSettings.sound = (sound === 'on');
+  }
+
+  logOutHandler() {
+    this.$app.storage.resetUserStorage();
+    this.$app.router.navigate('welcome');
+  }
+
+  async successResponseHandler(response, type, currentForm) {
+    const result = await response.result;
+    const appToken = response.response.headers.get('app-token');
+
     if (type === 'login') {
-      const result = await response.result;
-      const appToken = response.response.headers.get('app-token');
+      if (appToken && response.response.ok) {
+        this.$app.storage.storage.userToken = appToken;
+        Object.assign(this.$app.storage.storage.userInfo, result.response);
+
+        this.$app.router.navigate('game-list');
+      } else {
+        this.elements.errorMessageContainer.textContent = result.response.message;
+      }
+    } else if (type === 'register') {
       if (appToken && response.response.ok) {
         this.$app.storage.storage.userToken = appToken;
         Object.assign(this.$app.storage.storage.userInfo, result.response);
@@ -92,53 +128,93 @@ export default class Content {
       } else {
         this.elements.errorMessageContainer.textContent = result.response.message;
       }
-    } else if (type === 'register') {
-      const result = await response.result;
+    } else if (type === 'profile' && currentForm.id === 'form1') {
       if (response.response.ok) {
-        return this.$app.router.navigate('game-list');
+        this.elements.errorMessageContainer.textContent = 'Password is changed';
       }
-      if (!response.response.ok) this.elements.errorMessageContainer.textContent = result.response.message;
     }
+  }
+
+  registerRequestHandler(type, data, currentForm) {
+    if (currentForm.elements.password.value === currentForm.elements.passwordCheck.value) {
+      HttpClient.send(`${this.$app.config.baseURL}/auth/${type}`, {
+        fetch: {
+          method: 'POST',
+          body: data.join('&'),
+        },
+        storage: this.$app.storage.storage,
+        success: async (response) => this.successResponseHandler(response, type),
+      });
+    } else {
+      this.elements.errorMessageContainer.textContent = 'Password does not match';
+    }
+  }
+
+  loginRequestHandler(type, data) {
+    HttpClient.send(`${this.$app.config.baseURL}/auth/${type}`, {
+      fetch: {
+        method: 'POST',
+        body: data.join('&'),
+      },
+      storage: this.$app.storage.storage,
+      success: async (response) => this.successResponseHandler(response, type),
+    });
+  }
+
+  changePasswordRequest(type, data, currentForm) {
+    if (currentForm.elements.password.value === currentForm.elements.passwordCheck.value) {
+      HttpClient.send(`${this.$app.config.baseURL}/user/change-password`, {
+        fetch: {
+          method: 'PUT',
+          body: data.join('&'),
+        },
+        storage: this.$app.storage.storage,
+        success: async (response) => this.successResponseHandler(response, type, currentForm),
+      });
+    } else {
+      this.elements.errorMessageContainer.textContent = 'Password does not match';
+    }
+  }
+
+  changeNicknameRequest(type, data) {
+    HttpClient.send(`${this.$app.config.baseURL}/user/change-name`, {
+      fetch: {
+        method: 'PUT',
+        body: data,
+      },
+      storage: this.$app.storage.storage,
+      success: async (response) => this.successResponseHandler(response, type),
+    });
   }
 
   backendRequestHandler(type) {
     const currentForm = document.forms[0];
+    let secondForm;
+    if (type === 'profile') {
+      secondForm = document.forms.changeNickname;
+      secondForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const stringifyData = `name=${secondForm.elements.nickname.value}`;
+        this.changeNicknameRequest(type, stringifyData);
+        this.$app.storage.storage.userInfo.name = secondForm.elements.nickname.value;
+        window.location.reload();
+      });
+    }
     currentForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const formData = new FormData(currentForm);
-      const outInner = Array.from(formData.entries())
+      const stringifyData = Array.from(formData.entries())
         .reduce((out, item) => {
           out.push(`${encodeURIComponent(item[0])}=${encodeURIComponent(item[1])}`);
           return out;
         }, []);
-      if (type === 'register' && currentForm.elements.password.value === currentForm.elements.passwordCheck.value) {
-        HttpClient.send(`${this.$app.config.baseURL}/auth/${type}`, {
-          fetch: {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: outInner.join('&'),
-          },
-          success: async (response) => {
-            this.successResponseHandler(response, type);
-          },
-        });
+
+      if (type === 'register') {
+        this.registerRequestHandler(type, stringifyData, currentForm);
       } else if (type === 'login') {
-        HttpClient.send(`${this.$app.config.baseURL}/auth/${type}`, {
-          fetch: {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: outInner.join('&'),
-          },
-          success: async (response) => {
-            this.successResponseHandler(response, type);
-          },
-        });
-      } else {
-        this.elements.errorMessageContainer.textContent = 'Password does not match';
+        this.loginRequestHandler(type, stringifyData);
+      } else if (type === 'profile') {
+        this.changePasswordRequest(type, stringifyData, currentForm);
       }
     });
   }
@@ -148,8 +224,12 @@ export default class Content {
       elements.game.finishBtn.addEventListener('click', () => document.body.classList.add('game-button-finish-clicked'));
     }
     if (type === 'profile') {
-      elements.toggleThemeDark.addEventListener('click', () => this.changeTheme());
-      elements.toggleThemeLight.addEventListener('click', () => this.changeTheme());
+      elements.toggleThemeDark.addEventListener('click', this.changeTheme.bind(this, 'dark'));
+      elements.toggleThemeLight.addEventListener('click', this.changeTheme.bind(this, 'light'));
+      elements.logoutButton.addEventListener('click', this.logOutHandler.bind(this));
+      elements.soundOn.addEventListener('click', this.soundHandler.bind(this, 'on'));
+      elements.soundOff.addEventListener('click', this.soundHandler.bind(this, 'off'));
+      this.backendRequestHandler('profile');
     }
 
     if (type === 'signIn') {
@@ -187,6 +267,12 @@ export default class Content {
       return {
         toggleThemeDark: node.querySelector('.theme-status_dark'),
         toggleThemeLight: node.querySelector('.theme-status_light'),
+        profileName: node.querySelector('.profile__nickname'),
+        registrationDate: node.querySelector('.profile__date'),
+        errorMessageContainer: node.querySelector('.form-errors-block'),
+        logoutButton: node.querySelector('.button-exit'),
+        soundOn: node.querySelector('.sound-on'),
+        soundOff: node.querySelector('.sound-off'),
       };
     } if (type === 'signIn') {
       return {
