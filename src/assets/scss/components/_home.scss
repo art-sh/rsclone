@@ -98,7 +98,6 @@
 .games__p {
   @include fontSettings(14px, normal);
   line-height: 135%;
-  text-transform: capitalize;
   color: $color-grey;
 }
 
