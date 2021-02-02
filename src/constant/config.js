@@ -44,6 +44,6 @@ export default {
   },
   hotKeysInfo: {
     title: 'Use this hot keys to open some pages',
-    info: '"Shift + G" - Game list \n "Shift + S" - Statistics \n "Shift + P" - Profile \n "Shift + R" - The Rolling Scopes School Web site \n "Shift + H" - Hot keys instructions',
+    info: '"Alt + G" - Game list \n "Alt + S" - Statistics \n "Alt + P" - Profile \n "Alt + R" - The Rolling Scopes School Web site \n "Alt + H" - Hot keys instructions',
   },
 };

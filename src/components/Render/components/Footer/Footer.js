@@ -40,10 +40,10 @@ export default class Footer {
   }
 
   keyboardHandler(event) {
-    if ((event.keyCode === 72 && event.shiftKey) || (event.which === 72 && event.shiftKey)) {
+    if ((event.keyCode === 72 && event.altKey) || (event.which === 72 && event.altKey)) {
       this.showHotKeys();
     }
-    if ((event.keyCode === 82 && event.shiftKey) || (event.which === 82 && event.shiftKey)) {
+    if ((event.keyCode === 82 && event.altKey) || (event.which === 82 && event.altKey)) {
       window.open('https://rs.school/', '_blank');
     }
   }
