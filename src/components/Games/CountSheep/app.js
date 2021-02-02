@@ -23,6 +23,7 @@ export default class CountSheep {
     this.fieldStep = 2; // for change level
     this.scoreStep = 99;
     this.scoreMultipliyer = 1;
+    this.amountOfVisibleCardsPerRound = 0;
   }
 
   getGameNode() {
@@ -44,7 +45,8 @@ export default class CountSheep {
 
   createCards() {
     const amountOfCards = 30;
-    const randomNumbers = this.getSortedRandomNumbers(amountOfCards, 7);
+    this.getAmountOfVisibleCardsPerRound(1, 15);
+    const randomNumbers = this.getSortedRandomNumbers(amountOfCards, this.amountOfVisibleCardsPerRound);
     for (let i = 1; i < amountOfCards + 1; i += 1) {
       if (randomNumbers[randomNumbers.length - 1] === i) {
         this.gameElement.append(this.buildGameCard(i, 'show'));
@@ -55,6 +57,11 @@ export default class CountSheep {
     }
 
     this.gameElement.append(this.buildAnswersBlock());
+  }
+
+  getAmountOfVisibleCardsPerRound(min, max) {
+    this.amountOfVisibleCardsPerRound = Math.floor(Math.random() * (max - min + 1)) + min;
+    return this.amountOfVisibleCardsPerRound;
   }
 
   getSortedRandomNumbers(lastNumberOfRange, amountOfNumbers) {
