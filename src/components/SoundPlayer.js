@@ -34,14 +34,13 @@ export default class SoundPlayer {
    */
   playSound(key) {
     if (!this.soundBuffers[key]) throw new Error('Sound not found');
+    if (!this.$app.storage.storage.userSettings.sound) return;
 
     const source = this.audio.createBufferSource();
 
     source.connect(this.audio.destination);
     source.buffer = this.soundBuffers[key];
-    if (document.body.classList.contains('sound-active')) {
-      source.start(0);
-    }
+    source.start(0);
   }
 
   /**

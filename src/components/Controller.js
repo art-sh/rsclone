@@ -1,3 +1,4 @@
+import Mixin from '@helpers/Mixin';
 import Render from './Render/Render';
 
 export default class Controller {
@@ -21,6 +22,8 @@ export default class Controller {
     if (!window.location.hash) return this.$router.navigate('welcome');
     if (!this.isCurrentUserHaveAccess(controller, action) && !this.isUserAuthorized()) return this.$router.navigate('welcome');
     if (!this.isCurrentUserHaveAccess(controller, action) && this.isUserAuthorized()) return this.$router.navigate('game-list');
+
+    document.title = Mixin.uppercaseFirstLetter(action || controller || 'Brain wars');
     this.$render.renderPage(controller, action);
   }
 

@@ -24,7 +24,8 @@ export default class Storage {
 
   init(config) {
     this.$config = config;
-    this.setStorageListener();
+
+    this.setStorageListeners();
     this.loadStorage();
   }
 
@@ -33,7 +34,7 @@ export default class Storage {
     Mixin.deepClearObject(this.storage.userInfo);
   }
 
-  setStorageListener() {
+  setStorageListeners() {
     // Mixin.listen(this.$config.events.gameEnd, (e) => {
     //   const stringifyData = Object.entries(e.detail)
     //     .reduce((out, item) => {

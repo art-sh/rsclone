@@ -40,7 +40,6 @@ export default class Footer {
   }
 
   keyboardHandler(event) {
-    event.preventDefault();
     if (['#/sign-up', '#/sign-in', '#/welcome'].includes(window.location.hash)) return;
 
     if ((event.keyCode === 72 && event.altKey) || (event.which === 72 && event.altKey)) {
