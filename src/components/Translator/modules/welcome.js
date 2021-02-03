@@ -4,7 +4,7 @@ export default {
     en: 'Welcome to BrainWars!',
   },
   subtitle: {
-    ru: 'Не ограничивайте свой разум',
+    ru: 'Расширяй свои горизонты',
     en: 'Don\'t put limits on your mind',
   },
   'sign-in': {

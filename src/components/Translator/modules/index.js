@@ -4,6 +4,7 @@ import profile from './profile';
 import statistic from './statistic';
 import welcome from './welcome';
 import game from './game';
+import modals from './modals';
 
 const modules = [
   {moduleKey: 'header', module: header},
@@ -12,6 +13,7 @@ const modules = [
   {moduleKey: 'statistic', module: statistic},
   {moduleKey: 'welcome', module: welcome},
   {moduleKey: 'game', module: game},
+  {moduleKey: 'modals', module: modals},
 ];
 const translations = {};
 

@@ -8,7 +8,7 @@ export default {
     en: 'Game',
   },
   'table-header-overall': {
-    ru: 'Всего очков',
+    ru: 'Общий результат',
     en: 'Overall score',
   },
   'table-header-best': {
