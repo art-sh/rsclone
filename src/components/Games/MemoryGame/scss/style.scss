@@ -1,16 +1,10 @@
-//*,
-//*::before,
-//*::after {
-//  box-sizing: border-box;
-//}
-
 #memory-game {
   max-width: 320px;
   margin: 0 auto 10px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-
+  transition: 0.4s;
   .card {
     position: relative;
     transition: all .25s linear;
@@ -18,6 +12,9 @@
     margin: 3px;
     height: 65px;
     width: 65px;
+    &:hover {
+      cursor: pointer;
+    }
 
     .face,
     .back {
@@ -29,7 +26,7 @@
 
     .back {
       z-index: 2;
-      background: #FAB942 url('../assets/img/question.gif') no-repeat center center / contain;
+      background: url('../assets/img/question.png') no-repeat center center / contain;
     }
 
     .face {

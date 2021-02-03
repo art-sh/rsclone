@@ -1,6 +1,7 @@
 import './scss/style.scss';
 import ReverseTimer from '@helpers/ReverseTimer';
 import Mixin from '../../../helpers/Mixin';
+import ModalWindow from '../../Render/components/ModalWindow/app';
 
 export default class MemoryMatrix {
   constructor(app, elements) {
@@ -14,6 +15,7 @@ export default class MemoryMatrix {
     this.answersCount = 0;
     this.correctAnswers = 0;
     this.currentLevel = 1;
+    this.livesCount = 3;
     this.currentScore = 0;
     this.scoreMultiplier = 1;
     this.score = 0;
@@ -36,7 +38,7 @@ export default class MemoryMatrix {
   }
 
   createLivesIcons() {
-    for (let i = 0; i < 3; i += 1) {
+    for (let i = 0; i < this.livesCount; i += 1) {
       this.elements.stats.icons.appendChild(this.elements.templates.star.content.cloneNode(true));
     }
   }
@@ -45,7 +47,6 @@ export default class MemoryMatrix {
     this.gameBlocks.container = this.createElementFactory('div', null, 'matrix-memory-container', null, null, null);
     this.gameBlocks.gameField = this.createElementFactory('div', null, 'matrix-memory-container__main', null, null, null);
     this.gameBlocks.container.appendChild(this.gameBlocks.gameField);
-    this.createLivesIcons();
     this.createGamesblocks(this.gameBlocks.gameField);
     this.listenersHandlers(this.gameBlocks.container);
     return this.gameBlocks.container;
@@ -85,7 +86,13 @@ export default class MemoryMatrix {
     this.visibilityDelay = 2000;
     this.gameBlocks.gameField.style.width = `${40}%`;
     this.elements.stats.score.textContent = 0;
-    this.isGameStart = false;
+    if (this.elements.stats.icons.children.length < 3) {
+      this.elements.stats.icons.innerHTML = '';
+      this.createLivesIcons();
+    }
+    this.elements.stats.score.textContent = 0;
+    this.blockOrApproveClicksHandler('approve');
+    this.isGameEnd = false;
   }
 
   listenersHandlers() {
@@ -94,6 +101,10 @@ export default class MemoryMatrix {
       if (guessBlock) {
         this.checkAnswer(guessBlock);
       }
+    });
+    this.elements.game.finishBtn.addEventListener('click', () => {
+      this.endGameHandler();
+      this.disableFinishBtn();
     });
   }
 
@@ -154,7 +165,9 @@ export default class MemoryMatrix {
   }
 
   startGame() {
-    this.timer.startCount(5, this.setTimerTextContent.bind(this), this.endGameHandler.bind(this));
+    this.resetFlags();
+    this.disableFinishBtn('on');
+    this.timer.startCount(44, this.setTimerTextContent.bind(this), this.endGameHandler.bind(this));
     this.nextLevelHandler();
   }
 
@@ -224,11 +237,37 @@ export default class MemoryMatrix {
 
     if (!block.classList.contains('active')) {
       this.elements.stats.icons.removeChild(live);
-      // this.$soundPlayer.playSound('beep-short');
+      this.$soundPlayer.playSound('answer-wrong');
     }
     if (this.elements.stats.icons.children.length === 0) {
-      clearInterval(this.timer.currentTimeInterval);
+      this.timer.stopCount();
       this.endGameHandler();
+    }
+  }
+
+  showModalWindow() {
+    const modal = new ModalWindow(this.$app);
+    modal.showModal({
+      type: this.gameConfig.modalWindow.types.gameEnd,
+      container: document.querySelector('#app'),
+      text: {
+        title: this.gameConfig.games.memoryMatrix.name,
+        score: this.score,
+      },
+      callback: {
+        restart: () => this.startGame(),
+      },
+    });
+  }
+
+  disableFinishBtn(mode = 'off') {
+    this.elements.game.finishBtn.disabled = true;
+    this.elements.game.finishBtn.classList.add('button_disabled');
+    this.elements.game.finishBtn.style.cursor = 'default';
+    if (mode === 'on') {
+      this.elements.game.finishBtn.disabled = false;
+      this.elements.game.finishBtn.classList.remove('button_disabled');
+      this.elements.game.finishBtn.style.cursor = 'pointer';
     }
   }
 
@@ -236,6 +275,7 @@ export default class MemoryMatrix {
     this.isGameEnd = true;
     this.blockOrApproveClicksHandler();
     this.timer.stopCount();
+    this.showModalWindow();
     this.$soundPlayer.playSound('game-end');
     Mixin.dispatch(this.gameConfig.events.gameEnd, {
       game: this.gameConfig.games.memoryMatrix.id,

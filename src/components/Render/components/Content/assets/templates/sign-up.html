@@ -1,22 +1,22 @@
-<main class="main">
+<main class="main main_welcome">
     <form action="/" class="form form_sign-up">
         <h2 class="form__title">Sign up</h2>
         <a href="#/sign-in" class="form__link">Already have an account?</a>
         <div class="form__field">
-            <input type="text" class="form__input" placeholder="Login...">
-            <p class="form__error">Error message</p>
+            <input type="text" name="login" minlength = '5' maxlength = '20' class="form__input" required placeholder="Login...">
+            <p class="form__error "></p>
         </div>
         <div class="form__field">
-            <input type="password" class="form__input" placeholder="Password...">
+            <input type="password" name="password" minlength = '8' maxlength = '64' class="form__input" required placeholder="Password...">
             <p class="form__error"></p>
         </div>
         <div class="form__field">
-            <input type="password" class="form__input" placeholder="Repeat password...">
-            <p class="form__error"></p>
+            <input type="password" name="passwordCheck"  class="form__input" minlength = '8' maxlength = '64' required placeholder="Repeat password...">
+            <p class="form__error form-errors-password"></p>
         </div>
         <div class="form__field">
-            <input type="text" class="form__input" placeholder="Nickname...">
-            <p class="form__error"></p>
+            <input type="text" name="name" class="form__input" placeholder="Nickname...">
+            <p class="form__error form-errors-container"></p>
         </div>
         <button class="button sign-up" type="submit">Sign up</button>
     </form>

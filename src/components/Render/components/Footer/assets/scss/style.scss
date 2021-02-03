@@ -1,23 +1,49 @@
+@import "../../../../../../assets/scss/abstarcts/variables";
+@import "../../../../../../assets/scss/abstarcts/mixins";
+
 .footer {
-  background-color: #2A1851;
+  background-color: $color-violet-black;
   padding-top: 15px;
   padding-bottom: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 
+  .page-welcome &,
+  .page-sign-in &,
+  .page-sign-up & {
+    background-color: $color-violet-dark;
+  }
+
   @media (max-width: 600px) {
     flex-direction: column;
   }
 }
 
-.rs-logo {
+.copyright {
+  display: flex;
+  flex-direction: column;
+
+  & span {
+    @include fontSettings(12px, 500);
+    color: $color-white-1;
+  }
+
   @media (max-width: 600px) {
     margin-bottom: 15px;
+    align-items: center;
   }
 }
 
+.rs-logo {
+  margin-bottom: 14px;
+}
+
 .authors {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
   @media (max-width: 600px) {
     display: flex;
     flex-direction: column;
@@ -26,32 +52,29 @@
 }
 
 .authors__link {
-  font-family: Acrom, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 11px;
+  @include fontSettings(11px, normal);
   line-height: 13px;
   text-decoration-line: underline;
-  color: #f9f9f9;
+  color: $color-white-1;
   transition-duration: 300ms;
 
   svg path {
-    fill: #f9f9f9;
+    fill: $color-white-1;
     transition-duration: 300ms;
   }
 
   &:hover {
-    color: #FFBD59;
+    color: $color-beige;
     svg path {
-      fill: #FFBD59;
+      fill: $color-beige;
       transition-duration: 300ms;
     }
   }
 }
 
 .authors__item {
-
   margin-bottom: 7px;
+  transition: 0.4s;
 
   &:last-child {
     margin-bottom: 0;
@@ -65,4 +88,13 @@
 
 .authots__name {
   margin-right: 5px;
+}
+
+.page-welcome,
+.page-sign-in,
+.page-sign-up {
+  .footer__hotkeys {
+    opacity: 0;
+    pointer-events: none;
+  }
 }

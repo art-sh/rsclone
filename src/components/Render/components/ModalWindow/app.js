@@ -2,6 +2,7 @@ import Mixin from '@helpers/Mixin';
 
 const templateGameDescription = require('./assets/templates/game-description.html');
 const templateGameEnd = require('./assets/templates/game-end.html');
+const templateHotKeys = require('./assets/templates/hot-keys.html');
 
 export default class ModalWindow {
   /**
@@ -15,10 +16,11 @@ export default class ModalWindow {
     this.templates = {
       [this.types.gameDescription]: templateGameDescription,
       [this.types.gameEnd]: templateGameEnd,
+      [this.types.hotKeys]: templateHotKeys,
     };
     this.elements = {};
 
-    Mixin.listen(this.$app.config.events.routeChange, this.destroyModal.bind(this));
+    Mixin.listen(this.$app.config.events.routeChange, this.destroyModal.bind(this), true);
   }
 
   /**
@@ -30,23 +32,27 @@ export default class ModalWindow {
     this.elements = this.getModalElements(type, node);
 
     this.fillElementsByParams(params.text, this.elements);
-    this.setModalListeners(params.callback, this.elements);
+    this.setModalListeners(type, params.callback, this.elements);
 
     return node;
   }
 
   /**
+   * @param {string} type
    * @param {object} params
    * @param {object} elements
    */
-  setModalListeners(params, elements) {
-    Object.entries(elements.buttons).forEach(([, element]) => {
+  setModalListeners(type, params, elements) {
+    Object.entries(elements.buttons).forEach(([elementKey, element]) => {
       if (!element) return;
+      if (type === this.types.gameEnd && elementKey === 'background') return;
 
       element.addEventListener('click', () => {
-        elements.node.classList.remove('show');
+        this.hide();
         elements.node.ontransitionend = () => {
           this.destroyModal();
+
+          if (type === this.types.gameEnd && ['close', 'quit'].includes(elementKey)) this.$app.router.navigate('game-list');
         };
       });
     });
@@ -97,7 +103,6 @@ export default class ModalWindow {
         text: {
           title: node.querySelector('.text-title'),
           score: node.querySelector('.text-score'),
-          time: node.querySelector('.text-time'),
           achievement: node.querySelector('.text-achievements'),
         },
         buttons: {
@@ -105,6 +110,20 @@ export default class ModalWindow {
           background: node.querySelector('.modal__background'),
           restart: node.querySelector('.button-restart'),
           quit: node.querySelector('.button-quit'),
+        },
+      };
+    }
+
+    if (type === this.types.hotKeys) {
+      return {
+        node,
+        text: {
+          title: node.querySelector('.text-title'),
+          info: node.querySelector('.text-description'),
+        },
+        buttons: {
+          close: node.querySelector('.button-close'),
+          background: node.querySelector('.modal__background'),
         },
       };
     }
@@ -140,14 +159,33 @@ export default class ModalWindow {
    * @return void
    */
   show() {
-    this.elements.node.classList.add('show');
+    document.body.classList.add('modal-show');
+  }
+
+  /**
+   * @return void
+   */
+  hide() {
+    document.body.classList.remove('modal-show');
   }
 
   /**
    * @return void
    */
   destroyModal() {
-    if (this.elements.node) this.elements.node.remove();
+    if (this.elements.node) {
+      const computedStyles = getComputedStyle(this.elements.node);
+
+      if (+computedStyles.opacity) {
+        this.elements.node.addEventListener('transitionend', () => this.destroyModal());
+
+        return this.hide();
+      }
+
+      this.hide();
+      this.elements.node.remove();
+    }
+
     this.elements = {};
   }
 }

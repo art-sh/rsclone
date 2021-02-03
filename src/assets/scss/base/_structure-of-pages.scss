@@ -13,40 +13,63 @@ body {
   font-weight: normal;
 }
 
-.main-container {
-  min-height: 100%;
-  position: relative;
-  overflow-x: hidden;
-}
+body {
+  overflow-y: scroll;
 
-.header {
-  padding-left: 5%;
-  padding-right: 5%;
-}
+  &.modal-show, &.menu-show {
+    overflow-y: hidden;
 
-.menu {
-  position: relative;
-  z-index: 2;
-  @media (max-width: 500px) {
-    position: static;
+    .main-container {
+      overflow-y: scroll;
+    }
   }
-}
 
-.main {
-  padding-bottom: 103px;
-  padding-left: 5%;
-  padding-right: 5%;
-  overflow: hidden;
-  @media (max-width: 500px) {
-    padding-bottom: 155px;
+  & > .main-container {
+    min-height: 100%;
+    position: relative;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+
+    & > .header {
+      padding-left: 5%;
+      padding-right: 5%;
+      @media (min-width: 1600px) {
+        padding-left: 18%;
+        padding-right: 18%;
+      }
+
+      & > .menu {
+        position: relative;
+        z-index: 2;
+        @media (max-width: 500px) {
+          position: static;
+        }
+      }
+    }
+
+    & > .main {
+      padding-left: 5%;
+      padding-right: 5%;
+      overflow: hidden;
+      flex-grow: 1;
+      @media (max-width: 500px) {
+      }
+      @media (min-width: 1600px) {
+        padding-left: 18%;
+        padding-right: 18%;
+      }
+    }
+
+    & > .footer {
+      box-sizing: border-box;
+      width: 100%;
+      padding-left: 5%;
+      padding-right: 5%;
+      @media (min-width: 1600px) {
+        padding-left: 18%;
+        padding-right: 18%;
+      }
+    }
   }
-}
-
-.footer {
-  box-sizing: border-box;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  padding-left: 5%;
-  padding-right: 5%;
 }

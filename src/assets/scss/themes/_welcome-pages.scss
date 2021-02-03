@@ -1,38 +1,17 @@
-.main-container_welcome {
-  background-color: #472B83;
+.main_welcome {
+  background-color: $color-violet-dark;
+
+  &.main_greetings {
     display: flex;
     flex-direction: column;
-
-  &:before {
-    display: none;
-  }
-
-  &:after {
-    display: none;
+    align-items: center;
+    justify-content: center;
   }
 
   .header:after {
     display: none;
   }
 
-  .header {
-    background-color: transparent;
-  }
-
-  .menu {
-    display: none;
-  }
-
-  .footer {
-    background-color: transparent;
-  }
-
-  .main_welcome {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
-  }
 
   .welcome-info {
     position: relative;
@@ -42,13 +21,10 @@
   }
 
   .welcome-title {
-    font-family: Acrom, sans-serif;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 48px;
+    @include fontSettings(48px, bold);
     line-height: 1.2;
     letter-spacing: 0.015em;
-    color: #F9F9F9;
+    color: $color-white-1;
     text-align: center;
     margin-bottom: 24px;
     @media (max-width: 600px) {
@@ -57,12 +33,9 @@
   }
 
   .welcome-subtitle {
-    font-family: Acrom, sans-serif;
-    font-style: normal;
-    font-weight: 250;
-    font-size: 24px;
+    @include fontSettings(24px, 250);
     line-height: 1.2;
-    color: #F9F9F9;
+    color: $color-white-1;
     text-align: center;
     margin-bottom: 38px;
     @media (max-width: 600px) {
@@ -78,7 +51,7 @@
   .button-sign-in {
     margin-right: 30px;
     @media (max-width: 600px) {
-      margin-right: 15px;
+      margin-right: 5%;
     }
   }
 
@@ -86,9 +59,9 @@
     position: absolute;
     top: 0;
     left: 0;
+    right: 0;
+    margin: auto;
     max-height: 100vh;
     overflow: hidden;
   }
 }
-
-

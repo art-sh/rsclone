@@ -1,14 +1,14 @@
-<main class="main">
-    <form action="/" class="form form_sign-up">
+<main class="main main_welcome">
+    <form action="/" class="form form__sign-in">
         <h2 class="form__title">Sign in</h2>
         <a href="#/sign-up" class="form__link">Don’t have an account yet?</a>
         <div class="form__field">
-            <input type="text" class="form__input" placeholder="Login...">
+            <input type="text" name="login" class="form__input" placeholder="Login..." required>
             <p class="form__error"></p>
         </div>
         <div class="form__field">
-            <input type="password" class="form__input" placeholder="Password...">
-            <p class="form__error"></p>
+            <input type="password" name="password" class="form__input" placeholder="Password..." required>
+            <p class="form__error form-errors-block"></p>
         </div>
         <button class="button sign-in" type="submit">Sign in</button>
     </form>

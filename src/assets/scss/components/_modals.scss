@@ -18,17 +18,18 @@
 
   $modal: &;
 
-  &.show {
+  .modal-show & {
     visibility: visible;
     opacity: 1;
     z-index: 900;
   }
 
   &__block {
-    background: $header-bg;
-    box-shadow: 0 4px 5px $color-black-1;
+    background: $color-violet-dark;
+    box-shadow: 0 4px 5px $color-grey-1;
     border-radius: 10px;
     max-width: 700px;
+    width: 90%;
     position: absolute;
     z-index: 1000;
     box-sizing: border-box;
@@ -41,8 +42,13 @@
     padding: 45px 70px 70px 38px;
     margin: 0 auto;
     cursor: default;
+    @media (max-height: 500px) {
+      @media (max-width: 480px) {
+        top: 80%;
+      }
+    }
 
-    #{$modal}.show & {
+    .modal-show & {
       transform: translateY(-50%);
     }
 
@@ -55,6 +61,10 @@
       position: absolute;
       bottom: 15px;
       right: 20px;
+      z-index: -1;
+      @media (max-width: 500px) {
+        display: none;
+      }
     }
 
     &-header {
@@ -120,8 +130,15 @@
     &-button-group {
       display: flex;
 
-      & > * {
+      @media (max-width: 500px) {
+        flex-direction: column;
+      }
+
+      .button-restart {
         margin-right: 25px;
+        @media (max-width: 500px) {
+          margin-bottom: 10px;
+        }
       }
     }
   }
@@ -132,5 +149,15 @@
     position: absolute;
     left: 0;
     right: 0;
+  }
+}
+
+.modal.modal-finish-game {
+  .modal__block {
+    @media (max-height: 500px) {
+      @media (max-width: 480px) {
+        top: 50%;
+      }
+    }
   }
 }

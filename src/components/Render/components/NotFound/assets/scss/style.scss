@@ -1,0 +1,64 @@
+@import "../../../../../../assets/scss/abstarcts/variables";
+@import "../../../../../../assets/scss/abstarcts/mixins";
+
+.main-container_404 {
+  background-color: $color-violet-black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.wrap_404 .circles-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.error404 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  margin-top: -40px;
+}
+
+.error404__title {
+  @include fontSettings(72px, bold);
+  line-height: 86px;
+  letter-spacing: 0.015em;
+  color: $color-white-1;
+  margin-bottom: 5px;
+}
+
+.error404__subtitle {
+  @include fontSettings(24px, normal);
+  line-height: 1.25;
+  letter-spacing: 0.015em;
+  color: $color-white-1;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.error404__link {
+  @include fontSettings(18px, normal);
+  line-height: 1.25;
+  letter-spacing: 0.015em;
+  text-decoration-line: underline;
+  color: $color-white-1;
+  opacity: 0.9;
+  cursor: pointer;
+  transition-duration: 250ms;
+
+  &:hover {
+    color: $color-beige;
+  }
+}
+

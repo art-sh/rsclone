@@ -1,0 +1,65 @@
+.theme-light {
+  .main-container {
+    background: $color-white-1;
+
+    .game-title {
+      color: $color-violet-dark;
+    }
+
+    .game-status__title {
+      color: $color-grey;
+    }
+
+    .game-status__state {
+      color: $color-grey;
+    }
+
+    .statistic__title {
+      color: $color-violet-dark;
+    }
+
+    .statistic__table {
+      color: $color-grey;
+      th {
+        color: $color-pink-dark;
+      }
+    }
+
+    .achievements__title {
+      font-weight: normal;
+      color: $color-violet-dark;
+    }
+
+    .transparent-wrapper {
+      background: rgba($color-white-2, 0.2);
+    }
+
+    .profile__title {
+      color: $color-violet-dark;
+    }
+
+    .profile__row {
+      color: $color-grey;
+
+      span {
+        font-weight: normal;
+      }
+
+      .sound-status {
+        font-weight: normal;
+      }
+
+      .theme-status {
+        font-weight: normal;
+      }
+
+      .theme-status_light {
+        font-weight: bold;
+      }
+    }
+
+    .profile__subtitle {
+      color: $color-violet-dark;
+    }
+  }
+}

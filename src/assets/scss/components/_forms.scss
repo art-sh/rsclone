@@ -1,30 +1,31 @@
-.form_sign-up {
-  margin-top: 30px;
-  position: relative;
-  z-index: 10;
-}
+.form_sign-up,
+.form__sign-in {
+   margin-top: 30px;
+   position: relative;
+   z-index: 10;
+   margin-bottom: 40px;
+ }
 
 .form__title {
-  font-family: Acrom, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 28px;
+  @include fontSettings(28px, bold);
   line-height: 1.2;
   letter-spacing: 0.015em;
-  color: #F9F9F9;
+  color: $color-white-1;
   margin-bottom: 4px;
 }
 
 .form__link {
   display: block;
-  font-family: Acrom, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 11px;
+  @include fontSettings(11px, normal);
   line-height: 13px;
   text-decoration-line: underline;
-  color: #F9F9F9;
+  color: $color-white-1;
   margin-bottom: 20px;
+  transition-duration: 300ms;
+
+  &:hover {
+    color: $color-beige;
+  }
 }
 
 .form__field {
@@ -36,15 +37,12 @@
 }
 
 .form__input {
-  background: #F9F9F9;
-  border: 1px solid #6175C0;
+  background: $color-white-1;
+  border: 1px solid $color-violet-light;
   box-sizing: border-box;
-  font-family: Acrom, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
+  @include fontSettings(14px, normal);
   line-height: 1.2;
-  color: #888888;
+  color: $color-grey-light;
   padding: 6px 10px;
   width: 300px;
   display: block;
@@ -57,10 +55,7 @@
 .form__error {
   position: absolute;
   top: 33px;
-  font-family: Acrom, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
+  @include fontSettings(12px, normal);
   line-height: 1.2;
-  color: #EB6AA4;
+  color: $color-pink-light;
 }
