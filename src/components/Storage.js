@@ -37,23 +37,26 @@ export default class Storage {
   }
 
   setStorageListeners() {
-    // Mixin.listen(this.$config.events.gameEnd, (e) => {
-    //   const stringifyData = Object.entries(e.detail)
-    //     .reduce((out, item) => {
-    //       out.push(`${encodeURIComponent(item[0])}=${encodeURIComponent(item[1])}`);
-    //       return out;
-    //     }, []);
+    Mixin.listen(this.$config.events.gameEnd, (e) => {
+      const stringifyData = Object.entries(e.detail)
+        .reduce((out, item) => {
+          if (item[0] === 'game') {
+            item[0] += '_id';
+          }
+          out.push(`${encodeURIComponent(item[0])}=${encodeURIComponent(item[1])}`);
+          return out;
+        }, []);
 
-    //   HttpClient.send(`${this.$app.config.baseURL}/score/submit-result`, {
-    //     fetch: {
-    //       method: 'POST',
-    //       headers: {
-    //         'App-Token': this.storage.userToken,
-    //       },
-    //       body: stringifyData.join('&'),
-    //     },
-    //   });
-    // });
+      HttpClient.send(`${this.$app.config.baseURL}/score/submit-result`, {
+        fetch: {
+          method: 'POST',
+          headers: {
+            'App-Token': this.storage.userToken,
+          },
+          body: stringifyData.join('&'),
+        },
+      });
+    });
 
     Mixin.listen(this.$config.events.storageUpdated, (e) => {
       if (e.detail.userSettings.theme === 'theme-light') {
