@@ -55,4 +55,24 @@ router.post('/register', (req, res) => {
   modelUser.write(modelFields, cb);
 });
 
+router.get('/refresh-user-info', (req, res) => {
+  if (!req.headers['app-token']) return mixin.jsonBad({message: 'App token is empty'}, 400, res);
+
+  const userInfo = auth.verifyToken(req.headers['app-token']);
+  if (!userInfo) return mixin.jsonBad({message: 'App-Token is bad'}, 403, res);
+
+  const cb = (result) => {
+    if (result.error || !result.result.length) return mixin.jsonBad({message: 'User not found'}, 404, res);
+
+    const outModel = {...result.result[0]};
+    delete outModel.password;
+
+    res
+      .header('App-Token', auth.getNewToken({_login: result.result[0].login}))
+      .json(mixin.jsonOk(outModel));
+  };
+
+  modelUser.findByLogin(userInfo._login, cb);
+});
+
 module.exports = router;

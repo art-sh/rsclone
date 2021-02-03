@@ -1,5 +1,5 @@
 import Mixin from '@helpers/Mixin';
-// import HttpClient from '@helpers/HttpClient';
+import HttpClient from '@helpers/HttpClient';
 
 export default class Storage {
   constructor(app) {
@@ -27,6 +27,8 @@ export default class Storage {
 
     this.setStorageListeners();
     this.loadStorage();
+
+    this.refreshUserInfo();
   }
 
   resetUserStorage() {
@@ -107,5 +109,26 @@ export default class Storage {
     this.storage.userToken = appInfo.userToken || null;
     Object.assign(this.storage.userInfo, appInfo.userInfo || {});
     Object.assign(this.storage.userSettings, appInfo.userSettings || {});
+  }
+
+  refreshUserInfo() {
+    if (!this.storage.userToken) return;
+
+    HttpClient.send(`${this.$app.config.baseURL}/auth/refresh-user-info`, {
+      fetch: {
+        method: 'GET',
+      },
+      storage: this.storage,
+      success: async (data) => {
+        const response = await data.response;
+        const result = await data.result;
+
+        const newToken = response.headers.get('app-token');
+        const newUserInfo = result.response;
+
+        this.storage.userToken = newToken;
+        Object.assign(this.storage.userInfo, newUserInfo);
+      },
+    });
   }
 }
