@@ -13,7 +13,7 @@ export default class Header {
       logo: this.node.querySelector('.logo'),
       burgerButton: this.node.querySelector('.menu__burger-button'),
       burgerMenu: this.node.querySelector('#burger__menu'),
-      burgerLinks: this.node.querySelectorAll('.menu__list .menu__link'),
+      burgerLinks: this.node.querySelectorAll('.menu__burger-list-item-link'),
     };
 
     this.setHeaderListeners();
@@ -52,6 +52,9 @@ export default class Header {
 
   setHeaderListeners() {
     this.elements.burgerButton.addEventListener('click', () => this.burgerMenuToggle());
+    this.elements.burgerLinks.forEach((link) => {
+      link.addEventListener('click', () => this.burgerMenuHide());
+    });
 
     window.addEventListener('resize', () => this.burgerMenuResizeCheck());
     Mixin.listen(this.$app.config.events.routeChange, () => this.burgerMenuHide());

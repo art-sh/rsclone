@@ -28,6 +28,8 @@ export default class Footer {
   }
 
   showHotKeys() {
+    if (document.body.classList.contains('modal-show')) return;
+
     const modal = new ModalWindow(this.$app);
     modal.showModal({
       type: this.config.modalWindow.types.hotKeys,
