@@ -21,7 +21,7 @@ export default class CountSheep {
     this.livesCount = 3;
     this.score = 0;
     this.correctAnswers = 0;
-    this.scoreStep = 99;
+    this.scoreStep = 139;
     this.scoreMultiplier = 1;
     this.isGameActive = false;
     this.timeouts = {
