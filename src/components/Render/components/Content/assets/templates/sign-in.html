@@ -1,7 +1,7 @@
 <main class="main main_welcome">
     <form action="/" class="form form__sign-in">
-        <h2 class="form__title">Sign in</h2>
-        <a href="#/sign-up" class="form__link">Don’t have an account yet?</a>
+        <h2 class="form__title" data-lang="welcome__sign-in">Sign in</h2>
+        <a href="#/sign-up" class="form__link" data-lang="welcome__not-account">Don’t have an account yet?</a>
         <div class="form__field">
             <input type="text" name="login" class="form__input" placeholder="Login..." required>
             <p class="form__error"></p>
@@ -10,7 +10,7 @@
             <input type="password" name="password" class="form__input" placeholder="Password..." required>
             <p class="form__error form-errors-block"></p>
         </div>
-        <button class="button sign-in" type="submit">Sign in</button>
+        <button class="button sign-in" type="submit" data-lang="welcome__sign-in">Sign in</button>
     </form>
     <div class="circles-animation">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"

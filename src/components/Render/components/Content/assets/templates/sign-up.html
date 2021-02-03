@@ -1,7 +1,7 @@
 <main class="main main_welcome">
     <form action="/" class="form form_sign-up">
-        <h2 class="form__title">Sign up</h2>
-        <a href="#/sign-in" class="form__link">Already have an account?</a>
+        <h2 class="form__title" data-lang="welcome__sign-up">Sign up</h2>
+        <a href="#/sign-in" class="form__link" data-lang="welcome__have-account">Already have an account?</a>
         <div class="form__field">
             <input type="text" name="login" minlength = '5' maxlength = '20' class="form__input" required placeholder="Login...">
             <p class="form__error "></p>
@@ -18,7 +18,7 @@
             <input type="text" name="name" class="form__input" placeholder="Nickname...">
             <p class="form__error form-errors-container"></p>
         </div>
-        <button class="button sign-up" type="submit">Sign up</button>
+        <button class="button sign-up" type="submit" data-lang="welcome__sign-up">Sign up</button>
     </form>
     <div class="circles-animation">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"

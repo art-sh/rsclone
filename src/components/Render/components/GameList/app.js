@@ -94,7 +94,7 @@ export default class GameListPage {
     gameElements.gameTitle.textContent = gameConfig.name;
 
     gameElements.gameDescription.dataset.lang = `game__${gameConfig.id}-description`;
-    gameElements.gameStartButton.dataset.lang = `game__${gameConfig.id}-start`;
+    gameElements.gameStartButton.dataset.lang = 'game__button-start';
   }
 
   setElementsListeners(elements, modalConfig) {
