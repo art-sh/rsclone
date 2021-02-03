@@ -115,12 +115,12 @@ export default class MemoryMatrix {
     } else if (this.correctAnswers >= 3 && this.correctAnswers < 6) {
       this.fieldSize = 6;
       this.aciveBlocksNumber = 2;
-      this.gameBlocks.gameField.style.width = `${50}%`;
+      this.gameBlocks.gameField.style.width = `${51}%`;
       this.scoreMultiplier = 1.5;
     } else if (this.correctAnswers >= 6 && this.correctAnswers < 9) {
       this.fieldSize = 9;
       this.aciveBlocksNumber = 3;
-      this.gameBlocks.gameField.style.width = `${50}%`;
+      this.gameBlocks.gameField.style.width = `${51}%`;
       this.scoreMultiplier = 1.7;
     } else if (this.correctAnswers >= 9 && this.correctAnswers < 12) {
       this.gameBlocks.gameField.style.width = `${70}%`;

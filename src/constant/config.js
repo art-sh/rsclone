@@ -22,7 +22,7 @@ export default {
       name: 'Matrix Memory',
       id: 'matrix-memory',
       description: 'The “Memory Matrix” simulator helps to increase the volume of short-term memory, accuracy and speed of memorization, spatial working memory, visual memory, voluntary attention, speed of thinking',
-      rules: 'Colored squares appear on the playing field. Your task will be to remember their location and accurately reproduce when they disappear. The time of appearance of the original value will decrease, and the field will increase. An incorrect answer results in a lower difficulty level and the loss of 1 lives.',
+      rules: 'Colored squares appear on the playing field. Your task will be to remember their location and accurately reproduce when they disappear. The time of appearance of the original value will decrease, and the field will increase. If incorrect answer you will lose 1 live.',
     },
     memoryGame: {
       id: 'memory-game',
