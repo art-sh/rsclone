@@ -24,7 +24,7 @@ export default {
     en: 'Play',
   },
   'matrix-memory-description': {
-    ru: 'Тренажер "Матрицы памяти" помогает развитию – объема кратковременной памяти, точности и скорости запоминания, пространственной рабочей памяти, зрительной памяти, произвольному внимания, скорости мышления',
+    ru: 'Игра "Матрица памяти" - помогает развитию объема кратковременной памяти, точности и скорости запоминания, пространственной рабочей памяти, зрительной памяти, произвольному вниманию, скорости мышления.',
     en: 'The “Memory Matrix” simulator helps to increase the volume of short-term memory, accuracy and speed of memorization, spatial working memory, visual memory, voluntary attention, speed of thinking',
   },
   'memory-game-description': {
@@ -44,7 +44,7 @@ export default {
     en: 'This game will help you develop spatial thinking. Play the game and you will count a flock of sheep just by looking at it.',
   },
   'matrix-memory-rule': {
-    ru: 'На игровом поле появляются закрашенные квадратики. Ваша задача будет запомнить их место расположения и точно воспроизвести когда они пропадут. При неправильном ответе вы потеряете 1 жизнь',
+    ru: 'На игровом поле появляются закрашенные квадратики. Ваша задача будет запомнить их место расположения и точно воспроизвести когда они пропадут. При неправильном ответе вы потеряете 1 жизнь.',
     en: 'Colored squares appear on the playing field. Your task will be to remember their location and accurately reproduce when they disappear. The time of appearance of the original value will decrease, and the field will increase. An incorrect answer results in a lower difficulty level and the loss of 1 lives.',
   },
   'memory-game-rule': {
