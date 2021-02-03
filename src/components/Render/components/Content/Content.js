@@ -10,9 +10,10 @@ const templateProfile = require('./assets/templates/profile.html');
 const templateStatistic = require('./assets/templates/statistic.html');
 
 export default class Content {
-  constructor(app, appContainer) {
+  constructor(app, appContainer, translator) {
     this.$app = app;
     this.$appContainer = appContainer;
+    this.$translator = translator;
 
     this.elementContent = null;
     this.elements = {};
@@ -60,6 +61,8 @@ export default class Content {
           this.elements = newElements;
           this.setContentListeners(this.elements, contentType);
           cb && cb(this);
+
+          this.$translator.translateText(newContentElement);
         });
       };
 
@@ -210,6 +213,10 @@ export default class Content {
     });
   }
 
+  changeCurrentLanguage(newLanguage) {
+    this.$app.storage.storage.userSettings.currentLanguage = (newLanguage === 'ru') ? 'ru' : 'en';
+  }
+
   backendRequestHandler(type) {
     const currentForm = document.forms[0];
 
@@ -253,6 +260,8 @@ export default class Content {
       elements.logoutButton.addEventListener('click', this.logOutHandler.bind(this));
       elements.soundOn.addEventListener('click', this.changeSoundState.bind(this, 'on'));
       elements.soundOff.addEventListener('click', this.changeSoundState.bind(this, 'off'));
+      elements.languageEnglish.addEventListener('click', this.changeCurrentLanguage.bind(this, 'en'));
+      elements.languageRussian.addEventListener('click', this.changeCurrentLanguage.bind(this, 'ru'));
       this.backendRequestHandler('profile');
     } else if (type === 'signIn') {
       this.backendRequestHandler('login');
@@ -300,6 +309,8 @@ export default class Content {
         logoutButton: node.querySelector('.button-exit'),
         soundOn: node.querySelector('.sound-on'),
         soundOff: node.querySelector('.sound-off'),
+        languageEnglish: node.querySelector('.language-button-english'),
+        languageRussian: node.querySelector('.language-button-russian'),
       };
     }
     if (type === 'signIn') {

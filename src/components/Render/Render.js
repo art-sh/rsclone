@@ -12,17 +12,20 @@ import GameListPage from './components/GameList/app';
 import BackgroundStars from './components/BackgroundStars/app';
 import GamePreloader from './components/GamePreloader/GamePreloader';
 
+import Translator from '../Translator/app';
+
 export default class Render {
   constructor(app) {
     this.$app = app;
     this.$config = null;
+    this.$translator = new Translator(app);
 
     const appContainer = document.getElementById('app');
 
     this.elements = {
       app: appContainer,
       header: new Header(this.$app, appContainer),
-      content: new Content(this.$app, appContainer),
+      content: new Content(this.$app, appContainer, this.$translator),
       footer: new Footer(this.$app, appContainer),
       backgroundStars: new BackgroundStars(this.$app, appContainer),
     };
@@ -95,6 +98,16 @@ export default class Render {
       }
 
       document.body.classList.remove('game-button-finish-clicked');
+
+      this.$translator.translateText(this.elements.app);
+    });
+
+    Mixin.listen(this.$config.events.languageChanged, () => {
+      this.$translator.translateText(this.elements.app);
+    });
+
+    Mixin.listen(this.$config.events.modalShow, (e) => {
+      this.$translator.translateText(e.detail.elements.node);
     });
   }
 }

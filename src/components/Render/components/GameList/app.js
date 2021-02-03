@@ -92,6 +92,9 @@ export default class GameListPage {
     gameElements.gameFrame.src = this.imagesCollection[gameConfig.id];
     gameElements.gameDescription.textContent = gameConfig.description;
     gameElements.gameTitle.textContent = gameConfig.name;
+
+    gameElements.gameDescription.dataset.lang = `game__${gameConfig.id}-description`;
+    gameElements.gameStartButton.dataset.lang = `game__${gameConfig.id}-start`;
   }
 
   setElementsListeners(elements, modalConfig) {

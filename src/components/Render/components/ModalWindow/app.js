@@ -160,6 +160,7 @@ export default class ModalWindow {
    */
   show() {
     document.body.classList.add('modal-show');
+    Mixin.dispatch(this.$app.config.events.modalShow, this);
   }
 
   /**

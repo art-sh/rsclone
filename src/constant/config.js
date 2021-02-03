@@ -9,6 +9,8 @@ export default {
     gameStart: 'game-start',
     gameEnd: 'game-end',
     storageUpdated: 'storage-updated',
+    languageChanged: 'language-changed',
+    modalShow: 'modal-show',
   },
   modalWindow: {
     types: {

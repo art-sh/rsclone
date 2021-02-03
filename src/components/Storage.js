@@ -17,6 +17,7 @@ export default class Storage {
       userSettings: this.getSaveStorageProxy({
         theme: 'theme-dark',
         sound: true,
+        currentLanguage: 'en',
       }),
     });
     this.triggerInterval = null;
@@ -74,6 +75,14 @@ export default class Storage {
         document.body.classList.add('sound-deactive');
         document.body.classList.remove('sound-active');
       }
+
+      if (e.detail.userSettings.currentLanguage === 'en') {
+        document.body.classList.add('language-english');
+        document.body.classList.remove('language-russian');
+      } else {
+        document.body.classList.add('language-russian');
+        document.body.classList.remove('language-english');
+      }
     });
   }
 
@@ -96,6 +105,8 @@ export default class Storage {
         } else {
           trigger();
         }
+
+        if (property === 'currentLanguage') Mixin.dispatch(self.$config.events.languageChanged, self.storage);
 
         return true;
       },
