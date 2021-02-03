@@ -28,8 +28,8 @@
       flex-wrap: wrap;
       width: 40%;
       .matrix-memory-game-button {
-          width: 2.6rem;
-          height: 2.6rem;
+          width: 3rem;
+          height: 3rem;
           margin: 0.1rem;
           background-color: $color-white;
           border: 1px solid $color-black;
@@ -46,6 +46,10 @@
               cursor: pointer ;
               box-shadow: 0 0 5px $color-black;
           }
+        @media (max-width: 340px) {
+          width: 2.8rem;
+          height: 2.8rem;
+        }
       }
   }
 }
