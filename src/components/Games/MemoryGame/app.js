@@ -21,7 +21,7 @@ export default class MemoryGame {
     this.matches = 0;
     this.fieldSize = size;
     this.fieldStep = 2;
-    this.scoreStep = 99;
+    this.scoreStep = 59;
     this.scoreMultipliyer = 1;
   }
 
@@ -105,7 +105,7 @@ export default class MemoryGame {
       this.score += +(this.scoreStep * this.scoreMultipliyer).toFixed();
       setTimeout(this.matchCards.bind(this), this.delay);
       this.checkIfWin();
-    } else if (this.score > 0) this.score -= 2;
+    } else if (this.score > 0) this.score -= 10;
     this.setScoreText(this.score);
     setTimeout(() => this.resetGuesses(), this.delay);
   }
@@ -167,14 +167,8 @@ export default class MemoryGame {
   }
 
   disableFinishBtn(mode = 'off') {
-    this.elements.game.finishBtn.disabled = true;
-    this.elements.game.finishBtn.classList.add('button_disabled');
-    this.elements.game.finishBtn.style.cursor = 'default';
-    if (mode === 'on') {
-      this.elements.game.finishBtn.disabled = false;
-      this.elements.game.finishBtn.classList.remove('button_disabled');
-      this.elements.game.finishBtn.style.cursor = 'pointer';
-    }
+    if (mode === 'off') return document.body.classList.remove('game-button-finish-clicked');
+    if (mode === 'on') return document.body.classList.add('game-button-finish-clicked');
   }
 
   destroyGameInstance() {
@@ -200,7 +194,7 @@ export default class MemoryGame {
 
   gameEnd() {
     this.timer.stopCount();
-    this.disableFinishBtn();
+    this.disableFinishBtn('on');
     this.showModalWindow();
     this.$soundPlayer.playSound('game-end');
     return Mixin.dispatch(this.gameConfig.events.gameEnd, {
@@ -212,7 +206,7 @@ export default class MemoryGame {
   startGame() {
     this.resetFlags();
     this.timer.startCount(120, this.setTimeText.bind(this), this.gameEnd.bind(this));
-    this.disableFinishBtn('on');
+    this.disableFinishBtn('off');
     document.body.classList.remove('game-button-finish-clicked');
     this.gameElement.innerHTML = '';
     this.createCards(this.fieldSize);

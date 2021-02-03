@@ -44,7 +44,7 @@ router.post('/submit-result', (req, res) => {
   const userLogin = auth.getUserLoginByToken(req.headers['app-token']);
 
   if (!userLogin) return mixin.jsonBad({message: 'Forbidden'}, 403, res);
-  if (!req.body || !req.body.game_id || !req.body.score) return mixin.jsonOk({message: 'Form data is bad'}, 400, res);
+  if (!req.body || !req.body.game_id || !req.body.score) return mixin.jsonBad({message: 'Missed required params game_id or score'}, 400, res);
 
   const cb = (result) => {
     if (result.error || !result.result.length) return mixin.jsonBad({message: 'Not found'}, 400, res);
