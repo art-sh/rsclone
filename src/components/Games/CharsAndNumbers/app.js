@@ -297,6 +297,7 @@ export default class CharsAndNumbers {
   }
 
   startGame() {
+    document.body.focus();
     document.body.classList.remove('game-button-finish-clicked');
     this.disableFinishBtn('on');
     this.resetFlags();

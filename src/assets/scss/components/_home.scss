@@ -4,9 +4,9 @@
 }
 
 .games__item {
-  background: #FDFDFD;
+  background: $color-white-2;
   border-radius: 10px;
-  box-shadow: 0px 4px 4px rgba(133, 131, 131, 0.2);
+  box-shadow: 0 4px 4px rgba($color-grey-1, 0.2);
   display: flex;
   padding: 20px 50px 25px 20px;
 
@@ -19,8 +19,8 @@
   &_recommended {
     margin-bottom: 25px;
     @media (max-width: 960px) {
-      border: 5px solid #472B83;
-      box-shadow: 0px 0px 10px rgba(71, 43, 131, 0.69);
+      border: 5px solid $color-violet-dark;
+      box-shadow: 0 0 10px rgba($color-violet-dark, 0.69);
     }
   }
 }
@@ -81,14 +81,14 @@
 }
 
 .games__title {
-  font-family: Acrom, sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 28px;
+  @include fontSettings(28px, 500);
   line-height: 135%;
   text-transform: capitalize;
-  color: #472B83;
+  color: $color-violet-dark;
   margin-bottom: 15px;
+  @media (max-width: 500px) {
+    text-align: center;
+  }
 }
 
 .games__item_recommended .games__title{
@@ -99,13 +99,9 @@
 }
 
 .games__p {
-  font-family: Acrom, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
+  @include fontSettings(14px, normal);
   line-height: 135%;
-  text-transform: capitalize;
-  color: #333;
+  color: $color-grey;
 }
 
 .games__item_recommended .games__p{

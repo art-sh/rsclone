@@ -48,7 +48,7 @@ export default class ModalWindow {
       if (type === this.types.gameEnd && elementKey === 'background') return;
 
       element.addEventListener('click', () => {
-        document.body.classList.remove('modal-show');
+        this.hide();
         elements.node.ontransitionend = () => {
           this.destroyModal();
 
@@ -165,8 +165,27 @@ export default class ModalWindow {
   /**
    * @return void
    */
+  hide() {
+    document.body.classList.remove('modal-show');
+  }
+
+  /**
+   * @return void
+   */
   destroyModal() {
-    if (this.elements.node) this.elements.node.remove();
+    if (this.elements.node) {
+      const computedStyles = getComputedStyle(this.elements.node);
+
+      if (+computedStyles.opacity) {
+        this.elements.node.addEventListener('transitionend', () => this.destroyModal());
+
+        return this.hide();
+      }
+
+      this.hide();
+      this.elements.node.remove();
+    }
+
     this.elements = {};
   }
 }

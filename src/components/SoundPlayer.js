@@ -34,6 +34,7 @@ export default class SoundPlayer {
    */
   playSound(key) {
     if (!this.soundBuffers[key]) throw new Error('Sound not found');
+    if (!this.$app.storage.storage.userSettings.sound) return;
 
     const source = this.audio.createBufferSource();
 

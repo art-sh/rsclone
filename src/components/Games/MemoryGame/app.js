@@ -20,7 +20,7 @@ export default class MemoryGame {
     this.score = 0;
     this.matches = 0;
     this.fieldSize = size;
-    this.fieldStep = 2; // for change level
+    this.fieldStep = 2;
     this.scoreStep = 99;
     this.scoreMultipliyer = 1;
   }
@@ -48,7 +48,7 @@ export default class MemoryGame {
   }
 
   createCards(size) {
-    const resizedArray = cardsArray
+    const resizedArray = this.shuffle(cardsArray)
       .slice(0, size);
     const gameBoard = resizedArray
       .slice()
@@ -118,6 +118,7 @@ export default class MemoryGame {
     if (this.firstGuess === '' && this.secondGuess === '') return;
     this.firstGuess = '';
     this.secondGuess = '';
+    this.previousClick = null;
     this.getAllSelected().forEach((card) => card.classList.remove('selected'));
   }
 
@@ -203,7 +204,7 @@ export default class MemoryGame {
     this.showModalWindow();
     this.$soundPlayer.playSound('game-end');
     return Mixin.dispatch(this.gameConfig.events.gameEnd, {
-      game: this.gameConfig.id,
+      game: this.gameConfig.games.memoryGame.id,
       score: this.score,
     });
   }
