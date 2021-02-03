@@ -15,10 +15,11 @@ export default class MemoryMatrix {
     this.answersCount = 0;
     this.correctAnswers = 0;
     this.currentLevel = 1;
-    this.livesCount = 3;
+    this.livesCount = 5;
     this.currentScore = 0;
     this.scoreMultiplier = 1;
     this.score = 0;
+    this.scoreStep = 110;
     this.visibilityDelay = 2000;
     this.startGameDelay = 1500;
     this.delay = 1000;
@@ -167,7 +168,7 @@ export default class MemoryMatrix {
   startGame() {
     this.resetFlags();
     this.disableFinishBtn('off');
-    this.timer.startCount(44, this.setTimerTextContent.bind(this), this.endGameHandler.bind(this));
+    this.timer.startCount(80, this.setTimerTextContent.bind(this), this.endGameHandler.bind(this));
     this.nextLevelHandler();
   }
 
@@ -204,7 +205,7 @@ export default class MemoryMatrix {
     this.correctAnswerhandler(block);
     this.wrongAnswerhandler(block);
     if (this.answersCount === this.aciveBlocksNumber) {
-      this.score += this.scoreMultiplier * 20;
+      this.score += this.scoreMultiplier * this.scoreStep;
       this.correctAnswers += 1;
       this.elements.stats.score.textContent = this.score;
       this.blockOrApproveClicksHandler();

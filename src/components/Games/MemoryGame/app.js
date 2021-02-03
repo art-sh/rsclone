@@ -21,7 +21,7 @@ export default class MemoryGame {
     this.matches = 0;
     this.fieldSize = size;
     this.fieldStep = 2;
-    this.scoreStep = 99;
+    this.scoreStep = 59;
     this.scoreMultipliyer = 1;
   }
 
@@ -105,7 +105,7 @@ export default class MemoryGame {
       this.score += +(this.scoreStep * this.scoreMultipliyer).toFixed();
       setTimeout(this.matchCards.bind(this), this.delay);
       this.checkIfWin();
-    } else if (this.score > 0) this.score -= 2;
+    } else if (this.score > 0) this.score -= 10;
     this.setScoreText(this.score);
     setTimeout(() => this.resetGuesses(), this.delay);
   }

@@ -32,7 +32,7 @@ export default class CharsAndNumbers {
     };
     this.letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
     this.vowelsLetters = ['A', 'E', 'I', 'O', 'U', 'Y'];
-    this.lives = ['*', '*', '*'];
+    this.lives = ['*', '*', '*', '*', '*'];
     this.containerIndex = 0;
     this.difficulty = 5;
     this.choosenContainer = null;
@@ -43,7 +43,7 @@ export default class CharsAndNumbers {
     this.score = 0;
     this.images = Mixin.handleWebpackImport(require.context('./assets/img', true, /\.svg|.jpg/));
     this.scoreMultipliyer = 1;
-    this.scoreBase = 20;
+    this.scoreBase = 40;
     this.bindKeyHandler = null;
   }
 
@@ -265,7 +265,7 @@ export default class CharsAndNumbers {
     this.score = 0;
     this.elements.stats.score.textContent = '0';
     this.scoreMultipliyer = 1;
-    this.scoreBase = 20;
+    this.scoreBase = 40;
     this.blockOrApproveClicksHandler('approve');
   }
 
@@ -301,7 +301,7 @@ export default class CharsAndNumbers {
     document.body.classList.remove('game-button-finish-clicked');
     this.disableFinishBtn('on');
     this.resetFlags();
-    this.timer.startCount(55, this.setTimerTextContent.bind(this), this.endGameHandler.bind(this));
+    this.timer.startCount(80, this.setTimerTextContent.bind(this), this.endGameHandler.bind(this));
     this.choseContentContainer();
     this.addLevelContent();
   }
