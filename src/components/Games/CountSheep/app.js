@@ -28,6 +28,7 @@ export default class CountSheep {
       showAnswers: 2500,
       hideAnswers: 500,
       holdShowAnswers: 250,
+      showAnswersTimeout: null,
     };
   }
 
@@ -73,7 +74,7 @@ export default class CountSheep {
 
     this.showCards();
 
-    setTimeout(() => {
+    this.timeouts.showAnswersTimeout = setTimeout(() => {
       if (!this.isGameActive) return;
 
       this.showAnswers();
@@ -220,14 +221,17 @@ export default class CountSheep {
   }
 
   setListenersForAnswers() {
-    this.elements.game.box.addEventListener('mousedown', (e) => {
-      const userAnswer = e.target.closest('.answers__item');
-      let numberOfUserAnswer;
-      if (userAnswer) {
-        numberOfUserAnswer = Number(userAnswer.textContent);
-        this.checkAnswer(numberOfUserAnswer, userAnswer);
-      }
-    }, {once: true});
+    const answersField = document.querySelectorAll('.answers__item');
+    answersField.forEach((answerBlock) => {
+      answerBlock.addEventListener('mousedown', (e) => {
+        const userAnswer = e.target.closest('.answers__item');
+        let numberOfUserAnswer;
+        if (userAnswer) {
+          numberOfUserAnswer = Number(userAnswer.textContent);
+          this.checkAnswer(numberOfUserAnswer, userAnswer);
+        }
+      }, {once: true});
+    });
   }
 
   checkAnswer(userAnswer, userAnswerButton) {
@@ -257,6 +261,7 @@ export default class CountSheep {
   }
 
   gameEnd() {
+    clearTimeout(this.timeouts.showAnswersTimeout);
     this.isGameActive = false;
     this.timer.stopCount();
     this.disableFinishBtn('on');
@@ -299,6 +304,10 @@ export default class CountSheep {
   }
 
   destroyGameInstance() {
+    Mixin.dispatch(this.gameConfig.events.gameEnd, {
+      game: this.gameConfig.games.countSheep.id,
+      score: this.score,
+    });
     this.timer.stopCount();
     this.elements.stats.score.innerText = '';
     this.elements.stats.time.innerText = '';
