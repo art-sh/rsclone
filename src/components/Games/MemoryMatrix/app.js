@@ -279,6 +279,10 @@ export default class MemoryMatrix {
   }
 
   destroyGameInstance() {
+    Mixin.dispatch(this.gameConfig.events.gameEnd, {
+      game: this.gameConfig.games.memoryMatrix.id,
+      score: this.score,
+    });
     this.timer.stopCount();
     this.gameBlocks.container.remove();
     this.elements.stats.score.innerText = '';
