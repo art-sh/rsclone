@@ -160,7 +160,7 @@ export default class CharsAndNumbers {
     document.addEventListener('keydown', this.bindKeyHandler);
     this.elements.game.finishBtn.addEventListener('click', () => {
       this.endGameHandler();
-      this.disableFinishBtn();
+      this.disableFinishBtn('on');
     });
   }
 
@@ -171,14 +171,8 @@ export default class CharsAndNumbers {
   }
 
   disableFinishBtn(mode = 'off') {
-    this.elements.game.finishBtn.disabled = true;
-    this.elements.game.finishBtn.classList.add('button_disabled');
-    this.elements.game.finishBtn.style.cursor = 'default';
-    if (mode === 'on') {
-      this.elements.game.finishBtn.disabled = false;
-      this.elements.game.finishBtn.classList.remove('button_disabled');
-      this.elements.game.finishBtn.style.cursor = 'pointer';
-    }
+    if (mode === 'off') return document.body.classList.remove('game-button-finish-clicked');
+    if (mode === 'on') return document.body.classList.add('game-button-finish-clicked');
   }
 
   difficultyHandler() {
@@ -299,7 +293,7 @@ export default class CharsAndNumbers {
   startGame() {
     document.body.focus();
     document.body.classList.remove('game-button-finish-clicked');
-    this.disableFinishBtn('on');
+    this.disableFinishBtn('off');
     this.resetFlags();
     this.timer.startCount(80, this.setTimerTextContent.bind(this), this.endGameHandler.bind(this));
     this.choseContentContainer();
