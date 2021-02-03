@@ -8,6 +8,8 @@ export default class Controller {
     this.$config = null;
     this.$storage = null;
     this.$render = new Render(this.$app);
+
+    this.avaialableRoutes = [];
   }
 
   init(config, storage, router) {
@@ -15,6 +17,22 @@ export default class Controller {
     this.$config = config;
     this.$storage = storage;
     this.$render.init(this.$config);
+
+    const gamesCollection = Object.values(config.games).reduce((out, item) => {
+      out.push(item.id);
+
+      return out;
+    }, []);
+
+    this.avaialableRoutes = Mixin.deepFreeze([
+      {controller: 'game', action: gamesCollection},
+      {controller: 'welcome'},
+      {controller: 'sign-in'},
+      {controller: 'sign-up'},
+      {controller: 'game-list'},
+      {controller: 'statistic'},
+      {controller: 'profile'},
+    ]);
   }
 
   handleRoute(controller, action) {
@@ -31,7 +49,11 @@ export default class Controller {
     return this.$storage.storage.userToken;
   }
 
-  isCurrentUserHaveAccess(controller) {
+  isCurrentUserHaveAccess(controller, action) {
+    const isRouteExists = this.avaialableRoutes
+      .some((item) => (item.controller === controller && (!action || item.action.includes(action))));
+
+    if (!isRouteExists) return false;
     if (!this.isUserAuthorized() && ['welcome', 'sign-up', 'sign-in'].includes(controller)) return true;
     if (this.isUserAuthorized() && !['welcome', 'sign-up', 'sign-in'].includes(controller)) return true;
     if (this.isUserAuthorized() && ['welcome', 'sign-up', 'sign-in'].includes(controller)) return false;

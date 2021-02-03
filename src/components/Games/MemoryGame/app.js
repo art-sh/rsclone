@@ -118,6 +118,7 @@ export default class MemoryGame {
     if (this.firstGuess === '' && this.secondGuess === '') return;
     this.firstGuess = '';
     this.secondGuess = '';
+    this.previousClick = null;
     this.getAllSelected().forEach((card) => card.classList.remove('selected'));
   }
 

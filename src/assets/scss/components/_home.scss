@@ -86,6 +86,9 @@
   text-transform: capitalize;
   color: $color-violet-dark;
   margin-bottom: 15px;
+  @media (max-width: 500px) {
+    text-align: center;
+  }
 }
 
 .games__item_recommended .games__title{

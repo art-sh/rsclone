@@ -5,7 +5,7 @@ const cors = require('cors');
 const logger = require('./components/logger/logger');
 const constants = require('./constant/constant');
 
-const app = express(); //
+const app = express();
 
 const routesNotFound = require('./components/routes/not-found.routes');
 const routesAuth = require('./components/routes/auth.routes');
