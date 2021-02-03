@@ -28,36 +28,54 @@ export default class CountSheep {
     this.answers = [];
   }
 
-  getGameNode() {
-    const game = document.createElement('div');
-    game.setAttribute('id', 'count-sheep');
-    return game;
+  startGame() {
+    this.gameProgress();
+    this.timer.startCount(20, this.setTimeText.bind(this), this.gameEnd.bind(this));
+    this.setScoreText(0);
+    this.resetFlags();
+    this.disableFinishBtn('on');
+    document.body.classList.remove('game-button-finish-clicked');
   }
 
-  buildGameCard(currentNumber, status) {
-    const card = document.createElement('div');
-    card.classList.add('card');
-    card.dataset.number = currentNumber;
-    if (status === 'hide') {
-      card.style.visibility = 'hidden';
-    }
-    return card;
+  resetFlags() {
+    this.score = 0;
+    this.matches = 0;
+    this.fieldSize = 2;
+    this.scoreMultipliyer = 1;
   }
 
-  getAmountOfSheep(min, max) {
-    this.amountOfSheep = Math.floor(Math.random() * (max - min + 1)) + min;
-    return this.amountOfSheep;
+  setTimeText(time) {
+    this.elements.stats.time.textContent = `${time.minutesString}:${time.secondsString}`;
   }
 
-  createCards() {
+  setScoreText(string) {
+    this.elements.stats.score.textContent = string.toString();
+  }
+
+  gameProgress() {
+    setTimeout(() => {
+      this.showCards();
+    }, 1000);
+    setTimeout(() => {
+      this.showAnswers();
+      this.setListenersForAnswers();
+    }, 2500);
+  }
+
+  showCards() {
+    this.gameElement.innerHTML = '';
+    this.createFieldOfCards();
+  }
+
+  createFieldOfCards() {
     this.getAmountOfSheep(4, 12);
     const randomNumbers = this.getSortedRandomNumbers(this.amountOfCards, this.amountOfSheep);
     for (let i = 1; i < this.amountOfCards + 1; i += 1) {
       if (randomNumbers[randomNumbers.length - 1] === i) {
-        this.gameElement.append(this.buildGameCard(i, 'show'));
+        this.gameElement.append(this.createCard(i, 'show'));
         randomNumbers.pop();
       } else {
-        this.gameElement.append(this.buildGameCard(i, 'hide'));
+        this.gameElement.append(this.createCard(i, 'hide'));
       }
     }
   }
@@ -71,6 +89,48 @@ export default class CountSheep {
       }
     }
     return chosenNumbers.sort((a, b) => b - a);
+  }
+
+  getAmountOfSheep(min, max) {
+    this.amountOfSheep = Math.floor(Math.random() * (max - min + 1)) + min;
+    return this.amountOfSheep;
+  }
+
+  createCard(currentNumber, status) {
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.dataset.number = currentNumber;
+    if (status === 'hide') {
+      card.style.visibility = 'hidden';
+    }
+    return card;
+  }
+
+  getGameNode() {
+    const game = document.createElement('div');
+    game.setAttribute('id', 'count-sheep');
+    return game;
+  }
+
+  showAnswers() {
+    this.gameElement.append(this.createAnswersBlock());
+  }
+
+  createAnswersBlock() {
+    const answersBlock = document.createElement('div');
+    answersBlock.classList.add('answers');
+    this.getOptionsOfAnswers();
+    this.shuffle(this.answers);
+    console.log(this.answers);
+    let i = 0;
+    while (i < 4) {
+      const answersItem = document.createElement('button');
+      answersItem.classList.add('answers__item');
+      answersItem.innerText = this.answers[i];
+      answersBlock.append(answersItem);
+      i += 1;
+    }
+    return answersBlock;
   }
 
   shuffle(array) {
@@ -95,35 +155,6 @@ export default class CountSheep {
       wrongAnswers[i] = answer;
       this.answers.push(answer);
     }
-
-    console.log(this.answers);
-  }
-
-  createAnswersBlock() {
-    const answersBlock = document.createElement('div');
-    answersBlock.classList.add('answers');
-    this.getOptionsOfAnswers();
-    this.shuffle(this.answers);
-    console.log(this.answers);
-    let i = 0;
-    while (i < 4) {
-      const answersItem = document.createElement('button');
-      answersItem.classList.add('answers__item');
-      answersItem.innerText = this.answers[i];
-      answersBlock.append(answersItem);
-      i += 1;
-    }
-    return answersBlock;
-  }
-
-  gameProgress() {
-    setTimeout(() => {
-      this.showCards();
-    }, 1000);
-    setTimeout(() => {
-      this.showAnswers();
-      this.setListenersForAnswers();
-    }, 2500);
   }
 
   setListenersForAnswers() {
@@ -151,27 +182,15 @@ export default class CountSheep {
     }
   }
 
-  showCards() {
-    this.gameElement.innerHTML = '';
-    this.createCards();
-  }
-
-  showAnswers() {
-    this.gameElement.append(this.createAnswersBlock());
-  }
-
-  setTimeText(time) {
-    this.elements.stats.time.textContent = `${time.minutesString}:${time.secondsString}`;
-  }
-
-  setScoreText(string) {
-    this.elements.stats.score.textContent = string.toString();
-  }
-
-  startGame() {
-    this.gameProgress();
-    this.timer.startCount(20, this.setTimeText.bind(this), this.gameEnd.bind(this));
-    this.setScoreText(0);
+  gameEnd() {
+    this.timer.stopCount();
+    this.disableFinishBtn();
+    this.showModalWindow();
+    this.$soundPlayer.playSound('game-end');
+    return Mixin.dispatch(this.gameConfig.events.gameEnd, {
+      game: this.gameConfig.id,
+      score: this.score,
+    });
   }
 
   showModalWindow() {
@@ -189,19 +208,19 @@ export default class CountSheep {
     });
   }
 
-  gameEnd() {
-    this.timer.stopCount();
-    // this.disableFinishBtn();
-    this.showModalWindow();
-    this.$soundPlayer.playSound('game-end');
-    return Mixin.dispatch(this.gameConfig.events.gameEnd, {
-      game: this.gameConfig.id,
-      score: this.score,
-    });
-  }
-
   setListeners() {
     this.elements.game.finishBtn.addEventListener('click', this.gameEnd.bind(this));
+  }
+
+  disableFinishBtn(mode = 'off') {
+    this.elements.game.finishBtn.disabled = true;
+    this.elements.game.finishBtn.classList.add('button_disabled');
+    this.elements.game.finishBtn.style.cursor = 'default';
+    if (mode === 'on') {
+      this.elements.game.finishBtn.disabled = false;
+      this.elements.game.finishBtn.classList.remove('button_disabled');
+      this.elements.game.finishBtn.style.cursor = 'pointer';
+    }
   }
 
   init() {
