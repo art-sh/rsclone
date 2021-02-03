@@ -19,6 +19,9 @@ export default class ModalWindow {
       [this.types.hotKeys]: templateHotKeys,
     };
     this.elements = {};
+    this.timeouts = {
+      showHold: 100,
+    };
 
     Mixin.listen(this.$app.config.events.routeChange, this.destroyModal.bind(this), true);
   }
@@ -152,7 +155,7 @@ export default class ModalWindow {
 
     params.container.append(node);
 
-    window.requestAnimationFrame(() => this.show());
+    setTimeout(() => this.show(), this.timeouts.showHold);
   }
 
   /**
