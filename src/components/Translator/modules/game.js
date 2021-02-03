@@ -63,4 +63,20 @@ export default {
     ru: 'Игроку необходимо успеть воспринять количество пасущихся овечек на игровом поле и выбрать только один правильный ответ.  Есть только три возможности сделать ошибку. Удачи!!!',
     en: 'You need to count the elements on the playing field and choose only one correct answer. Be careful, because you have only 3 opportunities to make a mistake. Good luck!',
   },
+  'chars-and-numbers_vowel': {
+    ru: 'Гласная буква?',
+    en: 'Is vowel letter?',
+  },
+  'chars-and-numbers_number': {
+    ru: 'Чётное число?',
+    en: 'Is even number?',
+  },
+  'chars-and-numbers_no': {
+    ru: '◄ НЕТ',
+    en: '◄ NO',
+  },
+  'chars-and-numbers_yes': {
+    ru: 'ДА ►',
+    en: 'YES ►',
+  },
 };

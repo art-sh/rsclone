@@ -53,7 +53,9 @@ export default class CharsAndNumbers {
     this.gameBlocks.container = this.createElementFactory('div', null, 'game-container', null, null, null);
     this.gameBlocks.gameField = this.createElementFactory('div', null, 'game-field', null, null, null);
     this.gameBlocks.noButton = this.createElementFactory('button', null, 'no-answer', null, null, '◄ NO');
+    this.gameBlocks.noButton.dataset.lang = 'game__chars-and-numbers_no';
     this.gameBlocks.yesButton = this.createElementFactory('button', null, 'yes-answer', null, null, 'YES ►');
+    this.gameBlocks.yesButton.dataset.lang = 'game__chars-and-numbers_yes';
     this.gameBlocks.gameField.appendChild(this.createQuestionBlock());
     this.gameBlocks.gameField.appendChild(this.createElementFactory('div', null, 'divider', null, null, null));
     this.gameBlocks.gameField.appendChild(this.createQuestionBlock('char'));
@@ -76,6 +78,11 @@ export default class CharsAndNumbers {
     const questionElement = this.createElementFactory('span', null, `${type}-question`, null, null, 'Is even number?');
     if (type === 'char') {
       questionElement.textContent = 'Is vowel letter?';
+      questionElement.dataset.lang = 'game__chars-and-numbers_vowel';
+    }
+    if (type === 'number') {
+      questionElement.textContent = 'Is vowel letter?';
+      questionElement.dataset.lang = 'game__chars-and-numbers_number';
     }
     const contentBlock = this.createElementFactory('div', null, `${type}-block-content`, null, null, null);
     const firstContent = this.createElementFactory('span', null, `${type}-first-content-item`, null, null, null);
@@ -321,6 +328,7 @@ export default class CharsAndNumbers {
 
   init() {
     this.createField();
+    Mixin.dispatch(this.$app.config.events.languageChange, this);
     this.listenersHandler();
     this.elements.game.box.appendChild(this.gameBlocks.container);
   }
