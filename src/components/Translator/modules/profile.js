@@ -20,12 +20,12 @@ export default {
     en: 'Sound effects',
   },
   on: {
-    ru: 'Включено',
+    ru: 'Со звуком',
     en: 'On',
   },
   off: {
     ru: 'Выключено',
-    en: 'Off',
+    en: 'Без звука',
   },
   'theme-title': {
     ru: 'Сменить тему',
