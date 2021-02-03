@@ -99,8 +99,8 @@ export default class Content {
   async statisticRequestHandler(response, elements) {
     const result = await response.result;
     const gamesDataTable = elements.statisticTable.rows;
-
     Object.keys(result.response).forEach((game) => {
+      if (!gamesDataTable[`${game}`]) return;
       const overallScore = gamesDataTable[`${game}`].children[2];
       const bestScore = gamesDataTable[`${game}`].children[3];
       overallScore.textContent = result.response[`${game}`].overall;
