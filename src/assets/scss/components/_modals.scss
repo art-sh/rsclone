@@ -118,6 +118,7 @@
           font-size: 14px;
           line-height: 140%;
           letter-spacing: 0.015em;
+          white-space: pre-line;
 
           #{$high} & {
             font-size: 18px;

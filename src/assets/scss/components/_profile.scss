@@ -50,18 +50,9 @@
   margin-bottom: 20px;
 }
 
-.sound-active {
-  .main-container {
-    .sound-on {
-      font-weight: bold !important;
-    }
-  }
-}
-
-.sound-deactive {
-  .main-container {
-    .sound-off {
-      font-weight: bold !important;
-    }
-  }
+.sound-active .main-container .sound-on,
+.sound-deactive .main-container .sound-off,
+.language-english .language-button-english,
+.language-russian .language-button-russian {
+  font-weight: bold !important;
 }

@@ -37,6 +37,12 @@ export default class ModalWindow {
     this.fillElementsByParams(params.text, this.elements);
     this.setModalListeners(type, params.callback, this.elements);
 
+    if (type === this.types.gameDescription) {
+      const gameConfig = this.getGameConfigByName(params.text.title);
+
+      this.setTranslationKeys(gameConfig, this.elements);
+    }
+
     return node;
   }
 
@@ -77,6 +83,15 @@ export default class ModalWindow {
     Object.entries(config).forEach(([key, value]) => {
       if (elements.text[key]) elements.text[key].innerText = value;
     });
+  }
+
+  setTranslationKeys(config, elements) {
+    elements.text.gameDescription.dataset.lang = `game__${config.id}-description`;
+    elements.text.rule.dataset.lang = `game__${config.id}-rule`;
+  }
+
+  getGameConfigByName(name) {
+    return Object.values(this.$app.config.games).find((value) => value.name === name);
   }
 
   /**
@@ -163,6 +178,7 @@ export default class ModalWindow {
    */
   show() {
     document.body.classList.add('modal-show');
+    Mixin.dispatch(this.$app.config.events.modalShow, this);
   }
 
   /**
