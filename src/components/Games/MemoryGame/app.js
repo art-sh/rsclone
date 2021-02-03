@@ -173,7 +173,7 @@ export default class MemoryGame {
 
   destroyGameInstance() {
     Mixin.dispatch(this.gameConfig.events.gameEnd, {
-      game: this.gameConfig.games.charsAndNumbersGame.id,
+      game: this.gameConfig.games.memoryGame.id,
       score: this.score,
     });
     this.timer.stopCount();
