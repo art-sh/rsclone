@@ -1,6 +1,6 @@
 import ReverseTimer from '@helpers/ReverseTimer';
-// import ModalWindow from '../../Render/components/ModalWindow/app';
-// import Mixin from '../../../helpers/Mixin';
+import ModalWindow from '../../Render/components/ModalWindow/app';
+import Mixin from '../../../helpers/Mixin';
 // import cardsArray from './js/cardsArray';
 import './scss/style.scss';
 
@@ -122,12 +122,12 @@ export default class CountSheep {
     }, 1000);
     setTimeout(() => {
       this.showAnswers();
-      this.setListeners();
+      this.setListenersForAnswers();
     }, 2500);
   }
 
-  setListeners() {
-    this.elements.game.box.addEventListener('click', (e) => {
+  setListenersForAnswers() {
+    this.elements.game.box.addEventListener('mousedown', (e) => {
       const userAnswer = e.target.closest('.answers__item');
       let numberOfUserAnswer;
       if (userAnswer) {
@@ -170,14 +170,44 @@ export default class CountSheep {
 
   startGame() {
     this.gameProgress();
-    // this.timer.startCount(120, this.setTimeText.bind(this), this.gameEnd.bind(this));
-    this.timer.startCount(90, this.setTimeText.bind(this));
+    this.timer.startCount(20, this.setTimeText.bind(this), this.gameEnd.bind(this));
     this.setScoreText(0);
+  }
+
+  showModalWindow() {
+    const modal = new ModalWindow(this.$app);
+    modal.showModal({
+      type: this.gameConfig.modalWindow.types.gameEnd,
+      container: document.querySelector('#app'),
+      text: {
+        score: this.score,
+        title: this.gameConfig.games.countSheep.name,
+      },
+      callback: {
+        restart: () => this.startGame(),
+      },
+    });
+  }
+
+  gameEnd() {
+    this.timer.stopCount();
+    // this.disableFinishBtn();
+    this.showModalWindow();
+    this.$soundPlayer.playSound('game-end');
+    return Mixin.dispatch(this.gameConfig.events.gameEnd, {
+      game: this.gameConfig.id,
+      score: this.score,
+    });
+  }
+
+  setListeners() {
+    this.elements.game.finishBtn.addEventListener('click', this.gameEnd.bind(this));
   }
 
   init() {
     this.gameElement = this.getGameNode();
     this.elements.game.box.append(this.gameElement);
+    this.setListeners();
   }
 
   getGameInstance(root, elements) {
