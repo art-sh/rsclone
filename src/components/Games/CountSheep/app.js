@@ -9,9 +9,10 @@ export default class CountSheep {
     this.$soundPlayer = app.soundPlayer;
     this.gameConfig = app.config;
     this.elements = elements;
-    this.gameElement = null;
     this.timer = new ReverseTimer();
-    this.gameTime = 90;
+
+    this.gameElement = null;
+    this.gameTime = 80;
     this.amountOfSheep = 0;
     this.amountOfCards = 30;
     this.minAmountOfCards = 4;
@@ -20,30 +21,35 @@ export default class CountSheep {
     this.livesCount = 3;
     this.score = 0;
     this.correctAnswers = 0;
-    this.scoreStep = 20;
+    this.scoreStep = 99;
     this.scoreMultiplier = 1;
+    this.isGameActive = false;
+    this.timeouts = {
+      showAnswers: 2500,
+      hideAnswers: 500,
+      holdShowAnswers: 250,
+    };
   }
 
   startGame() {
     this.resetFlags();
-    console.log(`start: ${this.score}`);
-    this.gameProgress();
-    this.timer.startCount(this.gameTime, this.setTimeText.bind(this), this.gameEnd.bind(this));
+    this.isGameActive = true;
     this.setScoreText(0);
-    this.disableFinishBtn('on');
-    document.body.classList.remove('game-button-finish-clicked');
+    this.createLivesIcons();
+    this.disableFinishBtn('off');
+    this.timer.startCount(this.gameTime, this.setTimeText.bind(this), this.gameEnd.bind(this));
+    this.gameProgress();
   }
 
   resetFlags() {
+    this.gameTime = 90;
     this.score = 0;
+    this.livesCount = 3;
     this.scoreMultiplier = 1;
     this.correctAnswers = 0;
     this.minAmountOfCards = 4;
     this.maxAmountOfCards = 6;
-    if (this.elements.stats.icons.children.length < 3) {
-      this.elements.stats.icons.innerHTML = '';
-      this.createLivesIcons();
-    }
+    this.isGameActive = false;
   }
 
   setTimeText(time) {
@@ -55,25 +61,33 @@ export default class CountSheep {
   }
 
   createLivesIcons() {
+    this.elements.stats.icons.innerHTML = '';
+
     for (let i = 0; i < this.livesCount; i += 1) {
       this.elements.stats.icons.appendChild(this.elements.templates.star.content.cloneNode(true));
     }
   }
 
   gameProgress() {
+    if (!this.isGameActive) return;
+
+    this.showCards();
+
     setTimeout(() => {
-      this.showCards();
-    }, 1000);
-    setTimeout(() => {
+      if (!this.isGameActive) return;
+
       this.showAnswers();
-      this.setListenersForAnswers(); // the reason???
-    }, 2500);
-    console.log('gameProgress');
+      this.setListenersForAnswers();
+
+      this.elements.game.box.classList.remove('show-cards');
+    }, this.timeouts.showAnswers);
   }
 
   showCards() {
     this.gameElement.innerHTML = '';
     this.createFieldOfCards();
+
+    setTimeout(() => this.elements.game.box.classList.add('show-cards'));
   }
 
   createFieldOfCards() {
@@ -145,9 +159,11 @@ export default class CountSheep {
     const card = document.createElement('div');
     card.classList.add('card');
     card.dataset.number = currentNumber;
-    if (status === 'hide') {
-      card.style.visibility = 'hidden';
+
+    if (status === 'show') {
+      card.classList.add('card-show');
     }
+
     return card;
   }
 
@@ -159,6 +175,8 @@ export default class CountSheep {
 
   showAnswers() {
     this.gameElement.append(this.createAnswersBlock());
+
+    setTimeout(() => this.elements.game.box.classList.add('show-answers'), this.timeouts.holdShowAnswers);
   }
 
   createAnswersBlock() {
@@ -219,31 +237,33 @@ export default class CountSheep {
       this.score += +(this.scoreStep * this.scoreMultiplier).toFixed();
       this.setScoreText(this.score);
       this.correctAnswers += 1;
-      this.gameProgress();
     } else {
       this.$soundPlayer.playSound('sheep');
       userAnswerButton.style.backgroundColor = '#EA6453';
       this.removeLife();
-      this.gameProgress();
     }
+
+    this.elements.game.box.classList.remove('show-answers');
+
+    setTimeout(() => {
+      this.gameProgress();
+    }, this.timeouts.hideAnswers);
   }
 
   removeLife() {
-    const live = this.elements.stats.icons.querySelector('.game-status_custom');
-    this.elements.stats.icons.removeChild(live);
-    if (this.elements.stats.icons.children.length === 0) {
-      this.timer.stopCount();
-      this.gameEnd();
-    }
+    this.elements.stats.icons.children[0].remove();
+
+    if (this.elements.stats.icons.children.length === 0) this.gameEnd();
   }
 
   gameEnd() {
+    this.isGameActive = false;
     this.timer.stopCount();
-    this.disableFinishBtn();
+    this.disableFinishBtn('on');
     this.showModalWindow();
     this.$soundPlayer.playSound('game-end');
     return Mixin.dispatch(this.gameConfig.events.gameEnd, {
-      game: this.gameConfig.id,
+      game: this.gameConfig.games.countSheep.id,
       score: this.score,
     });
   }
@@ -268,14 +288,8 @@ export default class CountSheep {
   }
 
   disableFinishBtn(mode = 'off') {
-    this.elements.game.finishBtn.disabled = true;
-    this.elements.game.finishBtn.classList.add('button_disabled');
-    this.elements.game.finishBtn.style.cursor = 'default';
-    if (mode === 'on') {
-      this.elements.game.finishBtn.disabled = false;
-      this.elements.game.finishBtn.classList.remove('button_disabled');
-      this.elements.game.finishBtn.style.cursor = 'pointer';
-    }
+    if (mode === 'off') return document.body.classList.remove('game-button-finish-clicked');
+    if (mode === 'on') return document.body.classList.add('game-button-finish-clicked');
   }
 
   init() {
@@ -289,6 +303,8 @@ export default class CountSheep {
     this.elements.stats.score.innerText = '';
     this.elements.stats.time.innerText = '';
     this.elements.stats.icons.innerText = '';
+
+    if (this.gameElement) this.gameElement.remove();
   }
 
   getGameInstance(root, elements) {
