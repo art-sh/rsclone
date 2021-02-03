@@ -304,10 +304,6 @@ export default class CountSheep {
   }
 
   destroyGameInstance() {
-    Mixin.dispatch(this.gameConfig.events.gameEnd, {
-      game: this.gameConfig.games.countSheep.id,
-      score: this.score,
-    });
     this.timer.stopCount();
     this.elements.stats.score.innerText = '';
     this.elements.stats.time.innerText = '';

@@ -305,10 +305,6 @@ export default class CharsAndNumbers {
   }
 
   destroyGameInstance() {
-    Mixin.dispatch(this.gameConfig.events.gameEnd, {
-      game: this.gameConfig.games.charsAndNumbersGame.id,
-      score: this.score,
-    });
     this.timer.stopCount();
     document.removeEventListener('keydown', this.bindKeyHandler);
     this.gameBlocks.container.remove();
