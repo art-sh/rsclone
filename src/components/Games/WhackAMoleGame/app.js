@@ -173,6 +173,10 @@ export default class WhackAMole {
   }
 
   destroyGameInstance() {
+    Mixin.dispatch(this.gameConfig.events.gameEnd, {
+      game: this.gameConfig.games.whackAMole.id,
+      score: this.totalScore,
+    });
     this.timer.stopCount();
     clearTimeout(this.stepGameInterval);
     this.gameElement.remove();
