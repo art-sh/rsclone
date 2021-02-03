@@ -186,7 +186,7 @@ export default class WhackAMole {
     this.gameElement.innerHTML = '';
 
     return Mixin.dispatch(this.gameConfig.events.gameEnd, {
-      game: this.gameConfig.id,
+      game: this.gameConfig.games.whackAMole.id,
       score: this.totalScore,
     });
   }

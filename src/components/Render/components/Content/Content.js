@@ -49,7 +49,6 @@ export default class Content {
       const newContentElement = this.getNode(this.templates[contentType]) || '';
       const newElements = this.getNodeElements(newContentElement, contentType);
       this.setProfileContent(newElements, contentType);
-
       const handler = () => {
         this.elementContent.ontransitionend = null;
         this.elementContent.replaceWith(newContentElement);
@@ -59,9 +58,7 @@ export default class Content {
           window.requestAnimationFrame(() => this.elementContent.removeAttribute('style'));
 
           this.elements = newElements;
-
           this.setContentListeners(this.elements, contentType);
-
           cb && cb(this);
         });
       };
@@ -85,6 +82,32 @@ export default class Content {
       elements.profileName.textContent = userInfoObject.name;
       elements.registrationDate.textContent = `${Mixin.addZero(date.getDate())}.${Mixin.addZero(date.getMonth() + 1)}.${date.getFullYear()}`;
     }
+  }
+
+  setStatisticContent(elements, type) {
+    if (type === 'statistic') {
+      HttpClient.send(`${this.$app.config.baseURL}/score/get-all`, {
+        fetch: {
+          method: 'GET',
+        },
+        storage: this.$app.storage.storage,
+        success: async (response) => this.statisticRequestHandler(response, elements),
+      });
+    }
+  }
+
+  async statisticRequestHandler(response, elements) {
+    const result = await response.result;
+    const gamesDataTable = elements.statisticTable.rows;
+    Object.keys(result.response).forEach((game) => {
+      if (!gamesDataTable[`${game}`]) return;
+      const overallScore = gamesDataTable[`${game}`].children[2];
+      const bestScore = gamesDataTable[`${game}`].children[3];
+      overallScore.textContent = result.response[`${game}`].overall;
+      bestScore.textContent = result.response[`${game}`].best;
+    });
+
+    elements.statisticTable.classList.add('statistics-loaded');
   }
 
   changeThemeState(theme) {
@@ -230,12 +253,13 @@ export default class Content {
       elements.logoutButton.addEventListener('click', this.logOutHandler.bind(this));
       elements.soundOn.addEventListener('click', this.changeSoundState.bind(this, 'on'));
       elements.soundOff.addEventListener('click', this.changeSoundState.bind(this, 'off'));
-
       this.backendRequestHandler('profile');
     } else if (type === 'signIn') {
       this.backendRequestHandler('login');
     } else if (type === 'signUp') {
       this.backendRequestHandler('register');
+    } else if (type === 'statistic') {
+      this.setStatisticContent(elements, type);
     }
   }
 
@@ -278,19 +302,22 @@ export default class Content {
         soundOff: node.querySelector('.sound-off'),
       };
     }
-
     if (type === 'signIn') {
       return {
         errorMessageContainer: node.querySelector('.form-errors-block'),
       };
     }
-
     if (type === 'signUp') {
       return {
         errorMessageContainer: node.querySelector('.form-errors-container'),
       };
     }
-
+    if (type === 'statistic') {
+      return {
+        statisticTable: node.querySelector('.statistic__table'),
+        statisticTableRows: node.querySelectorAll('.statistic__table [name]'),
+      };
+    }
     return {};
   }
 
