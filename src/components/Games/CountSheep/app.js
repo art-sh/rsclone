@@ -50,7 +50,7 @@ export default class CountSheep {
   }
 
   createCards() {
-    this.getAmountOfSheep(4, 15);
+    this.getAmountOfSheep(4, 12);
     const randomNumbers = this.getSortedRandomNumbers(this.amountOfCards, this.amountOfSheep);
     for (let i = 1; i < this.amountOfCards + 1; i += 1) {
       if (randomNumbers[randomNumbers.length - 1] === i) {
@@ -141,6 +141,8 @@ export default class CountSheep {
     if (userAnswer === this.amountOfSheep) {
       this.$soundPlayer.playSound('pew');
       userAnswerButton.style.backgroundColor = '#21B3A9';
+      this.score += this.scoreStep;
+      this.setScoreText(this.score);
       this.gameProgress();
     } else {
       this.$soundPlayer.playSound('sheep');
@@ -168,7 +170,8 @@ export default class CountSheep {
 
   startGame() {
     this.gameProgress();
-    this.timer.startCount(120, this.setTimeText.bind(this));
+    // this.timer.startCount(120, this.setTimeText.bind(this), this.gameEnd.bind(this));
+    this.timer.startCount(90, this.setTimeText.bind(this));
     this.setScoreText(0);
   }
 
