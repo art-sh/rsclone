@@ -1,7 +1,6 @@
 import ReverseTimer from '@helpers/ReverseTimer';
 import ModalWindow from '../../Render/components/ModalWindow/app';
 import Mixin from '../../../helpers/Mixin';
-// import cardsArray from './js/cardsArray';
 import './scss/style.scss';
 
 export default class CountSheep {
@@ -11,37 +10,40 @@ export default class CountSheep {
     this.gameConfig = app.config;
     this.elements = elements;
     this.gameElement = null;
-    this.firstGuess = '';
-    this.secondGuess = '';
-    this.previousClick = null;
-    this.delay = 500;
-    this.showCardsTime = 4000;
     this.timer = new ReverseTimer();
-    this.score = 0;
-    this.matches = 0;
-    this.fieldSize = 30;
-    this.fieldStep = 2; // for change level
-    this.scoreStep = 99;
-    this.scoreMultipliyer = 1;
+    this.gameTime = 90;
     this.amountOfSheep = 0;
     this.amountOfCards = 30;
+    this.minAmountOfCards = 4;
+    this.maxAmountOfCards = 6;
     this.answers = [];
+    this.livesCount = 3;
+    this.score = 0;
+    this.correctAnswers = 0;
+    this.scoreStep = 20;
+    this.scoreMultiplier = 1;
   }
 
   startGame() {
-    this.gameProgress();
-    this.timer.startCount(20, this.setTimeText.bind(this), this.gameEnd.bind(this));
-    this.setScoreText(0);
     this.resetFlags();
+    console.log(`start: ${this.score}`);
+    this.gameProgress();
+    this.timer.startCount(this.gameTime, this.setTimeText.bind(this), this.gameEnd.bind(this));
+    this.setScoreText(0);
     this.disableFinishBtn('on');
     document.body.classList.remove('game-button-finish-clicked');
   }
 
   resetFlags() {
     this.score = 0;
-    this.matches = 0;
-    this.fieldSize = 2;
-    this.scoreMultipliyer = 1;
+    this.scoreMultiplier = 1;
+    this.correctAnswers = 0;
+    this.minAmountOfCards = 4;
+    this.maxAmountOfCards = 6;
+    if (this.elements.stats.icons.children.length < 3) {
+      this.elements.stats.icons.innerHTML = '';
+      this.createLivesIcons();
+    }
   }
 
   setTimeText(time) {
@@ -52,14 +54,21 @@ export default class CountSheep {
     this.elements.stats.score.textContent = string.toString();
   }
 
+  createLivesIcons() {
+    for (let i = 0; i < this.livesCount; i += 1) {
+      this.elements.stats.icons.appendChild(this.elements.templates.star.content.cloneNode(true));
+    }
+  }
+
   gameProgress() {
     setTimeout(() => {
       this.showCards();
     }, 1000);
     setTimeout(() => {
       this.showAnswers();
-      this.setListenersForAnswers();
+      this.setListenersForAnswers(); // the reason???
     }, 2500);
+    console.log('gameProgress');
   }
 
   showCards() {
@@ -68,7 +77,8 @@ export default class CountSheep {
   }
 
   createFieldOfCards() {
-    this.getAmountOfSheep(4, 12);
+    this.levelChanger();
+    this.getAmountOfSheep(this.minAmountOfCards, this.maxAmountOfCards);
     const randomNumbers = this.getSortedRandomNumbers(this.amountOfCards, this.amountOfSheep);
     for (let i = 1; i < this.amountOfCards + 1; i += 1) {
       if (randomNumbers[randomNumbers.length - 1] === i) {
@@ -77,6 +87,41 @@ export default class CountSheep {
       } else {
         this.gameElement.append(this.createCard(i, 'hide'));
       }
+    }
+  }
+
+  levelChanger() {
+    if (this.correctAnswers >= 0 && this.correctAnswers < 3) {
+      this.minAmountOfCards = 4;
+      this.maxAmountOfCards = 6;
+    } else if (this.correctAnswers >= 3 && this.correctAnswers < 6) {
+      this.minAmountOfCards = 6;
+      this.maxAmountOfCards = 8;
+      this.scoreMultiplier = 1.5;
+    } else if (this.correctAnswers >= 6 && this.correctAnswers < 9) {
+      this.minAmountOfCards = 8;
+      this.maxAmountOfCards = 10;
+      this.scoreMultiplier = 1.7;
+    } else if (this.correctAnswers >= 9 && this.correctAnswers < 12) {
+      this.minAmountOfCards = 10;
+      this.maxAmountOfCards = 12;
+      this.scoreMultiplier = 2;
+    } else if (this.correctAnswers >= 12 && this.correctAnswers < 16) {
+      this.minAmountOfCards = 12;
+      this.maxAmountOfCards = 14;
+      this.scoreMultiplier = 2.2;
+    } else if (this.correctAnswers >= 16 && this.correctAnswers < 24) {
+      this.minAmountOfCards = 14;
+      this.maxAmountOfCards = 16;
+      this.scoreMultiplier = 2.5;
+    } else if (this.correctAnswers >= 24 && this.correctAnswers < 30) {
+      this.minAmountOfCards = 16;
+      this.maxAmountOfCards = 18;
+      this.scoreMultiplier = 2.7;
+    } else {
+      this.minAmountOfCards = 18;
+      this.maxAmountOfCards = 20;
+      this.scoreMultiplier = 3;
     }
   }
 
@@ -121,7 +166,6 @@ export default class CountSheep {
     answersBlock.classList.add('answers');
     this.getOptionsOfAnswers();
     this.shuffle(this.answers);
-    console.log(this.answers);
     let i = 0;
     while (i < 4) {
       const answersItem = document.createElement('button');
@@ -172,13 +216,24 @@ export default class CountSheep {
     if (userAnswer === this.amountOfSheep) {
       this.$soundPlayer.playSound('pew');
       userAnswerButton.style.backgroundColor = '#21B3A9';
-      this.score += this.scoreStep;
+      this.score += +(this.scoreStep * this.scoreMultiplier).toFixed();
       this.setScoreText(this.score);
+      this.correctAnswers += 1;
       this.gameProgress();
     } else {
       this.$soundPlayer.playSound('sheep');
       userAnswerButton.style.backgroundColor = '#EA6453';
+      this.removeLife();
       this.gameProgress();
+    }
+  }
+
+  removeLife() {
+    const live = this.elements.stats.icons.querySelector('.game-status_custom');
+    this.elements.stats.icons.removeChild(live);
+    if (this.elements.stats.icons.children.length === 0) {
+      this.timer.stopCount();
+      this.gameEnd();
     }
   }
 
@@ -227,6 +282,13 @@ export default class CountSheep {
     this.gameElement = this.getGameNode();
     this.elements.game.box.append(this.gameElement);
     this.setListeners();
+  }
+
+  destroyGameInstance() {
+    this.timer.stopCount();
+    this.elements.stats.score.innerText = '';
+    this.elements.stats.time.innerText = '';
+    this.elements.stats.icons.innerText = '';
   }
 
   getGameInstance(root, elements) {
