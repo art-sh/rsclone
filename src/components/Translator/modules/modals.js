@@ -8,7 +8,7 @@ export default {
     en: 'Your score is ',
   },
   restart: {
-    ru: 'Перезапустить',
+    ru: 'Перезапуск',
     en: 'Restart',
   },
   quit: {
