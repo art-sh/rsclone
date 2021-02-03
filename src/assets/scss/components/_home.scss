@@ -71,7 +71,11 @@
     object-position: bottom;
   }
 }
-
+.games__item_recommended .games__info{
+  @media (max-width: 960px) {
+    margin-left: 20px;
+  }
+}
 .games__info {
   @media (max-width: 500px) {
     display: flex;
