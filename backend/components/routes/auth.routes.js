@@ -4,7 +4,6 @@ const auth = require('../auth/app');
 const mixin = require('../../helpers/mixin');
 
 router.post('/login', (req, res) => {
-  if (req.headers['app-token']) return mixin.jsonBad({message: 'You are already logged in'}, 400, res);
   if (!req.body) return mixin.jsonBad({message: 'Bad form data'}, 400, res);
   if (!req.body.login) return mixin.jsonBad({message: 'Login is empty'}, 400, res);
   if (!req.body.password) return mixin.jsonBad({message: 'Password is empty'}, 400, res);
