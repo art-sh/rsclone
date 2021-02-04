@@ -83,7 +83,7 @@ export default class CharsAndNumbers {
       questionElement.dataset.lang = 'game__chars-and-numbers_vowel';
     }
     if (type === 'number') {
-      questionElement.textContent = 'Is vowel letter?';
+      questionElement.textContent = 'Is even number?';
       questionElement.dataset.lang = 'game__chars-and-numbers_number';
     }
     const contentBlock = this.createElementFactory('div', null, `${type}-block-content`, null, null, null);
