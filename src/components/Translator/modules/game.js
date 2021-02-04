@@ -72,11 +72,11 @@ export default {
     en: 'Is even number?',
   },
   'chars-and-numbers_no': {
-    ru: '◄ NO',
+    ru: '◄ НЕТ',
     en: '◄ NO',
   },
   'chars-and-numbers_yes': {
-    ru: 'YES ►',
+    ru: 'ДА ►',
     en: 'YES ►',
   },
 };
