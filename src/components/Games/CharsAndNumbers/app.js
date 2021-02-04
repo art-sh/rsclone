@@ -160,7 +160,7 @@ export default class CharsAndNumbers {
       if (!target) return;
       if (targetTextContent === 'yes') {
         this.guess = true;
-      } else if (targetTextContent === 'no') {
+      } else if (targetTextContent === 'false') {
         this.guess = false;
       }
       this.checkGuess();
@@ -240,6 +240,7 @@ export default class CharsAndNumbers {
   wrongAnswerHandler() {
     const live = this.elements.stats.icons.querySelector('.game-status_custom');
     if (this.guess !== this.answer) {
+      console.log(this.guess, this.answer);
       this.$soundPlayer.playSound('answer-wrong');
       this.elements.stats.icons.removeChild(live);
       this.guessCount += 1;
