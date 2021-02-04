@@ -160,7 +160,7 @@ export default class CharsAndNumbers {
       if (!target) return;
       if (targetTextContent === 'yes') {
         this.guess = true;
-      } else if (targetTextContent === 'no') {
+      } else if (targetTextContent === 'false') {
         this.guess = false;
       }
       this.checkGuess();
