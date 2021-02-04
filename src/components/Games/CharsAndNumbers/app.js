@@ -240,7 +240,6 @@ export default class CharsAndNumbers {
   wrongAnswerHandler() {
     const live = this.elements.stats.icons.querySelector('.game-status_custom');
     if (this.guess !== this.answer) {
-      console.log(this.guess, this.answer);
       this.$soundPlayer.playSound('answer-wrong');
       this.elements.stats.icons.removeChild(live);
       this.guessCount += 1;
