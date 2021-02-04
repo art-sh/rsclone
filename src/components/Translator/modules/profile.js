@@ -24,8 +24,8 @@ export default {
     en: 'On',
   },
   off: {
-    ru: 'Выключено',
-    en: 'Без звука',
+    ru: 'Без звука',
+    en: 'Off',
   },
   'theme-title': {
     ru: 'Сменить тему',
