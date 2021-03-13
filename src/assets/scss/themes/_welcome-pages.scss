@@ -1,0 +1,67 @@
+.main_welcome {
+  background-color: $color-violet-dark;
+
+  &.main_greetings {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header:after {
+    display: none;
+  }
+
+
+  .welcome-info {
+    position: relative;
+    margin-top: 40px;
+    margin-bottom: 100px;
+    z-index: 10;
+  }
+
+  .welcome-title {
+    @include fontSettings(48px, bold);
+    line-height: 1.2;
+    letter-spacing: 0.015em;
+    color: $color-white-1;
+    text-align: center;
+    margin-bottom: 24px;
+    @media (max-width: 600px) {
+      font-size: 36px;
+    }
+  }
+
+  .welcome-subtitle {
+    @include fontSettings(24px, 250);
+    line-height: 1.2;
+    color: $color-white-1;
+    text-align: center;
+    margin-bottom: 38px;
+    @media (max-width: 600px) {
+      font-size: 20px;
+    }
+  }
+
+  .welcome-buttons {
+    display: flex;
+    justify-content: center;
+  }
+
+  .button-sign-in {
+    margin-right: 30px;
+    @media (max-width: 600px) {
+      margin-right: 5%;
+    }
+  }
+
+  .circles-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    max-height: 100vh;
+    overflow: hidden;
+  }
+}

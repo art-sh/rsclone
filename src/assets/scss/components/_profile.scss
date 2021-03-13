@@ -1,0 +1,58 @@
+.transparent-wrapper {
+  backdrop-filter: blur(3px);
+  border-radius: 10px;
+  margin: 40px auto 90px;
+  padding: 45px 43px 73px;
+  @media (max-width: 500px) {
+    padding: 20px 15px 73px;
+  }
+}
+
+.profile__title {
+  @include fontSettings(28px, bold);
+  line-height: 1.2;
+  letter-spacing: 0.015em;
+  margin-bottom: 30px;
+  @media (max-width: 670px) {
+    font-size: 22px;
+  }
+}
+
+.profile__box {
+  margin-bottom: 30px;
+}
+
+.profile__row {
+  @include fontSettings(14px, 500);
+  line-height: 1.2;
+  letter-spacing: 0.015em;
+  margin-bottom: 20px;
+
+  .sound-status {
+    font-size: 16px;
+    cursor: pointer;
+
+    .active {
+      font-weight: bold;
+    }
+  }
+
+  .theme-status {
+    font-size: 16px;
+    cursor: pointer;
+  }
+}
+
+.profile__subtitle {
+  @include fontSettings(18px, bold);
+  line-height: 1.2;
+  letter-spacing: 0.015em;
+  margin-bottom: 20px;
+}
+
+.sound-active .main-container .sound-on,
+.sound-deactive .main-container .sound-off,
+.language-english .language-button-english,
+.language-russian .language-button-russian {
+  font-weight: bold !important;
+}

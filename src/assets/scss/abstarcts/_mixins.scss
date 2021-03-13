@@ -1,0 +1,6 @@
+@mixin fontSettings($font-size, $font-weight) {
+  font-family: Acrom, sans-serif;
+  font-style: normal;
+  font-weight: $font-weight;
+  font-size: $font-size;
+}

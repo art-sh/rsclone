@@ -1,0 +1,51 @@
+<main class="main">
+    <div class="transparent-wrapper profile">
+        <h2 class="profile__title" data-lang="profile__title">Profile</h2>
+        <div class="profile__box">
+            <p class="profile__row">
+              <span data-lang="profile__nickname">Nickname</span>: <span class="profile__nickname">SuperPlayer</span></p>
+            <p class="profile__row">
+              <span data-lang="profile__registration">Date of Registration</span>: <span class="profile__date">12.01.2020</span></p>
+            <button class="button button-exit" type="button" data-lang="profile__exit">Exit</button>
+        </div>
+        <div class="profile__box">
+            <h3 class="profile__subtitle" data-lang="profile__sound-title">Sound effects</h3>
+            <p class="profile__row"><span class="sound-status sound-on" data-lang="profile__on">On</span> / <span
+                    class="sound-status sound-off" data-lang="profile__off">Off</span></p>
+        </div>
+        <div class="profile__box">
+            <h3 class="profile__subtitle" data-lang="profile__theme-title">Change theme</h3>
+            <p class="profile__row"><span class="theme-status theme-status_dark" data-lang="profile__dark">Dark</span> / <span
+                    class="theme-status theme-status_light" data-lang="profile__light">Light</span></p>
+        </div>
+        <div class="profile__box">
+          <h3 class="profile__subtitle" data-lang="profile__language-title">Change language</h3>
+          <p class="profile__row"><span class="theme-status language-button-english" data-lang="profile__english">English</span> / <span
+            class="theme-status language-button-russian" data-lang="profile__russian">Russian</span></p>
+        </div>
+        <div class="profile__box">
+            <h3 class="profile__subtitle" data-lang="profile__password-title">Change password</h3>
+            <form action="/" class="profile__change-password" id="changePassword">
+                <div class="form__field">
+                    <input type="password" class="form__input" name="password" minlength = '8' maxlength = '64' required placeholder="Password...">
+                    <p class="form__error"></p>
+                </div>
+                <div class="form__field">
+                    <input class="form__input" type="password" minlength = '8' maxlength = '64' name="passwordCheck" required placeholder="Repeat password...">
+                    <p class="form__error form-errors-block"></p>
+                </div>
+                <button class="button button-save-password" type="submit" data-lang="profile__save">Save</button>
+            </form>
+        </div>
+        <div class="profile__box">
+            <h3 class="profile__subtitle" data-lang="profile__nickname-title">Change your nickname</h3>
+            <form action="/" class="profile__change-password" id="changeNickname">
+                <div class="form__field">
+                    <input type="text" name="nickname" class="form__input" placeholder="Nickname...">
+                    <p class="form__error"></p>
+                </div>
+                <button class="button button-save-nickname" type="submit" data-lang="profile__save">Save</button>
+            </form>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,130 @@
+.button {
+  background-color: $color-pink-dark;
+  border-radius: 5px;
+  border: 2px solid $color-pink-dark;
+  color: $color-white-1;
+  @include fontSettings(18px, 500);
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba($color-pink-dark, 0.69);
+  text-decoration: none;
+  transition-duration: 300ms;
+  width: 156px;
+  height: 31px;
+
+  &:hover {
+    box-shadow: 0 0 15px $color-pink;
+    background-color: $color-pink;
+    border-color: $color-pink;
+    animation: neonPuls 2s infinite;
+  }
+
+  &.button_disabled {
+    background-color: $color-pink-grey;
+    border-color: $color-pink-grey;
+    box-shadow: none;
+    animation: none;
+    color: $color-grey-white;
+    cursor: auto;
+    pointer-events: none;
+  }
+
+  @media (max-width: 600px) {
+    font-size: 16px;
+    width: 130px;
+  }
+
+  &-empty {
+    background-color: transparent;
+  }
+
+  &_light {
+    background-color: transparent;
+  }
+}
+
+.game-button-finish-clicked .game-finish {
+  pointer-events: none;
+  cursor: default;
+}
+
+@keyframes neonPuls {
+  0% {
+    box-shadow: 0 0 2px $color-pink, 0 0 5px $color-pink, 0 0 15px $color-pink;
+  }
+  10% {
+    box-shadow: 0 0 10px $color-pink, 0 0 20px $color-pink, 0 0 17px $color-pink;
+  }
+  15% {
+    box-shadow: 0 0 5px $color-pink, 0 0 10px $color-pink, 0 0 16px $color-pink;
+  }
+  20% {
+    box-shadow: 0 0 10px $color-pink, 0 0 20px $color-pink, 0 0 17px $color-pink;
+  }
+  25% {
+    box-shadow: 0 0 5px $color-pink, 0 0 10px $color-pink, 0 0 16px $color-pink;
+  }
+  30% {
+    box-shadow: 0 0 10px $color-pink, 0 0 20px $color-pink, 0 0 17px $color-pink;
+  }
+  35% {
+    box-shadow: 0 0 5px $color-pink, 0 0 10px $color-pink, 0 0 16px $color-pink;
+  }
+  40% {
+    box-shadow: 0 0 10px $color-pink, 0 0 20px $color-pink, 0 0 17px $color-pink;
+  }
+  45% {
+    box-shadow: 0 0 2px $color-pink, 0 0 5px $color-pink, 0 0 15px $color-pink;
+  }
+  50% {
+    box-shadow: 0 0 10px $color-pink, 0 0 20px $color-pink, 0 0 17px $color-pink;
+  }
+  55% {
+    box-shadow: 0 0 5px $color-pink, 0 0 10px $color-pink, 0 0 16px $color-pink;
+  }
+  60% {
+    box-shadow: 0 0 10px $color-pink, 0 0 20px $color-pink, 0 0 17px $color-pink;
+  }
+  65% {
+    box-shadow: 0 0 2px $color-pink, 0 0 5px $color-pink, 0 0 15px $color-pink;
+  }
+  70% {
+    box-shadow: 0 0 10px $color-pink, 0 0 20px $color-pink, 0 0 17px $color-pink;
+  }
+  90% {
+    box-shadow: 0 0 2px $color-pink, 0 0 5px $color-pink, 0 0 15px $color-pink;
+  }
+  91% {
+    box-shadow: none;
+  }
+  92% {
+    box-shadow: 0 0 2px $color-pink, 0 0 5px $color-pink, 0 0 15px $color-pink;
+  }
+  93% {
+    box-shadow: none;
+  }
+  94% {
+    box-shadow: 0 0 2px $color-pink, 0 0 5px $color-pink, 0 0 15px $color-pink;
+  }
+  95% {
+    box-shadow: none;
+  }
+  96% {
+    box-shadow: 0 0 2px $color-pink, 0 0 5px $color-pink, 0 0 15px $color-pink;
+  }
+  97% {
+    box-shadow: none;
+  }
+  98% {
+    box-shadow: 0 0 2px $color-pink, 0 0 5px $color-pink, 0 0 15px $color-pink;
+  }
+  99% {
+    box-shadow: none;
+  }
+  100% {
+    box-shadow: 0 0 2px $color-pink, 0 0 5px $color-pink, 0 0 15px $color-pink;
+  }
+}

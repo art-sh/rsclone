@@ -1,0 +1,168 @@
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  z-index: -1;
+  transition: all .25s;
+  overflow: auto;
+  cursor: pointer;
+
+  $modal: &;
+
+  .modal-show & {
+    visibility: visible;
+    opacity: 1;
+    z-index: 900;
+  }
+
+  &__block {
+    background: $color-violet-dark;
+    box-shadow: 0 4px 5px $color-grey-1;
+    border-radius: 10px;
+    max-width: 700px;
+    width: 90%;
+    position: absolute;
+    z-index: 1000;
+    box-sizing: border-box;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transition-delay: .25s;
+    transition-duration: 500ms;
+    transform: translateY(calc(-50vh - 100%));
+    padding: 45px 70px 70px 38px;
+    margin: 0 auto;
+    cursor: default;
+    @media (max-height: 500px) {
+      @media (max-width: 480px) {
+        top: 80%;
+      }
+    }
+
+    .modal-show & {
+      transform: translateY(-50%);
+    }
+
+    &:after {
+      content: '';
+      display: block;
+      width: 270px;
+      height: 84px;
+      background-image: url("@assets/img/logo-sign.png");
+      position: absolute;
+      bottom: 15px;
+      right: 20px;
+      z-index: -1;
+      @media (max-width: 500px) {
+        display: none;
+      }
+    }
+
+    &-header {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+
+      &-button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        margin-left: auto;
+
+        &:hover {
+          opacity: .75;
+        }
+      }
+    }
+
+    &-content {
+      margin-bottom: 38px;
+
+      &-line {
+        margin-bottom: 20px;
+
+        $high: #{&}--high;
+
+        &--high {
+          margin: 15px 0;
+        }
+
+        &-header {
+          padding-bottom: 10px;
+          font-size: 18px;
+          line-height: 120%;
+          color: $color-white-1;
+
+          #{$high} & {
+            display: inline;
+            margin-right: 10px;
+          }
+
+          &.text-title {
+            font-size: 24px;
+          }
+        }
+
+        &-text {
+          color: $color-white-1;
+          font-size: 14px;
+          line-height: 140%;
+          letter-spacing: 0.015em;
+          white-space: pre-line;
+
+          #{$high} & {
+            font-size: 18px;
+            line-height: 120%;
+          }
+        }
+      }
+    }
+
+    &-button-group {
+      display: flex;
+
+      @media (max-width: 500px) {
+        flex-direction: column;
+      }
+
+      .button-restart {
+        margin-right: 25px;
+        @media (max-width: 500px) {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+
+  &__background {
+    background: rgba(148, 115, 218, 0.45);
+    height: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+
+    .page-game & {
+      cursor: default;
+    }
+  }
+}
+
+.modal.modal-finish-game {
+  .modal__block {
+    @media (max-height: 500px) {
+      @media (max-width: 480px) {
+        top: 50%;
+      }
+    }
+  }
+}

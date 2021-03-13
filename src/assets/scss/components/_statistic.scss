@@ -1,0 +1,119 @@
+.statistic__title {
+  @include fontSettings(28px, bold);
+  line-height: 1.2;
+  letter-spacing: 0.015em;
+  color: $color-white-1;
+  margin-bottom: 30px;
+
+  @media (max-width: 670px) {
+    font-size: 22px;
+  }
+}
+
+.statistic__table {
+  margin-bottom: 60px;
+  @include fontSettings(14px, normal);
+  line-height: 1.2;
+  letter-spacing: 0.015em;
+  color: $color-white-1;
+  text-align: left;
+
+  @media (max-width: 670px) {
+    font-size: 12px;
+  }
+
+  th {
+    padding-bottom: 20px;
+    padding-right: 40px;
+
+    @media (max-width: 670px) {
+      padding-right: 15px;
+    }
+
+    &:first-child {
+      padding-right: 15px;
+      text-align: center;
+
+      @media (max-width: 670px) {
+        display: none;
+      }
+    }
+
+    &:nth-child(2):after {
+      @media (max-width: 670px) {
+        content: 'Game';
+      }
+    }
+  }
+
+  tr td {
+    padding-bottom: 15px;
+    padding-right: 90px;
+    vertical-align: middle;
+
+    @media (max-width: 670px) {
+      padding-right: 15px;
+    }
+
+    &:first-child {
+      padding-right: 15px;
+
+      @media (max-width: 670px) {
+        display: none;
+      }
+    }
+
+    &:nth-child(2) {
+      font-weight: 500;
+
+      @media (max-width: 670px) {
+        font-weight: normal;
+      }
+    }
+  }
+
+  th {
+    font-weight: bold;
+    font-size: 18px;
+
+    @media (max-width: 670px) {
+      font-size: 14px;
+    }
+  }
+
+  .game-name {
+    animation: blink2 1s linear infinite;
+  }
+
+  &.statistics-loaded .game-name {
+    animation: unset;
+  }
+
+  &.statistics-loaded .game-score {
+    opacity: 1;
+  }
+
+  .game-score {
+    transition: all 0.5s;
+    opacity: 0;
+  }
+}
+
+
+.statistic__img {
+  width: 70px;
+  height: 70px;
+}
+
+
+@keyframes blink2 {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}

@@ -1,0 +1,61 @@
+.form_sign-up,
+.form__sign-in {
+   margin-top: 30px;
+   position: relative;
+   z-index: 10;
+   margin-bottom: 40px;
+ }
+
+.form__title {
+  @include fontSettings(28px, bold);
+  line-height: 1.2;
+  letter-spacing: 0.015em;
+  color: $color-white-1;
+  margin-bottom: 4px;
+}
+
+.form__link {
+  display: block;
+  @include fontSettings(11px, normal);
+  line-height: 13px;
+  text-decoration-line: underline;
+  color: $color-white-1;
+  margin-bottom: 20px;
+  transition-duration: 300ms;
+
+  &:hover {
+    color: $color-beige;
+  }
+}
+
+.form__field {
+  position: relative;
+  margin-bottom: 27px;
+  &:last-of-type {
+    margin-bottom: 35px;
+  }
+}
+
+.form__input {
+  background: $color-white-1;
+  border: 1px solid $color-violet-light;
+  box-sizing: border-box;
+  @include fontSettings(14px, normal);
+  line-height: 1.2;
+  color: $color-grey-light;
+  padding: 6px 10px;
+  width: 300px;
+  display: block;
+
+  @media (max-width: 600px) {
+    width: 250px;
+  }
+}
+
+.form__error {
+  position: absolute;
+  top: 33px;
+  @include fontSettings(12px, normal);
+  line-height: 1.2;
+  color: $color-pink-light;
+}

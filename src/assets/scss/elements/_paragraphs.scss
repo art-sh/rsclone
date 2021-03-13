@@ -1,0 +1,6 @@
+p {
+  @include fontSettings(14px, normal);
+  line-height: 160%;
+  letter-spacing: 0.02em;
+  color: $color-grey-middle;
+}
